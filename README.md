@@ -1,1 +1,20 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/95N4_EfF)
+Environnement :
+
+Java 17
+Spring Boot 3.2.4
+Dépendances :
+
+Spring Web
+Spring Data JPA
+H2 Database
+Lombok
+Points clés :
+Voila le liens de notre dataset qui contient 3 entités :
+movie_data
+ratings_export
+users_export
+
+les deux base de données qu'on vas utuliser cest
+MongoDb
+Redis 
+
