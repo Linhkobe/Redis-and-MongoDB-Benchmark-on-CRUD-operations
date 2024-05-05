@@ -1,6 +1,7 @@
 package com.example.bigdatareddismongodbfilm.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
 
@@ -18,6 +19,8 @@ public class Movie {
     private String original_language;
     private String overview;
     private String popularity;
+
+    @Field("null")
     private List<String> nullField;
 
     // getters
