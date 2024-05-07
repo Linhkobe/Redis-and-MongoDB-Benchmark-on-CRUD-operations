@@ -14,7 +14,7 @@ movie_data
 ratings_export
 users_export
 
-les deux base de données qu'on vas utuliser cest
+les deux base de données qu'on vas utiliser c'est
 MongoDb
 Redis 
 
