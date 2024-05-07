@@ -1,6 +1,6 @@
 // File: src/main/java/com/example/bigdatareddismongodbfilm/controllers/RatingController.java
 
-package com.example.bigdatareddismongodbfilm.controllers;
+package com.example.bigdatareddismongodbfilm.controllers.mongodb;
 
 import com.example.bigdatareddismongodbfilm.entity.Rating;
 import com.example.bigdatareddismongodbfilm.services.mongodb.RatingServiceMongo;

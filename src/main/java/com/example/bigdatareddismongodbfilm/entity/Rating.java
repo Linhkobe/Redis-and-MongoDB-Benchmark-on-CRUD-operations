@@ -2,9 +2,14 @@ package com.example.bigdatareddismongodbfilm.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.redis.core.RedisHash;
+import java.util.List;
+import java.io.Serializable;
+
+@RedisHash("Rating")
 
 @Document(collection = "ratings_export")
-public class Rating {
+public class Rating implements Serializable {
 
     @Id
     private String id;

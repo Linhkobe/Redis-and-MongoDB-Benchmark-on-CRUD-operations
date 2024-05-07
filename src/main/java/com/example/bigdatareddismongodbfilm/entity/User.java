@@ -3,11 +3,13 @@ package com.example.bigdatareddismongodbfilm.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-
+import org.springframework.data.redis.core.RedisHash;
 import java.util.List;
+import java.io.Serializable;
 
+@RedisHash("User")
 @Document(collection = "users_export")
-public class User {
+public class User implements Serializable {
 
     @Id
     private String id;

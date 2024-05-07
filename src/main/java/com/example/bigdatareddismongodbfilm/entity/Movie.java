@@ -2,11 +2,13 @@ package com.example.bigdatareddismongodbfilm.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-
+import org.springframework.data.redis.core.RedisHash;
 import java.util.List;
+import java.io.Serializable;
 
+@RedisHash("Movie")
 @Document(collection = "movie_data")
-public class Movie {
+public class Movie implements Serializable {
 
     @Id
     private String id;
