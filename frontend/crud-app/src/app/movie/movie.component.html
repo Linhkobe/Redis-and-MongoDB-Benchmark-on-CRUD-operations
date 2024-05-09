@@ -1,0 +1,31 @@
+<mat-form-field class="search-bar">
+  <input matInput placeholder="Search Movies">
+</mat-form-field>
+<button mat-raised-button class="create-button">Create Movie</button>
+
+<!-- movie.component.html -->
+<div style="height: 400px; overflow: auto;">
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Genres</th>
+      <!-- Add more columns for each field -->
+      <th>Actions</th>
+    </tr>
+    <tr *ngFor="let movie of movies">
+      <td>{{ movie.id }}</td>
+      <td>{{ movie.genres }}</td>
+      <!-- Add more cells for each field -->
+      <td>
+        <button (click)="updateMovie(movie.id, movie)">Edit</button>
+        <button (click)="deleteMovie(movie.id)">Delete</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<mat-paginator [length]="length"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="pageEvent = $event; loadMovies()">
+</mat-paginator>
