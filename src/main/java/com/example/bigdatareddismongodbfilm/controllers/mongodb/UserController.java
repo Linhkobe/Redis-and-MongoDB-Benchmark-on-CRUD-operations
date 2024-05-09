@@ -1,4 +1,4 @@
-package com.example.bigdatareddismongodbfilm.controllers;
+package com.example.bigdatareddismongodbfilm.controllers.mongodb;
 
 import com.example.bigdatareddismongodbfilm.entity.User;
 import com.example.bigdatareddismongodbfilm.services.mongodb.UserServiceMongo;

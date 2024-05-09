@@ -55,6 +55,6 @@ public class RatingServiceMongoImpl implements RatingServiceMongo {
     public void initRedisWithMongoData() {
         List<Rating> allRatings = getAllRatings();  // Retrieve all ratings from MongoDB
         allRatings.forEach(ratingRedisService::saveRating);  // Save each rating to Redis
-        System.out.println("Initialized Redis with existing MongoDB data.");
+        System.out.println("Initialized Redis with existing MongoDB data(RATING collection).");
     }
 }

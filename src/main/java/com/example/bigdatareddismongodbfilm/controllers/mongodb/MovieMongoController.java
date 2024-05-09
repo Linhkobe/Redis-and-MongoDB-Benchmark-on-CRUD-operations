@@ -4,6 +4,7 @@ import com.example.bigdatareddismongodbfilm.entity.Movie;
 import com.example.bigdatareddismongodbfilm.services.mongodb.MovieServiceMongo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.bson.types.ObjectId;
 
 import java.util.List;
 
@@ -26,7 +27,8 @@ public class MovieMongoController {
 
     @GetMapping("/{id}")
     public Movie getMovieById(@PathVariable String id) {
-        return movieService.getMovieById(id);
+        ObjectId objectId = new ObjectId(id);
+        return movieService.getMovieById(objectId.toString());
     }
 
     @PutMapping("/{id}")
