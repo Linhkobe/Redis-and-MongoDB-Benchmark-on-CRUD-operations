@@ -20,7 +20,7 @@ public class MovieMongoController {
         return movieService.createMovie(movie);
     }
 
-    @GetMapping("")
+    @GetMapping("/")
     public List<Movie> getAllMovies() {
         return movieService.getAllMovies();
     }
@@ -31,12 +31,12 @@ public class MovieMongoController {
         return movieService.getMovieById(objectId.toString());
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("update/{id}")
     public Movie updateMovie(@PathVariable String id, @RequestBody Movie movie) {
         return movieService.updateMovie(id, movie);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("delete/{id}")
     public void deleteMovie(@PathVariable String id) {
         movieService.deleteMovie(id);
     }

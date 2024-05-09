@@ -22,7 +22,7 @@ public class RatingController {
         return ResponseEntity.ok(ratingService.createRating(rating));
     }
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<Rating>> getAllRatings() {
         return ResponseEntity.ok(ratingService.getAllRatings());
     }
@@ -37,12 +37,12 @@ public class RatingController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("update/{id}")
     public ResponseEntity<Rating> updateRating(@PathVariable String id, @RequestBody Rating rating) {
         return ResponseEntity.ok(ratingService.updateRating(id, rating));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("delete/{id}")
     public ResponseEntity<Void> deleteRating(@PathVariable String id) {
         ratingService.deleteRating(id);
         return ResponseEntity.noContent().build();
