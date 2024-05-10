@@ -14,4 +14,12 @@ public class BigDataReddisMongoDbFilmApplication {
         SpringApplication.run(BigDataReddisMongoDbFilmApplication.class, args);
     }
 
+    @Bean
+    public CommandLineRunner runner(MovieServiceMongoImpl movieService) {
+        return args -> {
+            movieService.createMovie(new Movie("Test Movie", "Director", 2021));
+            System.out.println("Test data has been initialized.");
+        };
+    }
+
 }
