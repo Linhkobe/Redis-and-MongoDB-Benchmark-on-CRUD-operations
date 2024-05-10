@@ -16,11 +16,35 @@ public class UserRedisController {
     @Autowired
     private UserRedisService userRedisService;
 
+    // Endpoint pour créer un nouvel utilisateur
     @PostMapping("/create")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         return ResponseEntity.ok(userRedisService.saveUser(user));
     }
 
+    // Endpoint pour récupérer un utilisateur par son identifiant
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable String id) {
+        Optional<User> user = userRedisService.findUserById(id);
+        return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    // Endpoint pour mettre à jour un utilisateur existant
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable String id, @RequestBody User newUser) {
+        // Puisque Redis n'a pas de fonctionnalité de mise à jour, nous sauvegardons simplement le nouvel utilisateur
+        User updatedUser = userRedisService.saveUser(newUser);
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    // Endpoint pour supprimer un utilisateur par son identifiant
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable String id) {
+        userRedisService.deleteUser(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    // Endpoint pour récupérer tous les utilisateurs
     @GetMapping("/")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userRedisService.findAllUsers();
