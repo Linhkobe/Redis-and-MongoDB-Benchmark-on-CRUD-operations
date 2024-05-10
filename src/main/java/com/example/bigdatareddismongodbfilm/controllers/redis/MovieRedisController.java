@@ -16,7 +16,7 @@ public class MovieRedisController {
     @Autowired
     private MovieRedisService movieRedisService;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Movie> createMovie(@RequestBody Movie movie) {
         Movie savedMovie = movieRedisService.saveMovie(movie);
         return ResponseEntity.ok(savedMovie);
@@ -40,7 +40,7 @@ public class MovieRedisController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<Movie>> getAllMovies() {
         List<Movie> movies = movieRedisService.findAllMovies();
         if (movies.isEmpty()) {

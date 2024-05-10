@@ -17,7 +17,7 @@ public class RatingController {
     @Autowired
     private RatingServiceMongo ratingService;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Rating> createRating(@RequestBody Rating rating) {
         return ResponseEntity.ok(ratingService.createRating(rating));
     }

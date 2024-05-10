@@ -16,7 +16,7 @@ public class RatingRedisController {
     @Autowired
     private RatingRedisService ratingRedisService;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Rating> createRating(@RequestBody Rating rating) {
         return ResponseEntity.ok(ratingRedisService.saveRating(rating));
     }
@@ -39,7 +39,7 @@ public class RatingRedisController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<Rating>> getAllRatings() {
         List<Rating> ratings = ratingRedisService.findAllRatings();
         if (ratings.isEmpty()) {

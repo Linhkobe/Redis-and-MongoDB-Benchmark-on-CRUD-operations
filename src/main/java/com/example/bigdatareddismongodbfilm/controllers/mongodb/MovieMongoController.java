@@ -15,7 +15,7 @@ public class MovieMongoController {
     @Autowired
     private MovieServiceMongo movieService;
 
-    @PostMapping
+    @PostMapping("/create")
     public Movie createMovie(@RequestBody Movie movie) {
         return movieService.createMovie(movie);
     }

@@ -2,7 +2,10 @@ package com.example.bigdatareddismongodbfilm.services.mongodb;
 
 import com.example.bigdatareddismongodbfilm.entity.User;
 import com.example.bigdatareddismongodbfilm.repositories.mongodb.UserRepository;
+import com.example.bigdatareddismongodbfilm.services.redis.UserRedisService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,9 +16,14 @@ public class UserServiceMongoImpl implements UserServiceMongo {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserRedisService userRedisService;  // Autowired Redis Service
+
     @Override
     public User createUser(User user) {
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        userRedisService.saveUser(savedUser);  // Save to Redis as well
+        return savedUser;
     }
 
     @Override
@@ -31,11 +39,22 @@ public class UserServiceMongoImpl implements UserServiceMongo {
     @Override
     public User updateUser(String id, User user) {
         user.setId(id);
-        return userRepository.save(user);
+        User updatedUser = userRepository.save(user);
+        userRedisService.saveUser(updatedUser);  // Update in Redis too
+        return updatedUser;
     }
 
     @Override
     public void deleteUser(String id) {
         userRepository.deleteById(id);
+        userRedisService.deleteUser(id);  // Delete from Redis as well
+    }
+
+    // Method to initialize Redis with data from MongoDB at startup
+    @EventListener(ContextRefreshedEvent.class)
+    public void initRedisWithMongoData() {
+        List<User> allUsers = getAllUsers();  // Retrieve all users from MongoDB
+        allUsers.forEach(userRedisService::saveUser);  // Save each user to Redis
+        System.out.println("Initialized Redis with existing MongoDB data(USER collection).");
     }
 }
