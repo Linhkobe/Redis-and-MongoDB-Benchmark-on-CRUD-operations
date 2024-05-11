@@ -1,7 +1,22 @@
 <mat-form-field class="search-bar">
-  <input matInput placeholder="Search Movies">
+  <input matInput [(ngModel)]="searchID" placeholder="Search Movies">
 </mat-form-field>
-<button mat-raised-button class="create-button">Create Movie</button>
+<button mat-raised-button class="fin-button" (click)="searchMovie()">Find Movie</button>
+<div *ngIf="movie">
+  <h2>{{ movie.movie_title }}</h2>
+  <p>ID: {{ movie.id }}</p>
+  <p>Genres: {{ movie.genres.join(', ') }}</p>
+  <p>Image URL: {{ movie.image_url }}</p>
+  <p>IMDB ID: {{ movie.imdb_id }}</p>
+  <p>IMDB Link: <a href="{{ movie.imdb_link }}">{{ movie.imdb_link }}</a></p>
+  <p>Movie ID: {{ movie.movie_id }}</p>
+  <p>Original Language: {{ movie.original_language }}</p>
+  <p>Overview: {{ movie.overview }}</p>
+  <p>Popularity: {{ movie.popularity }}</p>
+</div>
+
+
+
 
 <!-- movie.component.html -->
 <div style="height: 400px; overflow: auto;">
@@ -17,7 +32,7 @@
       <td>{{ movie.genres }}</td>
       <!-- Add more cells for each field -->
       <td>
-        <button (click)="updateMovie(movie.id, movie)">Edit</button>
+        <button (click)="updateMovie(movie)">Edit</button>
         <button (click)="deleteMovie(movie.id)">Delete</button>
       </td>
     </tr>
@@ -29,3 +44,15 @@
                [pageSizeOptions]="pageSizeOptions"
                (page)="pageEvent = $event; loadMovies()">
 </mat-paginator>
+
+<div *ngIf="selectedMovie">
+  <form>
+    <label for="id">ID:</label><br>
+    <input type="text" id="id" [(ngModel)]="selectedMovie.id" name="id"><br>
+    <label for="genres">Genres:</label><br>
+    <input type="text" id="genres" [(ngModel)]="selectedMovie.genres" name="genres" disabled><br>
+    <!-- Add more fields for each property -->
+    <button (click)="submitUpdate()">Submit</button>
+    <button (click)="cancelUpdate()">Cancel</button>
+  </form>
+</div>

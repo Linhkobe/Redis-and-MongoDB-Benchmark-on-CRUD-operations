@@ -11,15 +11,20 @@ export class MovieService {
 
   constructor(private http: HttpClient) { }
 
+  // movie.service.ts
+  searchMovie(id: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${id}`);
+  }
+
   getMovies(page: number, size: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}?page=${page}&size=${size}`);
+    return this.http.get(`${this.apiUrl}/paged?page=${page}&size=${size}`);
   }
 
   updateMovie(id: string, movie: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, movie);
+    return this.http.put(`${this.apiUrl}/update/${id}`, movie);
   }
 
   deleteMovie(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+    return this.http.delete(`${this.apiUrl}/delete/${id}`);
   }
 }

@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
-
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import java.util.List;
 
 @Service
@@ -48,6 +49,11 @@ public class MovieServiceMongoImpl implements MovieServiceMongo {
     public void deleteMovie(String id) {
         movieRepository.deleteById(id);
         movieRedisService.deleteMovie(id);  // Delete from Redis as well
+    }
+
+    @Override
+    public Page<Movie> getAllMovies(Pageable pageable) {
+        return movieRepository.findAll(pageable);
     }
 
     // Method to initialize Redis with data from MongoDB at startup

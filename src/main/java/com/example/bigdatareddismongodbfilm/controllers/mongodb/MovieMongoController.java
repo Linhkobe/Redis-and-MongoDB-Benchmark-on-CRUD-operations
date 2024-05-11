@@ -5,6 +5,8 @@ import com.example.bigdatareddismongodbfilm.services.mongodb.MovieServiceMongo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -29,6 +31,12 @@ public class MovieMongoController {
     public Movie getMovieById(@PathVariable String id) {
         ObjectId objectId = new ObjectId(id);
         return movieService.getMovieById(objectId.toString());
+    }
+
+
+    @GetMapping("/paged")
+    public Page<Movie> getAllMoviesPaged(Pageable pageable) {
+        return movieService.getAllMovies(pageable);
     }
 
     @PutMapping("update/{id}")
