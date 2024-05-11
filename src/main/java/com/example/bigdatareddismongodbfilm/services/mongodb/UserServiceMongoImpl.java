@@ -6,6 +6,8 @@ import com.example.bigdatareddismongodbfilm.services.redis.UserRedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,6 +50,11 @@ public class UserServiceMongoImpl implements UserServiceMongo {
     public void deleteUser(String id) {
         userRepository.deleteById(id);
         userRedisService.deleteUser(id);  // Delete from Redis as well
+    }
+
+    @Override
+    public Page<User> getAllUsers(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
     // Method to initialize Redis with data from MongoDB at startup

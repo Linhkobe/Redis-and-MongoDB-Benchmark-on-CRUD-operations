@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 
 @RestController
 @RequestMapping("/mongodb/users")
@@ -44,5 +46,10 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable String id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/paged")
+    public Page <User> getAllUsersPaged(Pageable pageable) {
+        return userService.getAllUsers(pageable);
     }
 }

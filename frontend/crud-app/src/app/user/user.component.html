@@ -1,4 +1,60 @@
 <mat-form-field class="search-bar">
-  <input matInput placeholder="Search user">
+  <input matInput [(ngModel)]="searchID" placeholder="Search Users">
 </mat-form-field>
-<button mat-raised-button class="create-button">Create user</button>
+<button mat-raised-button class="fin-button" (click)="searchUser()">Find User</button>
+  <div *ngIf="user">
+    <h2>{{user.name}}</h2>
+     <p>{{user.username}}</p>
+      <p>{{user.display_name}}</p>
+      <p>{{user.num_ratings_pages}}</p>
+      <p>{{user.num_reviews}}</p>
+
+  </div>
+  <div *ngIf="!user">
+    <h2>User not found</h2>
+  </div>
+
+<div style="<height: 400px; overflow: auto;">
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Display Name</th>
+      <th>Number of Ratings</th>
+      <th>Number of Reviews</th>
+      <th>Actions</th>
+    </tr>
+    <tr *ngFor="let user of users">
+      <td>{{user.id}}</td>
+      <td>{{user.username}}</td>
+      <td>{{user.display_name}}</td>
+      <td>{{user.num_ratings_pages}}</td>
+      <td>{{user.num_reviews}}</td>
+       <td>
+         <button mat-raised-button (click)="updateUser(user)">Update</button>
+         <button mat-raised-button (click)="deleteUser(user.id)">Delete</button>
+       </td>
+    </tr>
+  </table>
+</div>
+
+<mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+<div *ngIf="selectedUser">
+  <h2>Update User</h2>
+  <mat-form-field>
+    <input matInput [(ngModel)]="selectedUser.username" placeholder="Username">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="selectedUser.display_name" placeholder="Display Name">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="selectedUser.num_ratings_pages" placeholder="Number of Ratings">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="selectedUser.num_reviews" placeholder="Number of Reviews">
+  </mat-form-field>
+  <button mat-raised-button (click)="submitUpdate()">Save</button>
+  <button mat-raised-button (click)="cancelUpdate()">Cancel</button>
+
+</div>
