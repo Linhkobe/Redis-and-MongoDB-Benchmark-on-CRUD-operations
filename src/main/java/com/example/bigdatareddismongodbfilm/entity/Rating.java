@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 @RedisHash("Rating")
 
+//@Document(collection = "rating_data")
 @Document(collection = "ratings_export")
 public class Rating implements Serializable {
 

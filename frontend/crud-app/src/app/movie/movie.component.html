@@ -3,7 +3,7 @@
 </mat-form-field>
 <button mat-raised-button class="fin-button" (click)="searchMovie()">Find Movie</button>
 <div *ngIf="movie">
-  <h2>{{ movie.movie_title }}</h2>
+  <h2>Movie title: {{ movie.movie_title }}</h2>
   <p>ID: {{ movie.id }}</p>
   <p>Genres: {{ movie.genres.join(', ') }}</p>
   <p>Image URL: {{ movie.image_url }}</p>
@@ -15,10 +15,6 @@
   <p>Popularity: {{ movie.popularity }}</p>
 </div>
 
-
-
-
-<!-- movie.component.html -->
 <div style="<height: 400px; overflow: auto;">
   <table>
     <tr>
@@ -32,8 +28,16 @@
       <td>{{ movie.genres }}</td>
       <!-- Add more cells for each field -->
       <td>
-        <button (click)="updateMovie(movie)">Edit</button>
-        <button (click)="deleteMovie(movie.id)">Delete</button>
+        <button mat-raised-button class="edit-button" (click)="updateMovie(movie)">Update</button>
+        <button mat-raised-button class="delete-button" (click)="deleteMovie(movie.id)">Delete</button>
+      </td>
+      <td *ngIf="selectedMovie && selectedMovie.id === movie.id" class="update_form">
+        <h2>Update Movie</h2>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedMovie.genres" placeholder="Genres">
+        </mat-form-field>
+        <button mat-raised-button class="save-button" (click)="submitUpdate()">Save</button>
+        <button mat-raised-button class="cancel-button" (click)="cancelUpdate()">Cancel</button>
       </td>
     </tr>
   </table>
@@ -44,15 +48,3 @@
                [pageSizeOptions]="pageSizeOptions"
                (page)="pageEvent = $event; loadMovies()">
 </mat-paginator>
-
-<div *ngIf="selectedMovie">
-  <form>
-    <label for="id">ID:</label><br>
-    <input type="text" id="id" [(ngModel)]="selectedMovie.id" name="id"><br>
-    <label for="genres">Genres:</label><br>
-    <input type="text" id="genres" [(ngModel)]="selectedMovie.genres" name="genres" disabled><br>
-    <!-- Add more fields for each property -->
-    <button (click)="submitUpdate()">Submit</button>
-    <button (click)="cancelUpdate()">Cancel</button>
-  </form>
-</div>

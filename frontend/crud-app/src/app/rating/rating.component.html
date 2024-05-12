@@ -1,4 +1,52 @@
 <mat-form-field class="search-bar">
-  <input matInput placeholder="Search Rating">
+  <input matInput [(ngModel)]="searchID" placeholder="Search Rating">
 </mat-form-field>
-<button mat-raised-button class="create-button">Create a rating</button>
+<button mat-raised-button class="fin-button" (click)="searchRating()">Find rating</button>
+<div *ngIf="rating">
+  <h2>ID: {{rating.id}}</h2>
+  <h4>Rating value: {{rating.rating_val}}</h4>
+</div>
+
+<div *ngIf="!rating">
+  <h2>Rating not found</h2>
+</div>
+
+<div style="<height: 400px; overflow: auto;">
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>rating value</th>
+      <th>Movie_id</th>
+      <th>Actions</th>
+    </tr>
+    <tr *ngFor="let rating of ratings">
+      <td>{{rating.id}}</td>
+      <td>{{rating.rating_val}}</td>
+      <td>{{rating.movie_id}}</td>
+
+      <td>
+        <button mat-raised-button class="edit-button" (click)="updateRating(rating)">Update</button>
+        <button mat-raised-button class="delete-button" (click)="deleteRating(rating.id)">Delete</button>
+      </td>
+      <td *ngIf="selectedRating && selectedRating.id === rating.id">
+        <h2>Update Rating</h2>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedRating.movie_id" placeholder="Username">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedRating.display_name" placeholder="Display Name">
+        </mat-form-field>
+        <button mat-raised-button class="save-button" (click)="submitUpdate()">Save</button>
+        <button mat-raised-button class="cancel-button" (click)="cancelUpdate()">Cancel</button>
+
+      </td>
+    </tr>
+  </table>
+</div>
+
+<mat-paginator [length]="length"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="pageEvent = $event; loadRatings()">
+</mat-paginator>
+

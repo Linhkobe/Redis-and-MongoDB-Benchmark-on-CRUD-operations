@@ -11,7 +11,6 @@ import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
 import {MatIconModule} from '@angular/material/icon';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { CompareComponent } from './compare/compare.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {MovieComponent} from "./movie/movie.component";
 import {RatingComponent} from "./rating/rating.component";
@@ -21,16 +20,26 @@ import { MatInputModule } from '@angular/material/input';
 import {FormsModule} from "@angular/forms";
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { HttpClientModule } from '@angular/common/http';
+import { BenchmarkComponent } from './benchmark/benchmark.component';
+import {
+  MatCell,
+  MatCellDef,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef,
+  MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
+  MatTable
+} from "@angular/material/table";
 
 @NgModule({
   declarations: [
     AppComponent,
     CrudComponent,
-    CompareComponent,
     DashboardComponent,
     MovieComponent,
     RatingComponent,
-    UserComponent
+    UserComponent,
+    BenchmarkComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +54,17 @@ import { HttpClientModule } from '@angular/common/http';
     MatInputModule,
     FormsModule,
     MatPaginatorModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCell,
+    MatCell,
+    MatCellDef,
+    MatHeaderCellDef,
+    MatHeaderRow,
+    MatRow,
+    MatHeaderRowDef,
+    MatRowDef
   ],
   providers: [
     provideAnimationsAsync()

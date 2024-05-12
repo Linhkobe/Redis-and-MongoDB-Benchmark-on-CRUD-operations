@@ -1,0 +1,33 @@
+<mat-tab-group>
+  <mat-tab label="Movie">
+    <h2>1) Create</h2>
+    <form #movieForm="ngForm" (ngSubmit)="createMovies()">
+      <mat-form-field class="input-field">
+        <input matInput type="number" name="count" ngModel placeholder="Number of movies">
+      </mat-form-field>
+      <mat-form-field class="input-field">
+        <input matInput type="number" name="runs" ngModel placeholder="Number of runs">
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Start Benchmark</button>
+    </form>
+
+    <table>
+      <tr *ngFor="let result of results">
+        <td>{{result.database}}</td>
+        <td>{{result.time}}</td>
+        <td>{{result.cpu}}</td>
+        <td>{{result.averageTimeElapsed}}</td>
+        <td>{{result.averageTimeElapsedInMilliseconds}}</td>
+        <td>{{result.averageCpuLoad}}</td>
+        <td>{{result.runs}}</td>
+      </tr>
+    </table>
+  </mat-tab>
+
+  <mat-tab label="Rating">
+
+  </mat-tab>
+  <mat-tab label="User">
+
+  </mat-tab>
+</mat-tab-group>

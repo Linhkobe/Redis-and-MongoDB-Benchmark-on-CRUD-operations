@@ -5,6 +5,8 @@ package com.example.bigdatareddismongodbfilm.controllers.mongodb;
 import com.example.bigdatareddismongodbfilm.entity.Rating;
 import com.example.bigdatareddismongodbfilm.services.mongodb.RatingServiceMongo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,5 +48,10 @@ public class RatingController {
     public ResponseEntity<Void> deleteRating(@PathVariable String id) {
         ratingService.deleteRating(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/paged")
+    public Page<Rating> getAllRatingsPaged(Pageable pageable) {
+        return ratingService.getAllRatings(pageable);
     }
 }

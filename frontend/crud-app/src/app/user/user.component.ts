@@ -54,7 +54,7 @@ export class UserComponent {
     this.userService.updateUser(this.selectedUser.id, this.selectedUser).subscribe({
       next: () => {
         this.loadUsers();
-        this.selectedUser = null;  // Clear the selection
+        this.selectedUser = null;
       },
       error: error => {
         console.error('Error updating user:', error);

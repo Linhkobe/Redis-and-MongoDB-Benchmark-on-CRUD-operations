@@ -3,6 +3,7 @@ package com.example.bigdatareddismongodbfilm.controllers.mongodb;
 import com.example.bigdatareddismongodbfilm.entity.Movie;
 import com.example.bigdatareddismongodbfilm.services.mongodb.MovieServiceMongo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Pageable;
@@ -40,8 +41,8 @@ public class MovieMongoController {
     }
 
     @PutMapping("update/{id}")
-    public Movie updateMovie(@PathVariable String id, @RequestBody Movie movie) {
-        return movieService.updateMovie(id, movie);
+    public ResponseEntity<Movie> updateMovie(@PathVariable String id, @RequestBody Movie movie) {
+        return ResponseEntity.ok(movieService.updateMovie(id, movie));
     }
 
     @DeleteMapping("delete/{id}")

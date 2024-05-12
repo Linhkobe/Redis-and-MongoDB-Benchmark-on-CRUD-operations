@@ -6,3 +6,27 @@
 .create-button {
   margin-left: 10px;
 }
+.fin-button {
+  background-color: blue;
+  color: white;
+}
+.edit-button {
+  background-color: yellow;
+}
+
+.delete-button {
+  background-color: red;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+th, td {
+  padding: 15px;
+  text-align: left;
+}

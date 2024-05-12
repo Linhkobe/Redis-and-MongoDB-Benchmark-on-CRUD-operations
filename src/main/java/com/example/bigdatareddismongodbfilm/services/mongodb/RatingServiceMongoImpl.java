@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -33,6 +35,7 @@ public class RatingServiceMongoImpl implements RatingServiceMongo {
 
     @Override
     public Rating getRatingById(String id) {
+
         return ratingRepository.findById(id).orElse(null);
     }
 
@@ -48,6 +51,11 @@ public class RatingServiceMongoImpl implements RatingServiceMongo {
     public void deleteRating(String id) {
         ratingRepository.deleteById(id);
         ratingRedisService.deleteRating(id);  // Delete from Redis as well
+    }
+
+    @Override
+    public Page<Rating> getAllRatings(Pageable pageable) {
+        return ratingRepository.findAll(pageable);
     }
 
     // Method to initialize Redis with data from MongoDB at startup

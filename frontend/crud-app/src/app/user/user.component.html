@@ -3,13 +3,13 @@
 </mat-form-field>
 <button mat-raised-button class="fin-button" (click)="searchUser()">Find User</button>
   <div *ngIf="user">
-    <h2>{{user.name}}</h2>
-     <p>{{user.username}}</p>
-      <p>{{user.display_name}}</p>
-      <p>{{user.num_ratings_pages}}</p>
-      <p>{{user.num_reviews}}</p>
-
+    <h2>User name: {{user.username}}</h2>
+    <p>ID: {{user.id}}</p>
+    <p>Display Name: {{user.display_name}}</p>
+    <p>Number of ratings: {{user.num_ratings_pages}}</p>
+    <p>Number of Reviews: {{user.num_reviews}}</p>
   </div>
+
   <div *ngIf="!user">
     <h2>User not found</h2>
   </div>
@@ -31,30 +31,34 @@
       <td>{{user.num_ratings_pages}}</td>
       <td>{{user.num_reviews}}</td>
        <td>
-         <button mat-raised-button (click)="updateUser(user)">Update</button>
-         <button mat-raised-button (click)="deleteUser(user.id)">Delete</button>
+         <button mat-raised-button class="edit-button" (click)="updateUser(user)">Update</button>
+         <button mat-raised-button class="delete-button" (click)="deleteUser(user.id)">Delete</button>
        </td>
+      <td *ngIf="selectedUser && selectedUser.id === user.id">
+        <h2>Update User</h2>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedUser.username" placeholder="Username">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedUser.display_name" placeholder="Display Name">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedUser.num_ratings_pages" placeholder="Number of Ratings">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedUser.num_reviews" placeholder="Number of Reviews">
+        </mat-form-field>
+        <button mat-raised-button class="edit-button" (click)="submitUpdate()">Save</button>
+        <button mat-raised-button class="delete-button" (click)="cancelUpdate()">Cancel</button>
+      </td>
     </tr>
   </table>
 </div>
 
-<mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+<mat-paginator [length]="length"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="pageEvent = $event; loadUsers()">
+</mat-paginator>
 
-<div *ngIf="selectedUser">
-  <h2>Update User</h2>
-  <mat-form-field>
-    <input matInput [(ngModel)]="selectedUser.username" placeholder="Username">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput [(ngModel)]="selectedUser.display_name" placeholder="Display Name">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput [(ngModel)]="selectedUser.num_ratings_pages" placeholder="Number of Ratings">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput [(ngModel)]="selectedUser.num_reviews" placeholder="Number of Reviews">
-  </mat-form-field>
-  <button mat-raised-button (click)="submitUpdate()">Save</button>
-  <button mat-raised-button (click)="cancelUpdate()">Cancel</button>
 
-</div>
