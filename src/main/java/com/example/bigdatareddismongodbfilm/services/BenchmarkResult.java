@@ -1,24 +1,36 @@
 package com.example.bigdatareddismongodbfilm.services;
 
 public class BenchmarkResult {
-    private long averageTimeElapsed;
-    private long averageTimeElapsedInMilliseconds;
+    private long averageTimeElapsedMongo;
+    private long averageTimeElapsedInMillisecondsMongo;
+    private long averageTimeElapsedRedis;
+    private long averageTimeElapsedInMillisecondsRedis;
     private double averageCpuLoad;
     private int runs;
 
-    public BenchmarkResult(long averageTimeElapsed, long averageTimeElapsedInMilliseconds, double averageCpuLoad, int runs) {
-        this.averageTimeElapsed = averageTimeElapsed;
-        this.averageTimeElapsedInMilliseconds = averageTimeElapsedInMilliseconds;
+    public BenchmarkResult(long averageTimeElapsedMongo, long averageTimeElapsedInMillisecondsMongo, long averageTimeElapsedRedis, long averageTimeElapsedInMillisecondsRedis, double averageCpuLoad, int runs) {
+        this.averageTimeElapsedMongo = averageTimeElapsedMongo;
+        this.averageTimeElapsedInMillisecondsMongo = averageTimeElapsedInMillisecondsMongo;
+        this.averageTimeElapsedRedis = averageTimeElapsedRedis;
+        this.averageTimeElapsedInMillisecondsRedis = averageTimeElapsedInMillisecondsRedis;
         this.averageCpuLoad = averageCpuLoad;
         this.runs = runs;
     }
 
-    public long getAverageTimeElapsed() {
-        return averageTimeElapsed;
+    public long getAverageTimeElapsedMongo() {
+        return averageTimeElapsedMongo;
     }
 
-    public long getAverageTimeElapsedInMilliseconds() {
-        return averageTimeElapsedInMilliseconds;
+    public long getAverageTimeElapsedInMillisecondsMongo() {
+        return averageTimeElapsedInMillisecondsMongo;
+    }
+
+    public long getAverageTimeElapsedRedis() {
+        return averageTimeElapsedRedis;
+    }
+
+    public long getAverageTimeElapsedInMillisecondsRedis() {
+        return averageTimeElapsedInMillisecondsRedis;
     }
 
     public double getAverageCpuLoad() {
@@ -28,4 +40,5 @@ public class BenchmarkResult {
     public int getRuns() {
         return runs;
     }
+
 }

@@ -23,7 +23,6 @@ public class MovieServiceMongoImpl implements MovieServiceMongo {
     @Override
     public Movie createMovie(Movie movie) {
         Movie savedMovie = movieRepository.save(movie);
-        movieRedisService.saveMovie(savedMovie);  // Save to Redis as well
         return savedMovie;
     }
 

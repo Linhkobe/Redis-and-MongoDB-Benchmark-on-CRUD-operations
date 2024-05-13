@@ -24,7 +24,6 @@ public class RatingServiceMongoImpl implements RatingServiceMongo {
     @Override
     public Rating createRating(Rating rating) {
         Rating savedRating = ratingRepository.save(rating);
-        ratingRedisService.saveRating(savedRating);  // Save to Redis as well
         return savedRating;
     }
 

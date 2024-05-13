@@ -24,4 +24,30 @@ export class BenchmarkService {
       );
   }
 
+  createRatings(count: number, runs: number): Observable<any> {
+    let params = new HttpParams().set('count', count.toString()).set('runs', runs.toString());
+    console.log(`Sending request with Count: ${count}, Runs: ${runs}`);
+    return this.http.post(`${this.apiUrl}/createRatings`, {}, { params: params })
+      .pipe(
+        tap((response: any) => console.log('Response:', response)),
+        catchError(error => {
+          console.error('Error:', error);
+          throw error;
+        })
+      );
+  }
+
+  createUsers(count: number, runs: number): Observable<any> {
+    let params = new HttpParams().set('count', count.toString()).set('runs', runs.toString());
+    console.log(`Sending request with Count: ${count}, Runs: ${runs}`);
+    return this.http.post(`${this.apiUrl}/createUsers`, {}, { params: params })
+      .pipe(
+        tap((response: any) => console.log('Response:', response)),
+        catchError(error => {
+          console.error('Error:', error);
+          throw error;
+        })
+      );
+  }
+
 }

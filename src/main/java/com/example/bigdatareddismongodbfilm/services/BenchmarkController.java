@@ -16,5 +16,15 @@ public class BenchmarkController {
         System.out.println("Received request with Count: " + count + ", Runs: " + runs);
         return benchmarkService.createMovies(count, runs);
     }
+    @PostMapping("/api/benchmark/createRatings")
+    public BenchmarkResult createRatings(@RequestParam int count, @RequestParam int runs) {
+        System.out.println("Received request with Count: " + count + ", Runs: " + runs);
+        return benchmarkService.createRatings(count, runs);
+    }
 
+    @PostMapping("/api/benchmark/createUsers")
+    public BenchmarkResult createUsers(@RequestParam int count, @RequestParam int runs) {
+        System.out.println("Received request with Count: " + count + ", Runs: " + runs);
+        return benchmarkService.createUsers(count, runs);
+    }
 }

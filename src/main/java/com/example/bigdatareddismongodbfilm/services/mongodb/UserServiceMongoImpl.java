@@ -24,7 +24,6 @@ public class UserServiceMongoImpl implements UserServiceMongo {
     @Override
     public User createUser(User user) {
         User savedUser = userRepository.save(user);
-        userRedisService.saveUser(savedUser);  // Save to Redis as well
         return savedUser;
     }
 

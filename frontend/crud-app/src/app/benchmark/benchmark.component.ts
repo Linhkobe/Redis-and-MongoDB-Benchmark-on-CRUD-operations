@@ -10,13 +10,14 @@ import {NgForm} from "@angular/forms";
 })
 export class BenchmarkComponent implements OnInit {
 
-  result: any;
-  results: any[] = [];
-  displayedColumns: string[] = ['database', 'time', 'cpu', 'averageTimeElapsed', 'averageTimeElapsedInMilliseconds', 'averageCpuLoad', 'runs'];
-
+  resultsm: any[] = [];
+  resultsr: any[] = [];
+  resultsu: any[] = [];
+  displayedColumns: string[] = ['averageTimeElapsedMongo', 'averageTimeElapsedInMillisecondsMongo', 'averageTimeElapsedRedis', 'averageTimeElapsedInMillisecondsRedis', 'averageCpuLoad', 'runs'];
   @ViewChild('movieForm') movieForm!: NgForm;
 
-  constructor(private benchmarkService: BenchmarkService) { }
+  constructor(private benchmarkService: BenchmarkService) {
+  }
 
   ngOnInit(): void {
   }
@@ -28,7 +29,37 @@ export class BenchmarkComponent implements OnInit {
     this.benchmarkService.createMovies(count, runs).subscribe({
       next: (response) => {
         console.log('Response:', response); // Log the response
-        this.results = response;
+        this.resultsm = [response]; // Wrap the response in an array
+      },
+      error: (error) => {
+        console.error('Error:', error); // Log any errors
+      }
+    });
+  }
+
+  createRatings() {
+    const count = this.movieForm.value.count;
+    const runs = this.movieForm.value.runs;
+
+    this.benchmarkService.createRatings(count, runs).subscribe({
+      next: (response) => {
+        console.log('Response:', response); // Log the response
+        this.resultsr = [response]; // Wrap the response in an array
+      },
+      error: (error) => {
+        console.error('Error:', error); // Log any errors
+      }
+    });
+  }
+
+  createUsers() {
+    const count = this.movieForm.value.count;
+    const runs = this.movieForm.value.runs;
+
+    this.benchmarkService.createUsers(count, runs).subscribe({
+      next: (response) => {
+        console.log('Response:', response); // Log the response
+        this.resultsu = [response]; // Wrap the response in an array
       },
       error: (error) => {
         console.error('Error:', error); // Log any errors
