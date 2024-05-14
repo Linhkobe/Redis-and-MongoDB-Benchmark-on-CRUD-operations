@@ -2,6 +2,42 @@
   <input matInput [(ngModel)]="searchID" placeholder="Search Movies">
 </mat-form-field>
 <button mat-raised-button class="fin-button" (click)="searchMovie()">Find Movie</button>
+
+<!--create-->
+<button mat-raised-button class="create-button" (click)="toggleCreateForm()">Create Movie</button>
+
+<!--Rechercher un movie avec son titre-->
+<mat-form-field class="search-bar">
+<input matInput [(ngModel)]="movieTitle" placeholder="Movie Title">
+</mat-form-field>
+<button mat-raised-button class="fin-button" (click)="fetchMovie()">Find Movie</button>
+
+<!--formulaire de creation-->
+<form [formGroup]="movieForm" (ngSubmit)="onSubmit()" *ngIf="createFormVisible">
+
+  <!-- Champs pour les détails du film -->
+  <input type="text" formControlName="id" placeholder="Movie ID">
+  <input type="text" formControlName="image_url" placeholder="Image URL">
+  <input type="text" formControlName="imdb_id" placeholder="IMDb ID">
+  <input type="text" formControlName="imdb_link" placeholder="IMDb Link">
+  <input type="text" formControlName="movie_id" placeholder="Movie DB ID">
+  <input type="text" formControlName="movie_title" placeholder="Title">
+  <input type="text" formControlName="original_language" placeholder="Original Language">
+  <textarea formControlName="overview" placeholder="Overview"></textarea>
+  <input type="text" formControlName="popularity" placeholder="Popularity">
+
+  <!-- Champs dynamiques pour les genres -->
+  <div formArrayName="genres">
+    <div *ngFor="let genreControl of genres.controls; let i = index">
+      <input [formControlName]="i" placeholder="Genre">
+      <button type="button" (click)="removeGenre(i)">Remove</button>
+    </div>
+    <button type="button" (click)="addGenre()">Add Genre</button>
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
+
 <div *ngIf="movie">
   <h2>Movie title: {{ movie.movie_title }}</h2>
   <p>ID: {{ movie.id }}</p>
@@ -48,3 +84,5 @@
                [pageSizeOptions]="pageSizeOptions"
                (page)="pageEvent = $event; loadMovies()">
 </mat-paginator>
+
+

@@ -16,3 +16,9 @@ table {
   width: 100%;
   border-collapse: collapse;
 }
+
+.fin-button {
+  background-color: seagreen;
+  color: white;
+}
+

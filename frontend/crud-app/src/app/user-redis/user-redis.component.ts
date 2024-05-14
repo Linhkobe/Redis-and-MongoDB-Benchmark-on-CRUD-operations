@@ -35,3 +35,48 @@ export class UserRedisComponent {
     });
   }
 
+  searchUser(): void {
+    this.userService.searchUser(this.searchID).subscribe({
+      next: user => {
+        this.user = user;
+      },
+      error: error => {
+        console.error('Error searching for user:', error);
+      }
+    });
+  }
+
+  updateUser(user: any): void {
+    this.selectedUser = {...user};  // Make a copy of the user to avoid modifying the original
+  }
+
+  submitUpdate(): void {
+    this.userService.updateUser(this.selectedUser.id, this.selectedUser).subscribe({
+      next: () => {
+        this.loadUsers();
+        this.selectedUser = null;
+      },
+      error: error => {
+        console.error('Error updating user:', error);
+      }
+    });
+  }
+
+  deleteUser(id: string): void {
+    this.userService.deleteUser(id).subscribe({
+      next: () => {
+        this.loadUsers();
+      },
+      error: error => {
+        console.error('Error deleting user:', error);
+      }
+    });
+  }
+
+  cancelUpdate(): void {
+    this.selectedUser = null;  // Clear the selection
+  }
+
+
+}
+

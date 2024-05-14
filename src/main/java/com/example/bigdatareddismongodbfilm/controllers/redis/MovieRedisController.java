@@ -21,6 +21,7 @@ public class MovieRedisController {
     @PostMapping("/create")
     public ResponseEntity<Movie> createMovie(@RequestBody Movie movie) {
         Movie savedMovie = movieRedisService.saveMovie(movie);
+        System.out.println("Movie crée");
         return ResponseEntity.ok(savedMovie);
     }
 
@@ -56,4 +57,11 @@ public class MovieRedisController {
         }
         return ResponseEntity.ok(movies);
     }
+
+    /*@GetMapping("/movies/by-title")
+    public ResponseEntity<Movie> getMovieByTitle(@RequestParam String title) {
+        return movieRedisService.findByTitle(title)
+                .map(ResponseEntity::ok)  // if movie is found, wrap it in a ResponseEntity with OK status
+                .orElseGet(() -> ResponseEntity.notFound().build());  // if not found, return not found status
+    }*/
 }

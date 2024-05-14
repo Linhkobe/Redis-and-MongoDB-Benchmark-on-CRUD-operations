@@ -1,44 +1,24 @@
-/* Styles pour la barre de recherche */
-.search-bar {
-  width: 200px;
-  margin-right: 10px;
-}
-
-/* Styles pour le bouton de création */
-.create-button {
-  margin-left: 10px;
-}
-
-/* Styles pour le bouton "Find User" */
-.fin-button {
-  background-color: #4CAF50; /* Vert */
-  color: white;
-}
-
-/* Styles pour le bouton d'édition */
 .edit-button {
-  background-color: #FFD700; /* Or */
+  background-color: darkolivegreen;
 }
-
-/* Styles pour le bouton de suppression */
 .delete-button {
-  background-color: #FF6347; /* Rouge clair */
+  background-color : coral;
+}
+table, th, td {
+  border: 1px solid black;
 }
 
-/* Styles pour la table */
+th, td {
+  padding: 15px;
+  text-align: left;
+}
 table {
   width: 100%;
   border-collapse: collapse;
 }
 
-/* Styles pour les cellules d'en-tête et de données */
-th, td {
-  border: 1px solid #ddd; /* Gris clair */
-  padding: 15px;
-  text-align: left;
+.fin-button {
+  background-color: seagreen;
+color: white;
 }
 
-/* Styles pour les cellules d'en-tête */
-th {
-  background-color: #f2f2f2; /* Gris plus clair */
-}

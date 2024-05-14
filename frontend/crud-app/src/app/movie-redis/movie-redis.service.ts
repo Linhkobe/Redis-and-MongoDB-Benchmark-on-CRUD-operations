@@ -15,7 +15,6 @@ export class MovieRedisService {
   }
 
 
-
   deleteMovie(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/delete/${id}`);
   }
@@ -31,6 +30,15 @@ export class MovieRedisService {
 
   getAllMovies(): Observable<any>{
     return this.http.get(`${this.apiUrl}/`);
+  }
+
+  //creer un movie avec le formulaire create
+  createMovie(movie: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/create`, movie);
+  }
+
+  getMovieByTitle(movieTitle: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/by-title`, { params: { title: movieTitle } });
   }
 
 

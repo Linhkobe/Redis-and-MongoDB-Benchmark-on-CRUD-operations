@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 
+import java.util.Optional;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,7 @@ public class MovieRedisServiceImpl implements MovieRedisService {
 
     @Autowired
     private MovieRedisRepository movieRedisRepository;
+
 
     @Override
     public Movie saveMovie(Movie movie) {
@@ -38,7 +40,5 @@ public class MovieRedisServiceImpl implements MovieRedisService {
 
     @Override
     public Page<Movie> getAllMovies(Pageable pageable) {
-        return movieRedisRepository.findAll(pageable);
-    }
-
+        return movieRedisRepository.findAll(pageable);}
 }

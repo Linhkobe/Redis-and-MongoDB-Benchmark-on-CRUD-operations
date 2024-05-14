@@ -17,7 +17,7 @@ import {RatingComponent} from "./rating/rating.component";
 import {UserComponent} from "./user/user.component";
 import {MatFormField} from "@angular/material/form-field";
 import { MatInputModule } from '@angular/material/input';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { HttpClientModule } from '@angular/common/http';
 import { BenchmarkComponent } from './benchmark/benchmark.component';
@@ -30,9 +30,11 @@ import {
   MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
   MatTable
 } from "@angular/material/table";
+
+
+import { UserRedisComponent } from './user-redis/user-redis.component';
 import {RatingRedisComponent} from "./rating-redis/rating-redis.component";
 import {MovieRedisComponent} from "./movie-redis/movie-redis.component";
-import { UserRedisComponent } from './user-redis/user-redis.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,6 @@ import { UserRedisComponent } from './user-redis/user-redis.component';
     UserComponent,
     BenchmarkComponent,
     RatingRedisComponent,
-    MovieRedisComponent,
     MovieRedisComponent,
     UserRedisComponent
   ],
@@ -71,7 +72,9 @@ import { UserRedisComponent } from './user-redis/user-redis.component';
     MatHeaderRow,
     MatRow,
     MatHeaderRowDef,
-    MatRowDef
+    MatRowDef,
+    ReactiveFormsModule
+
   ],
   providers: [
     provideAnimationsAsync()

@@ -29,4 +29,35 @@
       <td>{{user.id}}</td>
       <td>{{user.username}}</td>
       <td>{{user.display_name}}</td>
+      <td>{{user.num_ratings_pages}}</td>
+      <td>{{user.num_reviews}}</td>
+      <td>
+        <button mat-raised-button class="edit-button" (click)="updateUser(user)">Update</button>
+        <button mat-raised-button class="delete-button" (click)="deleteUser(user.id)">Delete</button>
+      </td>
+      <td *ngIf="selectedUser && selectedUser.id === user.id">
+        <h2>Update User</h2>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedUser.username" placeholder="Username">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedUser.display_name" placeholder="Display Name">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedUser.num_ratings_pages" placeholder="Number of Ratings">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedUser.num_reviews" placeholder="Number of Reviews">
+        </mat-form-field>
+        <button mat-raised-button class="edit-button" (click)="submitUpdate()">Save</button>
+        <button mat-raised-button class="delete-button" (click)="cancelUpdate()">Cancel</button>
+      </td>
+    </tr>
+  </table>
+</div>
 
+<mat-paginator [length]="length"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="pageEvent = $event; loadUsers()">
+</mat-paginator>
