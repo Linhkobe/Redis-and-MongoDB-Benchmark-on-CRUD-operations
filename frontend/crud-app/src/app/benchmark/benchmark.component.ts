@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {BenchmarkService} from "./benchmark.service";
 import {NgForm} from "@angular/forms";
+import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-benchmark',
@@ -9,6 +10,7 @@ import {NgForm} from "@angular/forms";
   styleUrls: ['./benchmark.component.css']
 })
 export class BenchmarkComponent implements OnInit {
+  showDashboard = false;
 
   resultsm: any[] = [];
   resultsr: any[] = [];
@@ -16,7 +18,7 @@ export class BenchmarkComponent implements OnInit {
   displayedColumns: string[] = ['averageTimeElapsedMongo', 'averageTimeElapsedInMillisecondsMongo', 'averageTimeElapsedRedis', 'averageTimeElapsedInMillisecondsRedis', 'averageCpuLoad', 'runs'];
   @ViewChild('movieForm') movieForm!: NgForm;
 
-  constructor(private benchmarkService: BenchmarkService) {
+  constructor(private benchmarkService: BenchmarkService, private SharedService: SharedService) {
   }
 
   ngOnInit(): void {
@@ -30,6 +32,8 @@ export class BenchmarkComponent implements OnInit {
       next: (response) => {
         console.log('Response:', response); // Log the response
         this.resultsm = [response]; // Wrap the response in an array
+        this.SharedService.updateBenchmarkData(response);
+        this.showDashboard = true;
       },
       error: (error) => {
         console.error('Error:', error); // Log any errors

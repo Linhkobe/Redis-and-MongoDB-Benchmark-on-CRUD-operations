@@ -12,7 +12,7 @@
     </form>
 
 
-
+    a
     <mat-table [dataSource]="resultsm" class="mat-elevation-z8">
       <!-- Column definitions -->
       <ng-container matColumnDef="averageTimeElapsedMongo">
@@ -49,6 +49,9 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
+
+    <app-dashboard *ngIf="showDashboard"></app-dashboard>
+
     <h2>2) Find</h2>
 
     <h2>3) Update</h2>
@@ -70,7 +73,7 @@
         <input matInput type="number" name="runs" ngModel placeholder="Number of runs">
       </mat-form-field>
       <button mat-raised-button color="primary" type="submit">Start Benchmark</button>
-</form>
+    </form>
 
     <mat-table [dataSource]="resultsr" class="mat-elevation-z8">
       <!-- Column definitions -->
