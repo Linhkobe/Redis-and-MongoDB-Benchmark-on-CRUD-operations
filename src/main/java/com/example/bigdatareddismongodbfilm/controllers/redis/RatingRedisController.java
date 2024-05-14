@@ -5,6 +5,8 @@ import com.example.bigdatareddismongodbfilm.services.redis.RatingRedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,5 +48,9 @@ public class RatingRedisController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(ratings);
+    }
+    @GetMapping("/paged")
+    public Page<Rating> getAllRatingsPaged(Pageable pageable) {
+        return ratingRedisService.getAllRatings(pageable);
     }
 }

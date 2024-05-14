@@ -49,13 +49,14 @@ public class RatingServiceMongoImpl implements RatingServiceMongo {
     @Override
     public void deleteRating(String id) {
         ratingRepository.deleteById(id);
-        ratingRedisService.deleteRating(id);  // Delete from Redis as well
+        ratingRedisService.deleteRating(id);
     }
 
     @Override
     public Page<Rating> getAllRatings(Pageable pageable) {
         return ratingRepository.findAll(pageable);
     }
+
 
     // Method to initialize Redis with data from MongoDB at startup
     @EventListener(ContextRefreshedEvent.class)
