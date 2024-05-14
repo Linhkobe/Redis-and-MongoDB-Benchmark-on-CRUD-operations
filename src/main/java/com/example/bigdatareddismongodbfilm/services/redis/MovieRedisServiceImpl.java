@@ -4,6 +4,8 @@ import com.example.bigdatareddismongodbfilm.entity.Movie;
 import com.example.bigdatareddismongodbfilm.repositories.redis.MovieRedisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,4 +35,10 @@ public class MovieRedisServiceImpl implements MovieRedisService {
     public List<Movie> findAllMovies() {
         return movieRedisRepository.findAll();
     }
+
+    @Override
+    public Page<Movie> getAllMovies(Pageable pageable) {
+        return movieRedisRepository.findAll(pageable);
+    }
+
 }
