@@ -13,8 +13,8 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
-<mat-sidenav-container>
-  <mat-sidenav [(opened)]="opened" mode="side">
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav [(opened)]="opened" mode="side" class="sidenav">
     <mat-nav-list>
       <a mat-list-item routerLink="/crud" routerLinkActive="active-link" class="link">CRUD</a>
       <mat-divider></mat-divider>
@@ -24,7 +24,8 @@
       <mat-divider></mat-divider>
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content>
+  <mat-sidenav-content class="sidenav-content">
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+

@@ -5,6 +5,8 @@ import com.example.bigdatareddismongodbfilm.services.redis.UserRedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,5 +54,9 @@ public class UserRedisController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(users);
+    }
+    @GetMapping("/paged")
+    public Page <User> getAllUsersPaged(Pageable pageable) {
+        return userRedisService.getAllUsers(pageable);
     }
 }

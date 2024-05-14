@@ -30,6 +30,9 @@ import {
   MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
   MatTable
 } from "@angular/material/table";
+import {RatingRedisComponent} from "./rating-redis/rating-redis.component";
+import {MovieRedisComponent} from "./movie-redis/movie-redis.component";
+import { UserRedisComponent } from './user-redis/user-redis.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,11 @@ import {
     MovieComponent,
     RatingComponent,
     UserComponent,
-    BenchmarkComponent
+    BenchmarkComponent,
+    RatingRedisComponent,
+    MovieRedisComponent,
+    MovieRedisComponent,
+    UserRedisComponent
   ],
   imports: [
     BrowserModule,

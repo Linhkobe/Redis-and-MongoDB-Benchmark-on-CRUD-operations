@@ -1,0 +1,32 @@
+<mat-form-field class="search-bar">
+  <input matInput [(ngModel)]="searchID" placeholder="Search Users">
+</mat-form-field>
+<button mat-raised-button class="fin-button" (click)="searchUser()">Find User</button>
+
+<div *ngIf="user">
+  <h2>User name: {{user.username}}</h2>
+  <p>ID: {{user.id}}</p>
+  <p>Display Name: {{user.display_name}}</p>
+  <p>Number of ratings: {{user.num_ratings_pages}}</p>
+  <p>Number of Reviews: {{user.num_reviews}}</p>
+</div>
+
+<div *ngIf="!user">
+  <h2>User not found</h2>
+</div>
+
+<div style="<height: 400px; overflow: auto;">
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Display Name</th>
+      <th>Number of Ratings</th>
+      <th>Number of Reviews</th>
+      <th>Actions</th>
+    </tr>
+    <tr *ngFor="let user of users">
+      <td>{{user.id}}</td>
+      <td>{{user.username}}</td>
+      <td>{{user.display_name}}</td>
+
