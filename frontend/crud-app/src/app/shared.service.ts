@@ -9,6 +9,13 @@ export class SharedService {
 
   showTabs$ = this.showTabsSubject.asObservable();
 
+  private benchmarkDataSubject = new BehaviorSubject<any>(null);
+  benchmarkData$ = this.benchmarkDataSubject.asObservable();
+
+  updateBenchmarkData(data: any) {
+    this.benchmarkDataSubject.next(data);
+  }
+
   setShowTabs(value: boolean) {
     this.showTabsSubject.next(value);
   }
