@@ -1,0 +1,50 @@
+<mat-form-field class="search-bar">
+  <input matInput [(ngModel)]="searchID" placeholder="Search Movies">
+</mat-form-field>
+<button mat-raised-button class="fin-button" (click)="searchMovie()">Find Movie</button>
+<div *ngIf="movie">
+  <h2>Movie title: {{ movie.movie_title }}</h2>
+  <p>ID: {{ movie.id }}</p>
+  <p>Genres: {{ movie.genres.join(', ') }}</p>
+  <p>Image URL: {{ movie.image_url }}</p>
+  <p>IMDB ID: {{ movie.imdb_id }}</p>
+  <p>IMDB Link: <a href="{{ movie.imdb_link }}">{{ movie.imdb_link }}</a></p>
+  <p>Movie ID: {{ movie.movie_id }}</p>
+  <p>Original Language: {{ movie.original_language }}</p>
+  <p>Overview: {{ movie.overview }}</p>
+  <p>Popularity: {{ movie.popularity }}</p>
+</div>
+
+<div style="<height: 400px; overflow: auto;">
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Genres</th>
+      <!-- Add more columns for each field -->
+      <th>Actions</th>
+    </tr>
+    <tr *ngFor="let movie of movies">
+      <td>{{ movie.id }}</td>
+      <td>{{ movie.genres }}</td>
+      <!-- Add more cells for each field -->
+      <td>
+        <button mat-raised-button class="edit-button" (click)="updateMovie(movie)">Update</button>
+        <button mat-raised-button class="delete-button" (click)="deleteMovie(movie.id)">Delete</button>
+      </td>
+      <td *ngIf="selectedMovie && selectedMovie.id === movie.id" class="update_form">
+        <h2>Update Movie</h2>
+        <mat-form-field>
+          <input matInput [(ngModel)]="selectedMovie.genres" placeholder="Genres">
+        </mat-form-field>
+        <button mat-raised-button class="save-button" (click)="submitUpdate()">Save</button>
+        <button mat-raised-button class="cancel-button" (click)="cancelUpdate()">Cancel</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<mat-paginator [length]="length"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="pageEvent = $event; loadMovies()">
+</mat-paginator>

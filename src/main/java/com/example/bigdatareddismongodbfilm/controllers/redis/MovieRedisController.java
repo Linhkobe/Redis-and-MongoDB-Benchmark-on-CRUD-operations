@@ -5,6 +5,8 @@ import com.example.bigdatareddismongodbfilm.services.redis.MovieRedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +35,12 @@ public class MovieRedisController {
         Movie movie = movieRedisService.saveMovie(updatedMovie); // Since Redis doesn't have "update", we'll re-save it.
         return ResponseEntity.ok(movie);
     }
+
+    @GetMapping("/paged")
+    public Page<Movie> getAllMoviesPaged(Pageable pageable) {
+        return movieRedisService.getAllMovies(pageable);
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMovie(@PathVariable String id) {
