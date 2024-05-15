@@ -9,8 +9,6 @@ import { SharedService } from '../shared.service';
 })
 export class DashboardComponent implements OnInit {
   chart: any;
-  prevMongoValue: number = 0;
-  prevRedisValue: number = 0;
 
   constructor(private sharedService: SharedService) {
     Chart.register(...registerables); // Assurez-vous d'enregistrer les composants Chart.js requis
@@ -28,7 +26,7 @@ export class DashboardComponent implements OnInit {
   addChartData(data: any) {
     const benchmarkCount = this.chart.data.labels.length + 1;
 
-    // Ajouter les valeurs MongoDB et Redis avec une ligne reliant les points
+    // Ajouter les valeurs MongoDB et Redis
     this.chart.data.labels.push(`Benchmark ${benchmarkCount}`);
     this.chart.data.datasets[0].data.push({
       x: benchmarkCount,
@@ -38,22 +36,6 @@ export class DashboardComponent implements OnInit {
       x: benchmarkCount,
       y: data.averageTimeElapsedInMillisecondsRedis
     });
-
-    if (benchmarkCount > 1) {
-      // Relier la valeur actuelle avec la valeur précédente pour MongoDB
-      this.chart.data.datasets[0].data.push({
-        x: benchmarkCount,
-        y: this.prevMongoValue
-      });
-      // Relier la valeur actuelle avec la valeur précédente pour Redis
-      this.chart.data.datasets[1].data.push({
-        x: benchmarkCount,
-        y: this.prevRedisValue
-      });
-    }
-
-    this.prevMongoValue = data.averageTimeElapsedInMillisecondsMongo;
-    this.prevRedisValue = data.averageTimeElapsedInMillisecondsRedis;
 
     this.chart.update();
   }
