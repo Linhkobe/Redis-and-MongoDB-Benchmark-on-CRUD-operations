@@ -13,30 +13,73 @@
 <button mat-raised-button class="fin-button" (click)="fetchMovie()">Find Movie</button>
 
 <!--formulaire de creation-->
-<form [formGroup]="movieForm" (ngSubmit)="onSubmit()" *ngIf="createFormVisible">
-
+<form [formGroup]="movieForm" (ngSubmit)="onSubmit()" *ngIf="createFormVisible" style="margin-top: 20px;">
+  <h2>Create New Movie</h2>
   <!-- Champs pour les détails du film -->
-  <input type="text" formControlName="id" placeholder="Movie ID">
-  <input type="text" formControlName="image_url" placeholder="Image URL">
-  <input type="text" formControlName="imdb_id" placeholder="IMDb ID">
-  <input type="text" formControlName="imdb_link" placeholder="IMDb Link">
-  <input type="text" formControlName="movie_id" placeholder="Movie DB ID">
-  <input type="text" formControlName="movie_title" placeholder="Title">
-  <input type="text" formControlName="original_language" placeholder="Original Language">
-  <textarea formControlName="overview" placeholder="Overview"></textarea>
-  <input type="text" formControlName="popularity" placeholder="Popularity">
+  <div class="form-row">
+    <mat-form-field class="form-field">
+      <input matInput formControlName="id" placeholder="Movie ID" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <input matInput formControlName="image_url" placeholder="Image URL" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+  </div>
+  <div class="form-row">
+    <mat-form-field class="form-field">
+      <input matInput formControlName="imdb_id" placeholder="IMDb ID" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <input matInput formControlName="imdb_link" placeholder="IMDb Link" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+  </div>
+  <div class="form-row">
+    <mat-form-field class="form-field">
+      <input matInput formControlName="movie_id" placeholder="Movie DB ID" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <input matInput formControlName="movie_title" placeholder="Title" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+  </div>
+  <div class="form-row">
+    <mat-form-field class="form-field">
+      <input matInput formControlName="original_language" placeholder="Original Language" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <textarea matInput formControlName="overview" placeholder="Overview" required></textarea>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+  </div>
+  <div class="form-row">
+    <mat-form-field class="form-field">
+      <input matInput formControlName="popularity" placeholder="Popularity" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+  </div>
 
   <!-- Champs dynamiques pour les genres -->
   <div formArrayName="genres">
-    <div *ngFor="let genreControl of genres.controls; let i = index">
-      <input [formControlName]="i" placeholder="Genre">
-      <button type="button" (click)="removeGenre(i)">Remove</button>
+    <div class="form-row" *ngFor="let genreControl of genres.controls; let i = index">
+      <mat-form-field class="form-field">
+        <input matInput [formControlName]="i" placeholder="Genre" required>
+        <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+      </mat-form-field>
+      <button mat-icon-button (click)="removeGenre(i)" matTooltip="Remove Genre" class="remove-button">
+        <mat-icon>delete</mat-icon>
+      </button>
     </div>
-    <button type="button" (click)="addGenre()">Add Genre</button>
+    <button mat-raised-button type="button" (click)="addGenre()" matTooltip="Add Genre" class="add-button">Add Genre</button>
   </div>
 
-  <button type="submit">Submit</button>
+  <button class="submit-button" type="submit" mat-raised-button color="primary">Create</button>
 </form>
+
 
 <div *ngIf="movie">
   <h2>Movie title: {{ movie.movie_title }}</h2>

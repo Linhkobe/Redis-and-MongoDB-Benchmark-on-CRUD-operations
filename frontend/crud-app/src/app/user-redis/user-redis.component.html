@@ -7,26 +7,43 @@
 <button mat-raised-button class="create-button" (click)="toggleCreateForm()">Create User</button>
 
 <!-- formulaire du bouton create-->
-<form [formGroup]="userForm" (ngSubmit)="onSubmit()" *ngIf="createFormVisible">
-
-  <!-- Champs pour les détails de l'utilisateur -->
-  <input type="text" formControlName="id" placeholder="User ID">
-  <input type="text" formControlName="display_name" placeholder="Display Name">
-  <input type="text" formControlName="num_ratings_pages" placeholder="Number of Ratings Pages">
-  <input type="text" formControlName="num_reviews" placeholder="Number of Reviews">
-  <input type="text" formControlName="username" placeholder="Username">
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" *ngIf="createFormVisible" style="margin-top: 20px;">
+  <mat-form-field class="form-field">
+    <input matInput formControlName="id" placeholder="User ID" required>
+    <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+  </mat-form-field>
+  <mat-form-field class="form-field">
+    <input matInput formControlName="display_name" placeholder="Display Name" required>
+    <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+  </mat-form-field>
+  <mat-form-field class="form-field">
+    <input matInput formControlName="num_ratings_pages" placeholder="Number of Ratings Pages" required>
+    <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+  </mat-form-field>
+  <mat-form-field class="form-field">
+    <input matInput formControlName="num_reviews" placeholder="Number of Reviews" required>
+    <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+  </mat-form-field>
+  <mat-form-field class="form-field">
+    <input matInput formControlName="username" placeholder="Username" required>
+    <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+  </mat-form-field>
 
   <!-- Champs dynamiques pour le champ nullField -->
   <div formArrayName="nullField">
-    <div *ngFor="let fieldControl of nullField.controls; let i = index">
-      <input [formControlName]="i" placeholder="Null Field {{ i + 1 }}">
-      <button type="button" (click)="removeNullField(i)">Remove</button>
+    <div class="form-row" *ngFor="let fieldControl of nullField.controls; let i = index">
+      <mat-form-field class="form-field">
+        <input matInput [formControlName]="i" placeholder="Null Field {{ i + 1 }}">
+      </mat-form-field>
+      <button mat-icon-button (click)="removeNullField(i)" matTooltip="Remove Null Field" class="remove-button">Remove</button>
+      <mat-icon>delete</mat-icon>
     </div>
-    <button type="button" (click)="addNullField()">Add Null Field</button>
+    <button mat-raised-button type="button" (click)="addNullField()" matTooltip="Add Null Field" class="add-button">Add Null Field</button>
   </div>
 
-  <button type="submit">Submit</button>
+  <button class="submit-button" type="submit" mat-raised-button color="primary">Create</button>
 </form>
+
 
 
 <div *ngIf="user">

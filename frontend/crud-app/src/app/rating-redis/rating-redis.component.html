@@ -6,13 +6,26 @@
 <!--create-->
 <button mat-raised-button class="create-button" (click)="toggleCreateForm()">Create Rating</button>
 
-<form [formGroup]="ratingForm" (ngSubmit)="onSubmit()" *ngIf="createFormVisible">
-  <input type="text" formControlName="id" placeholder="Rating ID">
-  <input type="text" formControlName="movie_id" placeholder="Movie ID">
-  <input type="text" formControlName="rating_val" placeholder="Rating Value">
-  <input type="text" formControlName="user_id" placeholder="User ID">
-  <button type="submit">Submit</button>
+<form [formGroup]="ratingForm" (ngSubmit)="onSubmit()" *ngIf="createFormVisible" style="margin-top: 20px;">
+  <mat-form-field class="form-field">
+    <input matInput formControlName="id" placeholder="Rating ID" required>
+    <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+  </mat-form-field>
+  <mat-form-field class="form-field">
+    <input matInput formControlName="movie_id" placeholder="Movie ID" required>
+    <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+  </mat-form-field>
+  <mat-form-field class="form-field">
+    <input matInput formControlName="rating_val" placeholder="Rating Value" required>
+    <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+  </mat-form-field>
+  <mat-form-field class="form-field">
+    <input matInput formControlName="user_id" placeholder="User ID" required>
+    <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+  </mat-form-field>
+  <button class="submit-button" type="submit" mat-raised-button color="primary">Create</button>
 </form>
+
 
 <div *ngIf="rating">
   <h2>ID: {{rating.id}}</h2>
