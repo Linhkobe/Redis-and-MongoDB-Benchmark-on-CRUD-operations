@@ -18,6 +18,10 @@ export class UserService {
     return this.http.get(`${this.apiUrl}/paged?page=${page}&size=${size}`);
   }
 
+  createUser(user: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/create`, user);
+  }
+
   updateUser(id: string, user: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/update/${id}`, user);
   }

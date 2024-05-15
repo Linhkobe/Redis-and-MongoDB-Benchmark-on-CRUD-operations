@@ -8,7 +8,11 @@
 .create-button {
   margin-left: 10px;
 }
-
+.create-button1 {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
 /* Styles pour le bouton "Find User" */
 .fin-button {
   background-color: #4CAF50; /* Vert */

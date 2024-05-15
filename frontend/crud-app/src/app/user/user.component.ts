@@ -1,23 +1,38 @@
 import { Component } from '@angular/core';
-import { UserService } from './user.service';
 import { PageEvent } from '@angular/material/paginator';
+import { UserService } from './user.service';
+import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styleUrl: './user.component.css'
+  styleUrls: ['./user.component.css']
 })
 export class UserComponent {
   users: any[] = [];
   length = 100;  // Replace with the actual total number of users
   pageSize = 20;
   pageSizeOptions = [5, 10, 20, 50, 100];
-  pageEvent: PageEvent = {pageIndex: 0, pageSize: this.pageSize, length: this.length};
+  pageEvent: PageEvent = { pageIndex: 0, pageSize: this.pageSize, length: this.length };
   selectedUser: any = null;
   searchID: string = '';
   user: any = null;
+  userForm: FormGroup;
+  createFormVisible: boolean = false;
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private fb: FormBuilder
+  ) {
+    this.userForm = this.fb.group({
+      id: [''],
+      display_name: [''],
+      num_ratings_pages: [''],
+      num_reviews: [''],
+      username: [''],
+      nullField: this.fb.array([])
+    });
+  }
 
   ngOnInit(): void {
     this.loadUsers();
@@ -47,7 +62,7 @@ export class UserComponent {
   }
 
   updateUser(user: any): void {
-    this.selectedUser = {...user};  // Make a copy of the user to avoid modifying the original
+    this.selectedUser = { ...user };  // Make a copy of the user to avoid modifying the original
   }
 
   submitUpdate(): void {
@@ -77,4 +92,29 @@ export class UserComponent {
     this.selectedUser = null;  // Clear the selection
   }
 
+  toggleCreateForm() {
+    this.createFormVisible = !this.createFormVisible;
+  }
+
+  get nullField(): FormArray {
+    return this.userForm.get('nullField') as FormArray;
+  }
+
+  removeNullField(index: number): void {
+    this.nullField.removeAt(index);
+  }
+
+  addNullField(nullField: string = ''): void {
+    this.nullField.push(new FormControl(nullField));
+  }
+
+  // onSubmit method for the create form
+  onSubmit() {
+    this.toggleCreateForm();
+    console.log(this.userForm.value);
+    this.userService.createUser(this.userForm.value).subscribe({
+      next: (response) => console.log('User created successfully!', response),
+      error: (error) => console.error('Failed to create User', error)
+    });
+  }
 }

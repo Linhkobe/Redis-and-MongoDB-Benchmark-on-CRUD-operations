@@ -2,19 +2,74 @@
   <input matInput [(ngModel)]="searchID" placeholder="Search Users">
 </mat-form-field>
 <button mat-raised-button class="fin-button" (click)="searchUser()">Find User</button>
-  <div *ngIf="user">
-    <h2>User name: {{user.username}}</h2>
-    <p>ID: {{user.id}}</p>
-    <p>Display Name: {{user.display_name}}</p>
-    <p>Number of ratings: {{user.num_ratings_pages}}</p>
-    <p>Number of Reviews: {{user.num_reviews}}</p>
+
+<!-- Create button -->
+<button mat-raised-button class="create-button" (click)="toggleCreateForm()">Create User</button>
+
+<!-- User creation form -->
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" *ngIf="createFormVisible" style="margin-top: 20px;">
+
+  <div class="form-row">
+    <mat-form-field class="form-field">
+      <input matInput formControlName="id" placeholder="User ID" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <input matInput formControlName="num_ratings_pages" placeholder="Number of Ratings Pages" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+
   </div>
 
-  <div *ngIf="!user">
-    <h2>User not found</h2>
+  <div class="form-row">
+    <mat-form-field class="form-field">
+      <input matInput formControlName="display_name" placeholder="Display Name" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <input matInput formControlName="num_reviews" placeholder="Number of Reviews" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
   </div>
 
-<div style="<height: 400px; overflow: auto;">
+  <div class="form-row">
+    <mat-form-field class="form-field">
+      <input matInput formControlName="username" placeholder="Username" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+  </div>
+  <!-- Dynamic fields for nullField -->
+  <div formArrayName="nullField">
+    <div class="form-row" *ngFor="let fieldControl of nullField.controls; let i = index">
+      <mat-form-field class="form-field">
+        <input matInput [formControlName]="i" placeholder="Null Field {{ i + 1 }}">
+      </mat-form-field>
+      <button mat-icon-button (click)="removeNullField(i)" matTooltip="Remove Null Field" class="remove-button">Remove</button>
+      <mat-icon>delete</mat-icon>
+    </div>
+    <button mat-raised-button type="button" (click)="addNullField()" matTooltip="Add Null Field" class="add-button">Add Null Field</button>
+  </div>
+
+  <button class="create-button1" type="submit" mat-raised-button color="primary" >Create</button>
+</form>
+
+<!-- Display user details -->
+<div *ngIf="user">
+  <h2>User name: {{user.username}}</h2>
+  <p>ID: {{user.id}}</p>
+  <p>Display Name: {{user.display_name}}</p>
+  <p>Number of ratings: {{user.num_ratings_pages}}</p>
+  <p>Number of Reviews: {{user.num_reviews}}</p>
+</div>
+
+<!-- Display message if user not found
+<div *ngIf="!user">
+  <h2>User not found</h2>
+</div>-->
+
+<!-- Table to display list of users -->
+<div style="height: 400px; overflow: auto;">
   <table>
     <tr>
       <th>ID</th>
@@ -30,10 +85,10 @@
       <td>{{user.display_name}}</td>
       <td>{{user.num_ratings_pages}}</td>
       <td>{{user.num_reviews}}</td>
-       <td>
-         <button mat-raised-button class="edit-button" (click)="updateUser(user)">Update</button>
-         <button mat-raised-button class="delete-button" (click)="deleteUser(user.id)">Delete</button>
-       </td>
+      <td>
+        <button mat-raised-button class="edit-button" (click)="updateUser(user)">Update</button>
+        <button mat-raised-button class="delete-button" (click)="deleteUser(user.id)">Delete</button>
+      </td>
       <td *ngIf="selectedUser && selectedUser.id === user.id">
         <h2>Update User</h2>
         <mat-form-field>
@@ -55,10 +110,9 @@
   </table>
 </div>
 
+<!-- Paginator for pagination -->
 <mat-paginator [length]="length"
                [pageSize]="pageSize"
                [pageSizeOptions]="pageSizeOptions"
                (page)="pageEvent = $event; loadUsers()">
 </mat-paginator>
-
-

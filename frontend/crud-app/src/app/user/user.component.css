@@ -9,6 +9,12 @@
   margin-left: 10px;
 }
 
+.create-button1 {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
 /* Styles pour le bouton "Find User" */
 .fin-button {
   background-color: #4CAF50; /* Vert */
@@ -41,4 +47,25 @@ th, td {
 /* Styles pour les cellules d'en-tête */
 th {
   background-color: #f2f2f2; /* Gris plus clair */
+}
+
+/* Style pour les boutons Add et Remove Genre */
+.add-button, .remove-button {
+  margin-top: 6px;
+}
+
+/* Style pour le formulaire de création */
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.form-field {
+  width: calc(50% - 5px); /* Diviser l'espace en deux avec un petit espace entre */
+}
+
+/* Style pour le bouton de soumission */
+.submit-button {
+  margin-top: 20px;
 }

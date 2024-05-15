@@ -54,7 +54,11 @@ th {
   justify-content: space-between;
   margin-bottom: 10px;
 }
-
+.create-button1 {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
 .form-field {
   width: calc(50% - 5px); /* Diviser l'espace en deux avec un petit espace entre */
 }
