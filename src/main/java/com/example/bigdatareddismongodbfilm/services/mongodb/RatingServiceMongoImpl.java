@@ -9,11 +9,15 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 @Service
 public class RatingServiceMongoImpl implements RatingServiceMongo {
+
+    private static final Logger logger = LoggerFactory.getLogger(RatingServiceMongoImpl.class);
 
     @Autowired
     private RatingRepository ratingRepository;
@@ -48,8 +52,13 @@ public class RatingServiceMongoImpl implements RatingServiceMongo {
 
     @Override
     public void deleteRating(String id) {
-        ratingRepository.deleteById(id);
-        ratingRedisService.deleteRating(id);
+        try {
+            ratingRepository.deleteById(id);
+            ratingRedisService.deleteRating(id);
+            logger.info("Successfully deleted rating with id: {}", id);
+        } catch (Exception e) {
+            logger.error("Error occurred while deleting rating with id: {}", id, e);
+        }
     }
 
     @Override

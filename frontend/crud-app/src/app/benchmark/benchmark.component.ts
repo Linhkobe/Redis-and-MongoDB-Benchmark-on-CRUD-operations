@@ -11,31 +11,20 @@ import { SharedService } from '../shared.service';
 })
 export class BenchmarkComponent implements OnInit {
   showDashboard = false;
-
-<<<<<<< Updated upstream
-  selectedMovie: any="";
-
-=======
   resultsFindMovie: any[] = [];
->>>>>>> Stashed changes
   resultsm: any[] = [];
   resultsr: any[] = [];
   resultsu: any[] = [];
   displayedColumns: string[] = ['averageTimeElapsedMongo', 'averageTimeElapsedInMillisecondsMongo', 'averageTimeElapsedRedis', 'averageTimeElapsedInMillisecondsRedis', 'averageCpuLoad', 'runs'];
-  @ViewChild('movieForm') movieForm!: NgForm;
-<<<<<<< Updated upstream
-  @ViewChild('updateForm') updateForm!: NgForm;
 
-=======
+  @ViewChild('movieForm') movieForm!: NgForm;
   @ViewChild('ratingForm') ratingForm!: NgForm;
   @ViewChild('userForm') userForm!: NgForm;
->>>>>>> Stashed changes
+  @ViewChild('updateForm') updateForm!: NgForm;
 
-  constructor(private benchmarkService: BenchmarkService, private SharedService: SharedService) {
-  }
+  constructor(private benchmarkService: BenchmarkService, private sharedService: SharedService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   createMovies() {
     const count = this.movieForm.value.count;
@@ -43,13 +32,13 @@ export class BenchmarkComponent implements OnInit {
 
     this.benchmarkService.createMovies(count, runs).subscribe({
       next: (response) => {
-        console.log('Response:', response); // Log the response
-        this.resultsm = [response]; // Wrap the response in an array
-        this.SharedService.updateBenchmarkData(response);
+        console.log('Response:', response);
+        this.resultsm = [response];
+        this.sharedService.updateBenchmarkData(response);
         this.showDashboard = true;
       },
       error: (error) => {
-        console.error('Error:', error); // Log any errors
+        console.error('Error:', error);
       }
     });
   }
@@ -60,11 +49,11 @@ export class BenchmarkComponent implements OnInit {
 
     this.benchmarkService.createRatings(count, runs).subscribe({
       next: (response) => {
-        console.log('Response:', response); // Log the response
-        this.resultsr = [response]; // Wrap the response in an array
+        console.log('Response:', response);
+        this.resultsr = [response];
       },
       error: (error) => {
-        console.error('Error:', error); // Log any errors
+        console.error('Error:', error);
       }
     });
   }
@@ -75,25 +64,24 @@ export class BenchmarkComponent implements OnInit {
 
     this.benchmarkService.createUsers(count, runs).subscribe({
       next: (response) => {
-        console.log('Response:', response); // Log the response
-        this.resultsu = [response]; // Wrap the response in an array
+        console.log('Response:', response);
+        this.resultsu = [response];
       },
       error: (error) => {
-        console.error('Error:', error); // Log any errors
+        console.error('Error:', error);
       }
     });
   }
-
-<<<<<<< Updated upstream
 
   updateMovies() {
     if (this.updateForm.valid) {
       const count = this.updateForm.value.count;
       const runs = this.updateForm.value.runs;
+
       this.benchmarkService.updateMovies(count, runs).subscribe({
         next: (response) => {
           console.log('Updated successfully:', response);
-          this.resultsm.push(response); // Mettre à jour l'affichage des résultats
+          this.resultsm.push(response);
         },
         error: (error) => {
           console.error('Update error:', error);
@@ -102,21 +90,19 @@ export class BenchmarkComponent implements OnInit {
     }
   }
 
-=======
   findMovies() {
-
     const count = this.movieForm.value.count;
     const runs = this.movieForm.value.runs;
 
     this.benchmarkService.findMovies(count, runs).subscribe({
       next: (response) => {
-        console.log('Response:', response); // Log the response
-        this.resultsFindMovie = [response]; // Wrap the response in an array
-        this.SharedService.updateBenchmarkData(response);
+        console.log('Response:', response);
+        this.resultsFindMovie = [response];
+        this.sharedService.updateBenchmarkData(response);
         this.showDashboard = true;
       },
       error: (error) => {
-        console.error('Error:', error); // Log any errors
+        console.error('Error:', error);
       }
     });
   }
@@ -127,11 +113,11 @@ export class BenchmarkComponent implements OnInit {
 
     this.benchmarkService.findRatings(count, runs).subscribe({
       next: (response) => {
-        console.log('Response:', response); // Log the response
-        this.resultsr = [response]; // Wrap the response in an array
+        console.log('Response:', response);
+        this.resultsr = [response];
       },
       error: (error) => {
-        console.error('Error:', error); // Log any errors
+        console.error('Error:', error);
       }
     });
   }
@@ -142,13 +128,12 @@ export class BenchmarkComponent implements OnInit {
 
     this.benchmarkService.findUsers(count, runs).subscribe({
       next: (response) => {
-        console.log('Response:', response); // Log the response
-        this.resultsu = [response]; // Wrap the response in an array
+        console.log('Response:', response);
+        this.resultsu = [response];
       },
       error: (error) => {
-        console.error('Error:', error); // Log any errors
+        console.error('Error:', error);
       }
     });
   }
->>>>>>> Stashed changes
 }

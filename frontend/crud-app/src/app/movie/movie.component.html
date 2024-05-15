@@ -92,13 +92,13 @@
   <table>
     <tr>
       <th>ID</th>
-      <th>Genres</th>
+      <th>Movie title</th>
       <!-- Ajouter plus de colonnes pour chaque champ -->
       <th>Actions</th>
     </tr>
     <tr *ngFor="let movie of movies">
       <td>{{ movie.id }}</td>
-      <td>{{ movie.genres }}</td>
+      <td>{{ movie.movie_title }}</td>
       <!-- Ajouter plus de cellules pour chaque champ -->
       <td>
         <button mat-raised-button class="edit-button" (click)="updateMovie(movie)">Update</button>
@@ -107,7 +107,7 @@
       <td *ngIf="selectedMovie && selectedMovie.id === movie.id" class="update_form">
         <h2>Update Movie</h2>
         <mat-form-field>
-          <input matInput [(ngModel)]="selectedMovie.genres" placeholder="Genres">
+          <input matInput [(ngModel)]="selectedMovie.movie_title" placeholder="Movie title">
         </mat-form-field>
         <button mat-raised-button class="save-button" (click)="submitUpdate()">Save</button>
         <button mat-raised-button class="cancel-button" (click)="cancelUpdate()">Cancel</button>

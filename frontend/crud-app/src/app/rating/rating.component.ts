@@ -75,8 +75,8 @@ export class RatingComponent {
     });
   }
 
-  deleteRating(rating: any): void {
-    this.ratingService.deleteRating(rating.id).subscribe({
+  deleteRating(id:string): void {
+    this.ratingService.deleteRating(id).subscribe({
       next: () => {
         this.loadRatings();
       },

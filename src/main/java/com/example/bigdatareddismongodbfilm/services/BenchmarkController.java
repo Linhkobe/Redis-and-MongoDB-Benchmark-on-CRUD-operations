@@ -29,16 +29,14 @@ public class BenchmarkController {
         return benchmarkService.createUsers(count, runs);
     }
 
-<<<<<<< Updated upstream
     @PatchMapping("/api/benchmark/updateMovies")
     public BenchmarkResult updateMovies(@RequestParam int count, @RequestParam int runs) {
         System.out.println("Received request with Count: " + count + ", Runs: " + runs);
         return benchmarkService.updateMovies(count, runs);
-=======
+    }
     @PostMapping("/api/benchmark/findMovies")
     public BenchmarkResult findMovies(@RequestParam int count, @RequestParam int runs) {
         System.out.println("Received request with Count: " + count + ", Runs: " + runs);
         return benchmarkService.findMovies(count, runs);
->>>>>>> Stashed changes
     }
 }
