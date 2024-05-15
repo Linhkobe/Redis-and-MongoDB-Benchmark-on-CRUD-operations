@@ -14,4 +14,5 @@ public interface MovieRedisService {
     List<Movie> findAllMovies();
 
     Page<Movie> getAllMovies(Pageable pageable);
+    Movie updateMovieBenchmark(String id, Movie movie);
 }

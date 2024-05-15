@@ -50,4 +50,15 @@ export class BenchmarkService {
       );
   }
 
+  updateMovies(count: number, runs: number): Observable<any> {
+    let params = new HttpParams().set('count', count.toString()).set('runs', runs.toString());
+    return this.http.patch(`${this.apiUrl}/updateMovies`, { count, runs }, { params })
+      .pipe(
+        tap(response => console.log('Update response:', response)),
+        catchError(error => {
+          console.error('Error during update:', error);
+          throw error;
+        })
+      );
+  }
 }

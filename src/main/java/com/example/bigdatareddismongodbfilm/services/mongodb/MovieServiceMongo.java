@@ -14,4 +14,7 @@ public interface MovieServiceMongo {
     void deleteMovie(String id);
     Page<Movie> getAllMovies(Pageable pageable);
 
+    Movie getRandomMovie();
+    Movie updateMovieBenchmark(String id, Movie movie);
+
 }

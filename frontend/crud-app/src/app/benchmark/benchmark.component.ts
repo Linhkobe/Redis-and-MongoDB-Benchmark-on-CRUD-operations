@@ -12,11 +12,15 @@ import { SharedService } from '../shared.service';
 export class BenchmarkComponent implements OnInit {
   showDashboard = false;
 
+  selectedMovie: any="";
+
   resultsm: any[] = [];
   resultsr: any[] = [];
   resultsu: any[] = [];
   displayedColumns: string[] = ['averageTimeElapsedMongo', 'averageTimeElapsedInMillisecondsMongo', 'averageTimeElapsedRedis', 'averageTimeElapsedInMillisecondsRedis', 'averageCpuLoad', 'runs'];
   @ViewChild('movieForm') movieForm!: NgForm;
+  @ViewChild('updateForm') updateForm!: NgForm;
+
 
   constructor(private benchmarkService: BenchmarkService, private SharedService: SharedService) {
   }
@@ -70,4 +74,22 @@ export class BenchmarkComponent implements OnInit {
       }
     });
   }
+
+
+  updateMovies() {
+    if (this.updateForm.valid) {
+      const count = this.updateForm.value.count;
+      const runs = this.updateForm.value.runs;
+      this.benchmarkService.updateMovies(count, runs).subscribe({
+        next: (response) => {
+          console.log('Updated successfully:', response);
+          this.resultsm.push(response); // Mettre à jour l'affichage des résultats
+        },
+        error: (error) => {
+          console.error('Update error:', error);
+        }
+      });
+    }
+  }
+
 }

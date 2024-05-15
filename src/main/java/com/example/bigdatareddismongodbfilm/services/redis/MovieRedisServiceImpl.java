@@ -23,6 +23,7 @@ public class MovieRedisServiceImpl implements MovieRedisService {
         return movieRedisRepository.save(movie);
     }
 
+
     @Override
     public Optional<Movie> findMovieById(String id) {
         return movieRedisRepository.findById(id);
@@ -41,4 +42,11 @@ public class MovieRedisServiceImpl implements MovieRedisService {
     @Override
     public Page<Movie> getAllMovies(Pageable pageable) {
         return movieRedisRepository.findAll(pageable);}
+
+    @Override
+    public Movie updateMovieBenchmark(String id, Movie movie) {
+        movie.setId(id);
+        Movie updatedMovie = movieRedisRepository.save(movie);
+        return updatedMovie;
+    }
 }
