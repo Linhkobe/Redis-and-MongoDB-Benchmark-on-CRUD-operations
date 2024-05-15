@@ -12,6 +12,9 @@ export class RatingRedisService {
   constructor(private http: HttpClient) {
   }
 
+  createRating(rating: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/create`, rating);
+  }
   searchRating(id: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`);
   }

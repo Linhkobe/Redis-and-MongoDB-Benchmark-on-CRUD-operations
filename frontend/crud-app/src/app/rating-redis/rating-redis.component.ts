@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PageEvent } from "@angular/material/paginator";
 import { RatingRedisService } from "./rating-redis.service";
+import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-rating-redis',
@@ -16,8 +17,17 @@ export class RatingRedisComponent {
   selectedRating: any = null;
   searchID: string = '';
   rating: any = null;
+  ratingForm : FormGroup;
+  createFormVisible: boolean = false;
 
-  constructor(private ratingRedisService: RatingRedisService) { }
+  constructor(private ratingRedisService: RatingRedisService,private fb: FormBuilder) {
+    this.ratingForm = this.fb.group({
+      id: [''],
+      movie_id: [''],
+      rating_val: [''],
+      user_id: ['']
+    });
+  }
 
   ngOnInit(): void {
     this.loadRatings();
@@ -75,6 +85,20 @@ export class RatingRedisComponent {
 
   cancelUpdate(): void {
     this.selectedRating = null;  // Clear the selection
+  }
+
+  toggleCreateForm() {
+    this.createFormVisible = !this.createFormVisible;
+  }
+
+  //onsubmit du formulaire create
+  onSubmit() {
+    this.toggleCreateForm();
+    console.log(this.ratingForm.value);
+    this.ratingRedisService.createRating(this.ratingForm.value).subscribe({
+      next: (response) => console.log('Movie created successfully!', response),
+      error: (error) => console.error('Failed to create movie', error)
+    });
   }
 }
 

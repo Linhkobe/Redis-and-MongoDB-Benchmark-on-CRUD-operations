@@ -2,6 +2,18 @@
   <input matInput [(ngModel)]="searchID" placeholder="Search Rating">
 </mat-form-field>
 <button mat-raised-button class="fin-button" (click)="searchRating()">Find rating</button>
+
+<!--create-->
+<button mat-raised-button class="create-button" (click)="toggleCreateForm()">Create Movie</button>
+
+<form [formGroup]="ratingForm" (ngSubmit)="onSubmit()" *ngIf="createFormVisible">
+  <input type="text" formControlName="id" placeholder="Rating ID">
+  <input type="text" formControlName="movie_id" placeholder="Movie ID">
+  <input type="text" formControlName="rating_val" placeholder="Rating Value">
+  <input type="text" formControlName="user_id" placeholder="User ID">
+  <button type="submit">Submit</button>
+</form>
+
 <div *ngIf="rating">
   <h2>ID: {{rating.id}}</h2>
   <h4>Rating value: {{rating.rating_val}}</h4>
