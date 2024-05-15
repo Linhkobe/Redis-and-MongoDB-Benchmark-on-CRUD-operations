@@ -72,7 +72,6 @@ export class DashboardComponent implements OnInit {
             borderColor: 'blue',
             backgroundColor: 'transparent',
             showLine: true,
-            lineTension: 0,
             fill: false,
           },
           {
@@ -84,7 +83,6 @@ export class DashboardComponent implements OnInit {
             borderColor: 'red',
             backgroundColor: 'transparent',
             showLine: true,
-            lineTension: 0,
             fill: false,
           }
         ]
