@@ -2,21 +2,50 @@
   <input matInput [(ngModel)]="searchID" placeholder="Search Rating">
 </mat-form-field>
 <button mat-raised-button class="fin-button" (click)="searchRating()">Find rating</button>
+<button mat-raised-button class="create-button" (click)="toggleCreateForm()">Create Rating</button>
+
 <div *ngIf="rating">
   <h2>ID: {{rating.id}}</h2>
   <h4>Rating value: {{rating.rating_val}}</h4>
 </div>
 
-<div *ngIf="!rating">
+<!--<div *ngIf="!rating">
   <h2>Rating not found</h2>
-</div>
+</div>-->
 
-<div style="<height: 400px; overflow: auto;">
+
+
+<form [formGroup]="ratingForm" (ngSubmit)="onSubmit()" *ngIf="createFormVisible" style="margin-top: 20px;">
+  <div class="form-row">
+    <mat-form-field class="form-field">
+      <input matInput formControlName="id" placeholder="Rating ID" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <input matInput formControlName="rating_val" placeholder="Rating Value" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+  </div>
+  <div class="form-row">
+    <mat-form-field class="form-field">
+      <input matInput formControlName="movie_id" placeholder="Movie ID" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <input matInput formControlName="user_id" placeholder="User ID" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+  </div>
+  <button class="submit-button" type="submit" mat-raised-button color="primary">Create rating</button>
+</form>
+
+
+<div style="height: 400px; overflow: auto;">
   <table>
     <tr>
       <th>ID</th>
       <th>Rating Value</th>
-      <th>Rating Name</th>
+      <th>Movie ID</th>
       <th>Actions</th>
     </tr>
     <tr *ngFor="let rating of ratings">
@@ -38,7 +67,6 @@
         </mat-form-field>
         <button mat-raised-button class="save-button" (click)="submitUpdate()">Save</button>
         <button mat-raised-button class="cancel-button" (click)="cancelUpdate()">Cancel</button>
-
       </td>
     </tr>
   </table>
@@ -49,4 +77,3 @@
                [pageSizeOptions]="pageSizeOptions"
                (page)="pageEvent = $event; loadRatings()">
 </mat-paginator>
-

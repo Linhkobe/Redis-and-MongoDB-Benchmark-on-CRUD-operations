@@ -28,6 +28,10 @@ export class RatingService {
     return this.http.put(`${this.apiUrl}/update/${id}`, rating);
   }
 
+  createRating(rating: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/create`, rating);
+  }
+
   deleteRating(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/delete/${id}`);
   }
