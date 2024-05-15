@@ -11,6 +11,11 @@
       <button mat-raised-button color="primary" type="submit">Start Benchmark</button>
     </form>
 
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
     <mat-table [dataSource]="resultsm" class="mat-elevation-z8">
       <!-- Column definitions -->
       <ng-container matColumnDef="averageTimeElapsedMongo">
@@ -51,6 +56,55 @@
     <app-dashboard *ngIf="showDashboard"></app-dashboard>
 
     <h2>2) Find</h2>
+
+      <h2>Find Movies</h2>
+      <form #movieFindForm="ngForm" (ngSubmit)="findMovies()">
+        <mat-form-field class="input-field">
+          <input matInput type="number" name="count" ngModel placeholder="Number of movies to find">
+        </mat-form-field>
+        <mat-form-field class="input-field">
+          <input matInput type="number" name="runs" ngModel placeholder="Number of runs for finding">
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">Find Benchmark</button>
+      </form>
+
+      <mat-table [dataSource]="resultsFindMovie" class="mat-elevation-z8">
+        <!-- Column definitions -->
+        <ng-container matColumnDef="averageTimeElapsedMongo">
+          <mat-header-cell *matHeaderCellDef> Average Time Elapsed Mongo </mat-header-cell>
+          <mat-cell *matCellDef="let result"> {{result.averageTimeElapsedMongo}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="averageTimeElapsedInMillisecondsMongo">
+          <mat-header-cell *matHeaderCellDef> Average Time Elapsed In Milliseconds Mongo </mat-header-cell>
+          <mat-cell *matCellDef="let result"> {{result.averageTimeElapsedInMillisecondsMongo}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="averageTimeElapsedRedis">
+          <mat-header-cell *matHeaderCellDef> Average Time Elapsed Redis </mat-header-cell>
+          <mat-cell *matCellDef="let result"> {{result.averageTimeElapsedRedis}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="averageTimeElapsedInMillisecondsRedis">
+          <mat-header-cell *matHeaderCellDef> Average Time Elapsed In Milliseconds Redis </mat-header-cell>
+          <mat-cell *matCellDef="let result"> {{result.averageTimeElapsedInMillisecondsRedis}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="averageCpuLoad">
+          <mat-header-cell *matHeaderCellDef> Average CPU Load </mat-header-cell>
+          <mat-cell *matCellDef="let result"> {{result.averageCpuLoad}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="runs">
+          <mat-header-cell *matHeaderCellDef> Runs </mat-header-cell>
+          <mat-cell *matCellDef="let result"> {{result.runs}} </mat-cell>
+        </ng-container>
+
+        <!-- Row definitions -->
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let result; columns: displayedColumns;"></mat-row>
+      </mat-table>
+
 
     <h2>3) Update</h2>
     <form #updateForm="ngForm" (ngSubmit)="updateMovies()">
@@ -157,8 +211,59 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
+    <app-dashboard *ngIf="showDashboard"></app-dashboard>
 
+    <h2>2) Find</h2>
+    <form #movieFindForm="ngForm" (ngSubmit)="findRatings()">
+      <mat-form-field class="input-field">
+        <input matInput type="number" name="count" ngModel placeholder="Number of movies to find">
+      </mat-form-field>
+      <mat-form-field class="input-field">
+        <input matInput type="number" name="runs" ngModel placeholder="Number of runs for finding">
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Find Benchmark</button>
+    </form>
 
+    <mat-table [dataSource]="resultsr" class="mat-elevation-z8">
+      <!-- Column definitions -->
+      <ng-container matColumnDef="averageTimeElapsedMongo">
+        <mat-header-cell *matHeaderCellDef> Average Time Elapsed Mongo </mat-header-cell>
+        <mat-cell *matCellDef="let resultr"> {{resultr.averageTimeElapsedMongo}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="averageTimeElapsedInMillisecondsMongo">
+        <mat-header-cell *matHeaderCellDef> Average Time Elapsed In Milliseconds Mongo </mat-header-cell>
+        <mat-cell *matCellDef="let resultr"> {{resultr.averageTimeElapsedInMillisecondsMongo}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="averageTimeElapsedRedis">
+        <mat-header-cell *matHeaderCellDef> Average Time Elapsed Redis </mat-header-cell>
+        <mat-cell *matCellDef="let resultr"> {{resultr.averageTimeElapsedRedis}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="averageTimeElapsedInMillisecondsRedis">
+        <mat-header-cell *matHeaderCellDef> Average Time Elapsed In Milliseconds Redis </mat-header-cell>
+        <mat-cell *matCellDef="let resultr"> {{resultr.averageTimeElapsedInMillisecondsRedis}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="averageCpuLoad">
+        <mat-header-cell *matHeaderCellDef> Average CPU Load </mat-header-cell>
+        <mat-cell *matCellDef="let resultr"> {{resultr.averageCpuLoad}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="runs">
+        <mat-header-cell *matHeaderCellDef> Runs </mat-header-cell>
+        <mat-cell *matCellDef="let resultr"> {{resultr.runs}} </mat-cell>
+      </ng-container>
+
+      <!-- Row definitions -->
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <h2>3) Update</h2>
+
+    <h2>4) Delete</h2>
   </mat-tab>
   <mat-tab label="User">
 
@@ -209,5 +314,57 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
+
+    <app-dashboard *ngIf="showDashboard"></app-dashboard>
+    <h2>2) Find</h2>
+    <form #movieFindForm="ngForm" (ngSubmit)="findUsers()">
+      <mat-form-field class="input-field">
+        <input matInput type="number" name="count" ngModel placeholder="Number of movies to find">
+      </mat-form-field>
+      <mat-form-field class="input-field">
+        <input matInput type="number" name="runs" ngModel placeholder="Number of runs for finding">
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Find Benchmark</button>
+    </form>
+
+    <mat-table [dataSource]="resultsu" class="mat-elevation-z8">
+      <!-- Column definitions -->
+      <ng-container matColumnDef="averageTimeElapsedMongo">
+        <mat-header-cell *matHeaderCellDef> Average Time Elapsed Mongo </mat-header-cell>
+        <mat-cell *matCellDef="let resultu"> {{resultu.averageTimeElapsedMongo}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="averageTimeElapsedInMillisecondsMongo">
+        <mat-header-cell *matHeaderCellDef> Average Time Elapsed In Milliseconds Mongo </mat-header-cell>
+        <mat-cell *matCellDef="let resultu"> {{resultu.averageTimeElapsedInMillisecondsMongo}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="averageTimeElapsedRedis">
+        <mat-header-cell *matHeaderCellDef> Average Time Elapsed Redis </mat-header-cell>
+        <mat-cell *matCellDef="let resultu"> {{resultu.averageTimeElapsedRedis}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="averageTimeElapsedInMillisecondsRedis">
+        <mat-header-cell *matHeaderCellDef> Average Time Elapsed In Milliseconds Redis </mat-header-cell>
+        <mat-cell *matCellDef="let resultu"> {{resultu.averageTimeElapsedInMillisecondsRedis}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="averageCpuLoad">
+        <mat-header-cell *matHeaderCellDef> Average CPU Load </mat-header-cell>
+        <mat-cell *matCellDef="let resultu"> {{resultu.averageCpuLoad}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="runs">
+        <mat-header-cell *matHeaderCellDef> Runs </mat-header-cell>
+        <mat-cell *matCellDef="let resultu"> {{resultu.runs}} </mat-cell>
+      </ng-container>
+
+      <!-- Row definitions -->
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <h2>3) Update</h2>
+
+    <h2>4) Delete</h2>
   </mat-tab>
 </mat-tab-group>

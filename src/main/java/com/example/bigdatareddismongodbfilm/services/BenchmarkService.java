@@ -126,6 +126,90 @@ public class BenchmarkService {
         return movie;
     }
 
+    public BenchmarkResult findMovies(int count, int runs) {
+        try {
+            long totalStartTimeMongo = 0;
+            long totalEndTimeMongo = 0;
+            long totalStartTimeRedis = 0;
+            long totalEndTimeRedis = 0;
+            double totalCpuLoad = 0.0;
+
+            // Warm-up
+            for (int i = 0; i < 10; i++) {
+                Movie searchTerm = generateRandomSearchTerm();
+                movieServiceMongo.getMovieById(searchTerm.getId());
+                movieServiceRedis.findMovieById(searchTerm.getId());
+            }
+
+            for (int i = 0; i < runs; i++) {
+                // Benchmark MongoDB
+                long startTimeMongo = System.nanoTime();
+                for (int j = 0; j < count; j++) {
+                    Movie searchTerm = generateRandomSearchTerm();
+                    movieServiceMongo.getMovieById(searchTerm.getId());
+                }
+                long endTimeMongo = System.nanoTime();
+                totalStartTimeMongo += startTimeMongo;
+                totalEndTimeMongo += endTimeMongo;
+
+                // Benchmark Redis
+                long startTimeRedis = System.nanoTime();
+                for (int j = 0; j < count; j++) {
+                    Movie searchTerm = generateRandomSearchTerm();
+                    movieServiceRedis.findMovieById(searchTerm.getId());
+                }
+                long endTimeRedis = System.nanoTime();
+                totalStartTimeRedis += startTimeRedis;
+                totalEndTimeRedis += endTimeRedis;
+
+                // Measure CPU load
+                OperatingSystemMXBean operatingSystemMXBean = ManagementFactory.getOperatingSystemMXBean();
+                double cpuLoad = operatingSystemMXBean.getSystemLoadAverage();
+                totalCpuLoad += cpuLoad;
+                System.out.println("CPU Load for run " + (i+1) + ": " + cpuLoad);
+            }
+
+            // Calculating average times and CPU load
+            long averageTimeElapsedMongo = (totalEndTimeMongo - totalStartTimeMongo) / runs;
+            long averageTimeElapsedRedis = (totalEndTimeRedis - totalStartTimeRedis) / runs;
+            long averageTimeElapsedInMillisecondsMongo = averageTimeElapsedMongo / 1000000;
+            long averageTimeElapsedInMillisecondsRedis = averageTimeElapsedRedis / 1000000;
+            double averageCpuLoad = totalCpuLoad / runs;
+
+            System.out.println("Average execution time for MongoDB in nanoseconds: " + averageTimeElapsedMongo);
+            System.out.println("Average execution time for MongoDB in milliseconds: " + averageTimeElapsedInMillisecondsMongo);
+            System.out.println("Average execution time for Redis in nanoseconds: " + averageTimeElapsedRedis);
+            System.out.println("Average execution time for Redis in milliseconds: " + averageTimeElapsedInMillisecondsRedis);
+            System.out.println("Average CPU Load: " + averageCpuLoad);
+
+            // Returning benchmark results
+            return new BenchmarkResult(averageTimeElapsedMongo, averageTimeElapsedInMillisecondsMongo,
+                    averageTimeElapsedRedis, averageTimeElapsedInMillisecondsRedis,
+                    averageCpuLoad, runs);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Movie generateRandomSearchTerm() {
+        // Obtenir la liste de tous les films depuis Redis
+        List<Movie> movies = movieServiceRedis.findAllMovies();
+
+        if (!movies.isEmpty()) {
+            // Générer un index aléatoire dans la plage de films disponibles
+            Random random = new Random();
+            int randomIndex = random.nextInt(movies.size());
+
+            // Renvoyer un film aléatoire
+            return movies.get(randomIndex);
+        } else {
+            // Aucun film trouvé dans Redis
+            return null;
+        }
+    }
+
+
 
     private Rating generateRandomRating() {
         Rating rating = new Rating();

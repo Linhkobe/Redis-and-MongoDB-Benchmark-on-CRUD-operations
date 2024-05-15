@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {BenchmarkService} from "./benchmark.service";
-import {NgForm} from "@angular/forms";
+import { HttpClient } from "@angular/common/http";
+import { BenchmarkService } from "./benchmark.service";
+import { NgForm } from "@angular/forms";
 import { SharedService } from '../shared.service';
 
 @Component({
@@ -12,15 +12,24 @@ import { SharedService } from '../shared.service';
 export class BenchmarkComponent implements OnInit {
   showDashboard = false;
 
+<<<<<<< Updated upstream
   selectedMovie: any="";
 
+=======
+  resultsFindMovie: any[] = [];
+>>>>>>> Stashed changes
   resultsm: any[] = [];
   resultsr: any[] = [];
   resultsu: any[] = [];
   displayedColumns: string[] = ['averageTimeElapsedMongo', 'averageTimeElapsedInMillisecondsMongo', 'averageTimeElapsedRedis', 'averageTimeElapsedInMillisecondsRedis', 'averageCpuLoad', 'runs'];
   @ViewChild('movieForm') movieForm!: NgForm;
+<<<<<<< Updated upstream
   @ViewChild('updateForm') updateForm!: NgForm;
 
+=======
+  @ViewChild('ratingForm') ratingForm!: NgForm;
+  @ViewChild('userForm') userForm!: NgForm;
+>>>>>>> Stashed changes
 
   constructor(private benchmarkService: BenchmarkService, private SharedService: SharedService) {
   }
@@ -46,8 +55,8 @@ export class BenchmarkComponent implements OnInit {
   }
 
   createRatings() {
-    const count = this.movieForm.value.count;
-    const runs = this.movieForm.value.runs;
+    const count = this.ratingForm.value.count;
+    const runs = this.ratingForm.value.runs;
 
     this.benchmarkService.createRatings(count, runs).subscribe({
       next: (response) => {
@@ -61,8 +70,8 @@ export class BenchmarkComponent implements OnInit {
   }
 
   createUsers() {
-    const count = this.movieForm.value.count;
-    const runs = this.movieForm.value.runs;
+    const count = this.userForm.value.count;
+    const runs = this.userForm.value.runs;
 
     this.benchmarkService.createUsers(count, runs).subscribe({
       next: (response) => {
@@ -75,6 +84,7 @@ export class BenchmarkComponent implements OnInit {
     });
   }
 
+<<<<<<< Updated upstream
 
   updateMovies() {
     if (this.updateForm.valid) {
@@ -92,4 +102,53 @@ export class BenchmarkComponent implements OnInit {
     }
   }
 
+=======
+  findMovies() {
+
+    const count = this.movieForm.value.count;
+    const runs = this.movieForm.value.runs;
+
+    this.benchmarkService.findMovies(count, runs).subscribe({
+      next: (response) => {
+        console.log('Response:', response); // Log the response
+        this.resultsFindMovie = [response]; // Wrap the response in an array
+        this.SharedService.updateBenchmarkData(response);
+        this.showDashboard = true;
+      },
+      error: (error) => {
+        console.error('Error:', error); // Log any errors
+      }
+    });
+  }
+
+  findRatings() {
+    const count = this.ratingForm.value.count;
+    const runs = this.ratingForm.value.runs;
+
+    this.benchmarkService.findRatings(count, runs).subscribe({
+      next: (response) => {
+        console.log('Response:', response); // Log the response
+        this.resultsr = [response]; // Wrap the response in an array
+      },
+      error: (error) => {
+        console.error('Error:', error); // Log any errors
+      }
+    });
+  }
+
+  findUsers() {
+    const count = this.userForm.value.count;
+    const runs = this.userForm.value.runs;
+
+    this.benchmarkService.findUsers(count, runs).subscribe({
+      next: (response) => {
+        console.log('Response:', response); // Log the response
+        this.resultsu = [response]; // Wrap the response in an array
+      },
+      error: (error) => {
+        console.error('Error:', error); // Log any errors
+      }
+    });
+  }
+>>>>>>> Stashed changes
 }
