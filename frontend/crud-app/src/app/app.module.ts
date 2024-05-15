@@ -35,6 +35,7 @@ import {
 import { UserRedisComponent } from './user-redis/user-redis.component';
 import {RatingRedisComponent} from "./rating-redis/rating-redis.component";
 import {MovieRedisComponent} from "./movie-redis/movie-redis.component";
+import {MatTooltip} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -49,33 +50,34 @@ import {MovieRedisComponent} from "./movie-redis/movie-redis.component";
     MovieRedisComponent,
     UserRedisComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatListModule,
-    MatTabsModule,
-    MatIconModule,
-    MatFormField,
-    MatInputModule,
-    FormsModule,
-    MatPaginatorModule,
-    HttpClientModule,
-    MatTable,
-    MatColumnDef,
-    MatHeaderCell,
-    MatCell,
-    MatCellDef,
-    MatHeaderCellDef,
-    MatHeaderRow,
-    MatRow,
-    MatHeaderRowDef,
-    MatRowDef,
-    ReactiveFormsModule
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatSidenavModule,
+        MatListModule,
+        MatTabsModule,
+        MatIconModule,
+        MatFormField,
+        MatInputModule,
+        FormsModule,
+        MatPaginatorModule,
+        HttpClientModule,
+        MatTable,
+        MatColumnDef,
+        MatHeaderCell,
+        MatCell,
+        MatCellDef,
+        MatHeaderCellDef,
+        MatHeaderRow,
+        MatRow,
+        MatHeaderRowDef,
+        MatRowDef,
+        ReactiveFormsModule,
+        MatTooltip
 
-  ],
+    ],
   providers: [
     provideAnimationsAsync()
   ],

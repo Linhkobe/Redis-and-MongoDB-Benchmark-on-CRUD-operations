@@ -1,4 +1,3 @@
-// movie.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -11,13 +10,16 @@ export class MovieService {
 
   constructor(private http: HttpClient) { }
 
-  // movie.service.ts
   searchMovie(id: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`);
   }
 
   getMovies(page: number, size: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/paged?page=${page}&size=${size}`);
+  }
+
+  createMovie(movieData: any): Observable<any> { // Ajoutez la méthode createMovie
+    return this.http.post(`${this.apiUrl}/create`, movieData);
   }
 
   updateMovie(id: string, movie: any): Observable<any> {

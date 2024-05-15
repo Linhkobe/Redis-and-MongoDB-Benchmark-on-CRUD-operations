@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MovieService } from './movie.service';
 import { PageEvent } from '@angular/material/paginator';
+import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-movie',
@@ -17,7 +18,49 @@ export class MovieComponent implements OnInit {
   searchID: string = '';
   movie: any = null;
 
-  constructor(private movieService: MovieService) { }
+  movieForm: FormGroup;
+  createFormVisible: boolean = false;
+
+  constructor(private movieService: MovieService, private fb: FormBuilder) {
+    this.movieForm = this.fb.group({
+      id: [''],
+      genres: this.fb.array([]),
+      image_url: [''],
+      imdb_id: [''],
+      imdb_link: [''],
+      movie_id: [''],
+      movie_title: [''],
+      original_language: [''],
+      overview: [''],
+      popularity: ['']
+    });
+  }
+
+  get genres(): FormArray {
+    return this.movieForm.get('genres') as FormArray;
+  }
+
+  removeGenre(index: number): void {
+    this.genres.removeAt(index);
+  }
+
+  addGenre(genre: string = ''): void {
+    this.genres.push(new FormControl(genre));
+  }
+
+  onSubmit(): void {
+    console.log(this.movieForm.value);
+    this.movieService.createMovie(this.movieForm.value).subscribe({
+      next: () => {
+        this.loadMovies();
+        this.movieForm.reset();
+        this.toggleCreateForm(); // Cacher le formulaire après la soumission
+      },
+      error: error => {
+        console.error('Error creating movie:', error);
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.loadMovies();
@@ -35,7 +78,6 @@ export class MovieComponent implements OnInit {
     });
   }
 
-
   searchMovie(): void {
     this.movieService.searchMovie(this.searchID).subscribe({
       next: movie => {
@@ -48,14 +90,14 @@ export class MovieComponent implements OnInit {
   }
 
   updateMovie(movie: any): void {
-    this.selectedMovie = {...movie};  // Make a copy of the movie to avoid modifying the original
+    this.selectedMovie = {...movie};
   }
 
   submitUpdate(): void {
     this.movieService.updateMovie(this.selectedMovie.id, this.selectedMovie).subscribe({
       next: () => {
         this.loadMovies();
-        this.selectedMovie = null;  // Clear the selection
+        this.selectedMovie = null;
       },
       error: error => {
         console.error('Error updating movie:', error);
@@ -64,12 +106,17 @@ export class MovieComponent implements OnInit {
   }
 
   cancelUpdate(): void {
-    this.selectedMovie = null;  // Clear the selection
+    this.selectedMovie = null;
   }
 
   deleteMovie(id: string): void {
     this.movieService.deleteMovie(id).subscribe(() => {
       this.loadMovies();
     });
+  }
+
+  // Fonction pour basculer la visibilité du formulaire
+  toggleCreateForm() {
+    this.createFormVisible = !this.createFormVisible;
   }
 }

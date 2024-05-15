@@ -2,6 +2,79 @@
   <input matInput [(ngModel)]="searchID" placeholder="Search Movies">
 </mat-form-field>
 <button mat-raised-button class="fin-button" (click)="searchMovie()">Find Movie</button>
+
+<!-- Bouton de création -->
+<button mat-raised-button class="create-button" (click)="toggleCreateForm()">Create Movie</button>
+
+<!-- Formulaire de création -->
+<form [formGroup]="movieForm" (ngSubmit)="onSubmit()" *ngIf="createFormVisible" style="margin-top: 20px;" novalidate>
+
+  <!-- Champs du formulaire avec indication visuelle des champs obligatoires -->
+  <div class="form-row">
+    <mat-form-field class="form-field">
+      <input matInput formControlName="id" placeholder="Movie ID" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <input matInput formControlName="image_url" placeholder="Image URL" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+  </div>
+  <div class="form-row">
+    <mat-form-field class="form-field">
+      <input matInput formControlName="imdb_id" placeholder="IMDb ID" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <input matInput formControlName="imdb_link" placeholder="IMDb Link" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+  </div>
+  <div class="form-row">
+    <mat-form-field class="form-field">
+      <input matInput formControlName="movie_id" placeholder="Movie DB ID" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <input matInput formControlName="movie_title" placeholder="Title" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+  </div>
+  <div class="form-row">
+    <mat-form-field class="form-field">
+      <input matInput formControlName="original_language" placeholder="Original Language" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <textarea matInput formControlName="overview" placeholder="Overview" required></textarea>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+  </div>
+  <div class="form-row">
+    <mat-form-field class="form-field">
+      <input matInput formControlName="popularity" placeholder="Popularity" required>
+      <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+    </mat-form-field>
+  </div>
+
+  <!-- Champs dynamiques pour les genres -->
+  <div formArrayName="genres">
+    <div class="form-row" *ngFor="let genreControl of genres.controls; let i = index">
+      <mat-form-field class="form-field">
+        <input matInput [formControlName]="i" placeholder="Genre" required>
+        <mat-hint align="end"><span class="required">*</span> Required</mat-hint>
+      </mat-form-field>
+      <button mat-icon-button (click)="removeGenre(i)" matTooltip="Remove Genre" class="remove-button">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+    <button mat-raised-button (click)="addGenre()" matTooltip="Add Genre" class="add-button">Add Genre</button>
+  </div>
+
+  <!-- Bouton de soumission -->
+  <button type="submit" mat-raised-button color="primary" class="submit-button">Create</button>
+</form>
+
 <div *ngIf="movie">
   <h2>Movie title: {{ movie.movie_title }}</h2>
   <p>ID: {{ movie.id }}</p>
@@ -20,13 +93,13 @@
     <tr>
       <th>ID</th>
       <th>Genres</th>
-      <!-- Add more columns for each field -->
+      <!-- Ajouter plus de colonnes pour chaque champ -->
       <th>Actions</th>
     </tr>
     <tr *ngFor="let movie of movies">
       <td>{{ movie.id }}</td>
       <td>{{ movie.genres }}</td>
-      <!-- Add more cells for each field -->
+      <!-- Ajouter plus de cellules pour chaque champ -->
       <td>
         <button mat-raised-button class="edit-button" (click)="updateMovie(movie)">Update</button>
         <button mat-raised-button class="delete-button" (click)="deleteMovie(movie.id)">Delete</button>
