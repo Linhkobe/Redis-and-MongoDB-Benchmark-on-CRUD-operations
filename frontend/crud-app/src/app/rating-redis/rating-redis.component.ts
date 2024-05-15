@@ -96,8 +96,8 @@ export class RatingRedisComponent {
     this.toggleCreateForm();
     console.log(this.ratingForm.value);
     this.ratingRedisService.createRating(this.ratingForm.value).subscribe({
-      next: (response) => console.log('Movie created successfully!', response),
-      error: (error) => console.error('Failed to create movie', error)
+      next: (response) => console.log('Rating created successfully!', response),
+      error: (error) => console.error('Failed to create rating', error)
     });
   }
 }

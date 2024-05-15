@@ -10,6 +10,10 @@ export class UserRedisService {
 
   constructor(private http: HttpClient) { }
 
+  createUser(user: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/create`, user);
+  }
+
   searchUser(id: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`);
   }

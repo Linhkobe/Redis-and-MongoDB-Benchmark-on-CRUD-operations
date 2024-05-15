@@ -4,7 +4,7 @@
 <button mat-raised-button class="fin-button" (click)="searchRating()">Find rating</button>
 
 <!--create-->
-<button mat-raised-button class="create-button" (click)="toggleCreateForm()">Create Movie</button>
+<button mat-raised-button class="create-button" (click)="toggleCreateForm()">Create Rating</button>
 
 <form [formGroup]="ratingForm" (ngSubmit)="onSubmit()" *ngIf="createFormVisible">
   <input type="text" formControlName="id" placeholder="Rating ID">

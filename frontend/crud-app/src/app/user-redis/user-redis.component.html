@@ -3,6 +3,32 @@
 </mat-form-field>
 <button mat-raised-button class="fin-button" (click)="searchUser()">Find User</button>
 
+<!--create-->
+<button mat-raised-button class="create-button" (click)="toggleCreateForm()">Create User</button>
+
+<!-- formulaire du bouton create-->
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" *ngIf="createFormVisible">
+
+  <!-- Champs pour les détails de l'utilisateur -->
+  <input type="text" formControlName="id" placeholder="User ID">
+  <input type="text" formControlName="display_name" placeholder="Display Name">
+  <input type="text" formControlName="num_ratings_pages" placeholder="Number of Ratings Pages">
+  <input type="text" formControlName="num_reviews" placeholder="Number of Reviews">
+  <input type="text" formControlName="username" placeholder="Username">
+
+  <!-- Champs dynamiques pour le champ nullField -->
+  <div formArrayName="nullField">
+    <div *ngFor="let fieldControl of nullField.controls; let i = index">
+      <input [formControlName]="i" placeholder="Null Field {{ i + 1 }}">
+      <button type="button" (click)="removeNullField(i)">Remove</button>
+    </div>
+    <button type="button" (click)="addNullField()">Add Null Field</button>
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
+
+
 <div *ngIf="user">
   <h2>User name: {{user.username}}</h2>
   <p>ID: {{user.id}}</p>
