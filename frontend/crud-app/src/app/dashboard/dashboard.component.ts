@@ -11,7 +11,7 @@ export class DashboardComponent implements OnInit {
   chart: any;
 
   constructor(private sharedService: SharedService) {
-    Chart.register(...registerables); // Make sure to register the required Chart.js components
+    Chart.register(...registerables); // Assurez-vous d'enregistrer les composants Chart.js requis
   }
 
   ngOnInit(): void {
@@ -21,28 +21,26 @@ export class DashboardComponent implements OnInit {
         this.addChartData(data);
       }
     });
-    this.sharedService.benchmarkData$.subscribe(data => {
-      if (data) {
-        const runIndex = this.chart.data.labels.length + 1;
-        this.chart.data.labels.push(runIndex); // Ajoutez l'index comme label
-        this.chart.data.datasets[0].data.push({
-          x: runIndex,
-          y: data.averageTimeElapsedInMillisecondsRedis
-        });
-        this.chart.data.datasets[1].data.push({
-          x: runIndex,
-          y: data.averageTimeElapsedInMillisecondsMongo
-        });
-        this.chart.update();
-      }
-    });
   }
 
   addChartData(data: any) {
-    const newLabelIndex = this.chart.data.labels.length + 1;
-    this.chart.data.labels.push(`Run ${newLabelIndex}`);
-    this.chart.data.datasets[0].data.push(data.mongoTime);
-    this.chart.data.datasets[1].data.push(data.redisTime);
+    const runIndex = this.chart.data.labels.length + 1;
+    this.chart.data.labels.push(runIndex.toString()); // Ajoutez l'index comme label
+
+    // Ajoutez la valeur Mongo comme point bleu
+    this.chart.data.datasets[0].data.push({
+      x: runIndex,
+      y: data.averageTimeElapsedInMillisecondsMongo,
+      backgroundColor: 'blue'
+    });
+
+    // Ajoutez la valeur Redis comme point rouge
+    this.chart.data.datasets[1].data.push({
+      x: runIndex,
+      y: data.averageTimeElapsedInMillisecondsRedis,
+      backgroundColor: 'red'
+    });
+
     this.chart.update();
   }
 
@@ -50,24 +48,25 @@ export class DashboardComponent implements OnInit {
     if (this.chart) {
       this.chart.destroy();
     }
-    this.chart = new Chart('canvas', { // Ensure the ID 'canvas' exists in your HTML
-      type: 'line',
+    this.chart = new Chart('canvas', { // Assurez-vous que l'ID 'canvas' existe dans votre HTML
+      type: 'scatter',
       data: {
         datasets: [
           {
-            label: 'Redis',
-            data: [],
-            borderColor: 'red',
-            fill: false
-          },
-          {
             label: 'MongoDB',
             data: [],
-            borderColor: 'blue',
-            fill: false
+            pointRadius: 5,
+            pointHoverRadius: 8,
+            pointStyle: 'circle'
+          },
+          {
+            label: 'Redis',
+            data: [],
+            pointRadius: 5,
+            pointHoverRadius: 8,
+            pointStyle: 'rectRot'
           }
-        ],
-        labels: [] // Consider adding labels if needed
+        ]
       },
       options: {
         responsive: true,
@@ -76,9 +75,17 @@ export class DashboardComponent implements OnInit {
           x: {
             type: 'linear',
             position: 'bottom',
+            title: {
+              display: true,
+              text: 'Run Index'
+            }
           },
-          y: { // Ensure there is a 'y' scale configuration if needed
-            beginAtZero: true
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Average Time Elapsed (Milliseconds)'
+            }
           }
         }
       },
