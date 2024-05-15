@@ -96,6 +96,8 @@ export class DashboardComponent implements OnInit {
           x: {
             type: 'linear',
             position: 'bottom',
+            min : 1,
+            max:10,
             title: {
               display: true,
               text: 'Benchmark Number'
