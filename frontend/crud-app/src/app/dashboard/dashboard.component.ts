@@ -9,6 +9,7 @@ import { SharedService } from '../shared.service';
 })
 export class DashboardComponent implements OnInit {
   chart: any;
+  benchmarkCount: number = 0;
 
   constructor(private sharedService: SharedService) {
     Chart.register(...registerables); // Assurez-vous d'enregistrer les composants Chart.js requis
@@ -18,36 +19,46 @@ export class DashboardComponent implements OnInit {
     this.initChart();
     this.sharedService.benchmarkData$.subscribe(data => {
       if (data) {
-        this.addChartData(data);
+        this.benchmarkCount++;
+        this.addChartData(data, this.benchmarkCount);
       }
     });
   }
 
-  addChartData(data: any) {
-    const runIndex = this.chart.data.labels.length + 1;
-    this.chart.data.labels.push(runIndex.toString()); // Ajoutez l'index comme label
-
+  addChartData(data: any, benchmarkCount: number) {
     // Ajoutez la valeur Mongo comme point bleu
     this.chart.data.datasets[0].data.push({
-      x: runIndex,
+      x: benchmarkCount,
       y: data.averageTimeElapsedInMillisecondsMongo,
       backgroundColor: 'blue'
     });
 
     // Ajoutez la valeur Redis comme point rouge
     this.chart.data.datasets[1].data.push({
-      x: runIndex,
+      x: benchmarkCount,
       y: data.averageTimeElapsedInMillisecondsRedis,
       backgroundColor: 'red'
     });
+
+    // Ajouter une ligne reliant les points
+    if (benchmarkCount > 1) {
+      const prevBenchmarkCount = benchmarkCount - 1;
+      this.chart.data.datasets[0].data.push({
+        x: prevBenchmarkCount,
+        y: data.averageTimeElapsedInMillisecondsMongo,
+        backgroundColor: 'transparent'
+      });
+      this.chart.data.datasets[1].data.push({
+        x: prevBenchmarkCount,
+        y: data.averageTimeElapsedInMillisecondsRedis,
+        backgroundColor: 'transparent'
+      });
+    }
 
     this.chart.update();
   }
 
   initChart(): void {
-    if (this.chart) {
-      this.chart.destroy();
-    }
     this.chart = new Chart('canvas', { // Assurez-vous que l'ID 'canvas' existe dans votre HTML
       type: 'scatter',
       data: {
@@ -57,14 +68,24 @@ export class DashboardComponent implements OnInit {
             data: [],
             pointRadius: 5,
             pointHoverRadius: 8,
-            pointStyle: 'circle'
+            pointStyle: 'circle',
+            borderColor: 'blue',
+            backgroundColor: 'transparent',
+            showLine: true,
+            lineTension: 0,
+            fill: false,
           },
           {
             label: 'Redis',
             data: [],
             pointRadius: 5,
             pointHoverRadius: 8,
-            pointStyle: 'rectRot'
+            pointStyle: 'rectRot',
+            borderColor: 'red',
+            backgroundColor: 'transparent',
+            showLine: true,
+            lineTension: 0,
+            fill: false,
           }
         ]
       },
@@ -77,7 +98,7 @@ export class DashboardComponent implements OnInit {
             position: 'bottom',
             title: {
               display: true,
-              text: 'Run Index'
+              text: 'Benchmark Number'
             }
           },
           y: {
