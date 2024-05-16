@@ -18,4 +18,5 @@ public interface RatingServiceMongo {
     Page<Rating> getAllRatings(Pageable pageable);
     Rating getRandomRating();
     Rating updateRatingBenchmark(String id, Rating rating);
+    List <Rating> getFirstNRatings(int n);
 }

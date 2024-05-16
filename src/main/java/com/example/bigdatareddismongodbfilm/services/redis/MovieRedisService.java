@@ -16,5 +16,5 @@ public interface MovieRedisService {
 
     Page<Movie> getAllMovies(Pageable pageable);
     Movie updateMovieBenchmark(String id, Movie movie);
-
+    List<Movie> getFirstNMovies(int n);
 }

@@ -17,4 +17,5 @@ public interface UserRedisService {
     Page<User> getAllUsers(Pageable pageable);
     User updateUser(String id, User user);
     User updateUserBenchmark(String id, User user);
+    List<User> getFirstNUsers(int n);
 }

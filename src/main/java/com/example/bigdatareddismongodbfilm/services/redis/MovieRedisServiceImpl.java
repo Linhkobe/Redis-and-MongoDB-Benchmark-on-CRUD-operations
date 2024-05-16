@@ -3,6 +3,7 @@ package com.example.bigdatareddismongodbfilm.services.redis;
 import com.example.bigdatareddismongodbfilm.entity.Movie;
 import com.example.bigdatareddismongodbfilm.repositories.redis.MovieRedisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,13 @@ public class MovieRedisServiceImpl implements MovieRedisService {
 
     @Autowired
     private MovieRedisRepository movieRedisRepository;
+
+    @Override
+    public List<Movie> getFirstNMovies(int n) {
+        Pageable pageable = PageRequest.of(0, n);
+        Page<Movie> moviePage = movieRedisRepository.findAll(pageable);
+        return moviePage.getContent();
+    }
 
     @Override
     public Movie updateMovie(String id, Movie movie) {

@@ -87,7 +87,7 @@ export class BenchmarkService {
   findMovies(count: number, runs: number): Observable<any> {
     let params = new HttpParams().set('count', count.toString()).set('runs', runs.toString());
     console.log(`Sending request with Count: ${count}, Runs: ${runs}`);
-    return this.http.post(`${this.apiUrl}/findMovies`, {}, { params: params })
+    return this.http.get(`${this.apiUrl}/findMovies`, { params: params })
       .pipe(
         tap((response: any) => console.log('Response:', response)),
         catchError(error => {
@@ -100,7 +100,7 @@ export class BenchmarkService {
   findRatings(count: number, runs: number): Observable<any> {
     let params = new HttpParams().set('count', count.toString()).set('runs', runs.toString());
     console.log(`Sending request with Count: ${count}, Runs: ${runs}`);
-    return this.http.post(`${this.apiUrl}/findRatings`, {}, { params: params })
+    return this.http.get(`${this.apiUrl}/findRatings`, { params: params })
       .pipe(
         tap((response: any) => console.log('Response:', response)),
         catchError(error => {
@@ -113,7 +113,7 @@ export class BenchmarkService {
   findUsers(count: number, runs: number): Observable<any> {
     let params = new HttpParams().set('count', count.toString()).set('runs', runs.toString());
     console.log(`Sending request with Count: ${count}, Runs: ${runs}`);
-    return this.http.post(`${this.apiUrl}/findUsers`, {}, { params: params })
+    return this.http.get(`${this.apiUrl}/findUsers`, { params: params })
       .pipe(
         tap((response: any) => console.log('Response:', response)),
         catchError(error => {

@@ -49,4 +49,16 @@ public class BenchmarkController {
         return benchmarkService.findMovies(count, runs);
     }
 
+    @GetMapping("/api/benchmark/findRatings")
+    public BenchmarkResult findRatings(@RequestParam int count, @RequestParam int runs) {
+        System.out.println("Received request with Count: " + count + ", Runs: " + runs);
+        return benchmarkService.findRatings(count, runs);
+    }
+
+    @GetMapping("/api/benchmark/findUsers")
+    public BenchmarkResult findUsers(@RequestParam int count, @RequestParam int runs) {
+        System.out.println("Received request with Count: " + count + ", Runs: " + runs);
+        return benchmarkService.findUsers(count, runs);
+    }
+
 }

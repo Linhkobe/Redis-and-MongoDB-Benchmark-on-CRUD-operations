@@ -16,5 +16,5 @@ public interface MovieServiceMongo {
 
     Movie getRandomMovie();
     Movie updateMovieBenchmark(String id, Movie movie);
-
+    List<Movie> getFirstNMovies(int n);
 }

@@ -15,4 +15,5 @@ public interface UserServiceMongo {
     Page<User> getAllUsers(Pageable pageable);
     User getRandomUser();
     User updateUserBenchmark(String id, User user);
+    List<User> getFirstNUsers(int n);
 }

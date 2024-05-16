@@ -19,6 +19,13 @@ public class MovieServiceMongoImpl implements MovieServiceMongo {
     @Autowired
     private MovieRepository movieRepository;
 
+    @Override
+    public List<Movie> getFirstNMovies(int n) {
+        Pageable pageable = PageRequest.of(0, n);
+        Page<Movie> moviePage = movieRepository.findAll(pageable);
+        return moviePage.getContent();
+    }
+
     @Autowired
     private MovieRedisService movieRedisService;  // Autowired Redis Service
 

@@ -25,6 +25,13 @@ public class RatingServiceMongoImpl implements RatingServiceMongo {
     @Autowired
     private RatingRepository ratingRepository;
 
+    @Override
+    public List<Rating> getFirstNRatings(int n) {
+        Pageable pageable = PageRequest.of(0, n);
+        return ratingRepository.findAll(pageable).getContent();
+    }
+
+
     @Autowired
     private RatingRedisService ratingRedisService;  // Autowired Redis Service
 

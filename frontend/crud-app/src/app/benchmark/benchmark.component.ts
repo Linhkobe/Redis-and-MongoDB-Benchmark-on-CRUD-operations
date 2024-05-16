@@ -15,7 +15,12 @@ export class BenchmarkComponent implements OnInit {
   showDashboardUpdateMovie = false;
   showDashboardUpdateRating = false;
   showDashboardUpdatUser = false;
+  showDashboardFindMovie = false;
+  showDashboardFindRating = false;
+  showDashboardFindUser = false;
   resultsFindMovie: any[] = [];
+  resultsFindRating: any[] = [];
+  resultsFindUser: any[] = [];
   resultsUpdateMovie: any[] = [];
   resultsUpdateRatings: any[] = [];
   resultsUpdateUsers: any[] = [];
@@ -28,10 +33,13 @@ export class BenchmarkComponent implements OnInit {
   @ViewChild('ratingForm') ratingForm!: NgForm;
   @ViewChild('userForm') userForm!: NgForm;
   @ViewChild('updateForm') updateForm!: NgForm;
-  @ViewChild('findMovieForm') findMovieForm!: NgForm;
   @ViewChild ('updateMovieForm') updateMovieForm!: NgForm;
   @ViewChild ('updateRatingForm') updateRatingForm!: NgForm;
   @ViewChild('updateUserForm') updateUserForm!: NgForm;
+  @ViewChild('findRatingForm') findRatingForm!: NgForm;
+  @ViewChild('findMovieForm') findMovieForm!: NgForm;
+  @ViewChild('findUserForm') findUserForm!: NgForm;
+
 
   constructor(private benchmarkService: BenchmarkService, private sharedService: SharedService) {}
 
@@ -186,9 +194,13 @@ export class BenchmarkComponent implements OnInit {
         console.log('Response:', response);
         this.resultsFindMovie = [response];
         this.sharedService.updateBenchmarkData(response);
-        this.showDashboardCreateMovie = true;
+        this.showDashboardCreateMovie = false;
         this.showDashboardCreateRating = false;
         this.showDashboardCreateUser = false;
+        this.showDashboardUpdateMovie = false;
+        this.showDashboardUpdateRating = false;
+        this.showDashboardUpdatUser = false;
+        this.showDashboardFindMovie = true;
       },
       error: (error) => {
         console.error('Error:', error);
@@ -198,17 +210,23 @@ export class BenchmarkComponent implements OnInit {
 
 
   findRatings() {
-    const count = this.ratingForm.value.count;
-    const runs = this.ratingForm.value.runs;
+    const count = this.findRatingForm.value.count;
+    const runs = this.findRatingForm.value.runs;
 
     this.benchmarkService.findRatings(count, runs).subscribe({
       next: (response) => {
         console.log('Response:', response);
-        this.resultsCreateRating = [response];//must change
+        this.resultsFindRating = [response];
         this.sharedService.updateBenchmarkData(response);
         this.showDashboardCreateMovie = false;
-        this.showDashboardCreateRating = true;
+        this.showDashboardCreateRating = false;
         this.showDashboardCreateUser = false;
+        this.showDashboardFindRating = true;
+        this.showDashboardFindMovie = false;
+        this.showDashboardFindUser = false;
+        this.showDashboardUpdateMovie = false;
+        this.showDashboardUpdateRating = false;
+        this.showDashboardUpdatUser = false;
       },
       error: (error) => {
         console.error('Error:', error);
@@ -217,17 +235,23 @@ export class BenchmarkComponent implements OnInit {
   }
 
   findUsers() {
-    const count = this.userForm.value.count;
-    const runs = this.userForm.value.runs;
+    const count = this.findUserForm.value.count;
+    const runs = this.findUserForm.value.runs;
 
     this.benchmarkService.findUsers(count, runs).subscribe({
       next: (response) => {
         console.log('Response:', response);
-        this.resultsCreateUser = [response]; //must change
+        this.resultsFindUser = [response]; //must change
         this.sharedService.updateBenchmarkData(response);
         this.showDashboardCreateMovie = false;
         this.showDashboardCreateRating = false;
-        this.showDashboardCreateUser = true;
+        this.showDashboardCreateUser = false;
+        this.showDashboardFindRating = false;
+        this.showDashboardFindMovie = false;
+        this.showDashboardFindUser = true;
+        this.showDashboardUpdateMovie = false;
+        this.showDashboardUpdateRating = false;
+        this.showDashboardUpdatUser = false;
       },
       error: (error) => {
         console.error('Error:', error);

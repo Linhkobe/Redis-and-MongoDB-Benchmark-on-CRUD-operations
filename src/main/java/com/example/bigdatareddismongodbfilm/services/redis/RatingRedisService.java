@@ -16,4 +16,5 @@ public interface RatingRedisService {
     Rating updateRating(String id, Rating rating);
     Page<Rating> getAllRatings(Pageable pageable);
     Rating updateRatingBenchmark(String id, Rating rating);
+    List <Rating> getFirstNRatings(int n);
 }

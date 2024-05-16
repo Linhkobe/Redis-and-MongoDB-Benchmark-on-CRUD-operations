@@ -21,6 +21,13 @@ public class UserServiceMongoImpl implements UserServiceMongo {
     @Autowired
     private UserRepository userRepository;
 
+    @Override
+    public List<User> getFirstNUsers(int n) {
+        Pageable pageable = PageRequest.of(0, n);
+        return userRepository.findAll(pageable).getContent();
+    }
+
+
     @Autowired
     private UserRedisService userRedisService;  // Autowired Redis Service
 

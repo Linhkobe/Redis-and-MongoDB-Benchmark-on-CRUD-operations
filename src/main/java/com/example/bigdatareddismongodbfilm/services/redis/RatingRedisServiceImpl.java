@@ -4,6 +4,7 @@ import com.example.bigdatareddismongodbfilm.entity.Movie;
 import com.example.bigdatareddismongodbfilm.entity.Rating;
 import com.example.bigdatareddismongodbfilm.repositories.redis.RatingRedisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,13 @@ import java.util.Optional;
 public class RatingRedisServiceImpl implements RatingRedisService {
 
     private final RatingRedisRepository ratingRedisRepository;
+
+    @Override
+    public List<Rating> getFirstNRatings(int n) {
+        Pageable pageable = PageRequest.of(0, n);
+        Page<Rating> ratingPage = ratingRedisRepository.findAll(pageable);
+        return ratingPage.getContent();
+    }
 
     @Autowired
     public RatingRedisServiceImpl(RatingRedisRepository ratingRedisRepository) {
