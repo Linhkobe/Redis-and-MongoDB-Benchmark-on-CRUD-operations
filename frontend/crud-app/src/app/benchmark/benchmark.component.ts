@@ -9,9 +9,9 @@ import { SharedService } from '../shared.service';
   styleUrls: ['./benchmark.component.css']
 })
 export class BenchmarkComponent implements OnInit {
-  showDashboardMovie = false;
-  showDashboardRating = false;
-  showDashboardUser = false;
+  showDashboardCreateMovie = false;
+  showDashboardCreateRating = false;
+  showDashboardCreateUser = false;
   showDashboardUpdateMovie = false;
   showDashboardUpdateRating = false;
   showDashboardUpdatUser = false;
@@ -19,9 +19,9 @@ export class BenchmarkComponent implements OnInit {
   resultsUpdateMovie: any[] = [];
   resultsUpdateRatings: any[] = [];
   resultsUpdateUsers: any[] = [];
-  resultsm: any[] = [];
-  resultsr: any[] = [];
-  resultsu: any[] = [];
+  resultsCreateMovie: any[] = [];
+  resultsCreateRating: any[] = [];
+  resultsCreateUser: any[] = [];
   displayedColumns: string[] = ['averageTimeElapsedMongo', 'averageTimeElapsedInMillisecondsMongo', 'averageTimeElapsedRedis', 'averageTimeElapsedInMillisecondsRedis', 'averageCpuLoad', 'runs'];
 
   @ViewChild('movieForm') movieForm!: NgForm;
@@ -44,11 +44,11 @@ export class BenchmarkComponent implements OnInit {
     this.benchmarkService.createMovies(count, runs).subscribe({
       next: (response) => {
         console.log('Response:', response);
-        this.resultsm = [response];
+        this.resultsCreateMovie = [response];
         this.sharedService.updateBenchmarkData(response);
-        this.showDashboardMovie = true;
-        this.showDashboardRating = false;
-        this.showDashboardUser = false;
+        this.showDashboardCreateMovie = true;
+        this.showDashboardCreateRating = false;
+        this.showDashboardCreateUser = false;
         this.showDashboardUpdateMovie = false;
         this.showDashboardUpdateRating = false;
         this.showDashboardUpdatUser = false;
@@ -66,11 +66,11 @@ export class BenchmarkComponent implements OnInit {
     this.benchmarkService.createRatings(count, runs).subscribe({
       next: (response) => {
         console.log('Response:', response);
-        this.resultsr = [response];
+        this.resultsCreateRating = [response];
         this.sharedService.updateBenchmarkData(response);
-        this.showDashboardMovie = false;
-        this.showDashboardRating = true;
-        this.showDashboardUser = false;
+        this.showDashboardCreateMovie = false;
+        this.showDashboardCreateRating = true;
+        this.showDashboardCreateUser = false;
         this.showDashboardUpdateMovie = false;
         this.showDashboardUpdateRating = false;
         this.showDashboardUpdatUser = false;
@@ -89,11 +89,11 @@ export class BenchmarkComponent implements OnInit {
     this.benchmarkService.createUsers(count, runs).subscribe({
       next: (response) => {
         console.log('Response:', response);
-        this.resultsu = [response];
+        this.resultsCreateUser = [response];
         this.sharedService.updateBenchmarkData(response);
-        this.showDashboardMovie = false;
-        this.showDashboardRating = false;
-        this.showDashboardUser = true;
+        this.showDashboardCreateMovie = false;
+        this.showDashboardCreateRating = false;
+        this.showDashboardCreateUser = true;
         this.showDashboardUpdateMovie = false;
         this.showDashboardUpdateRating = false;
         this.showDashboardUpdatUser = false;
@@ -115,9 +115,9 @@ export class BenchmarkComponent implements OnInit {
           console.log('Response:', response);
           this.resultsUpdateMovie = [response];
           this.sharedService.updateBenchmarkData(response);
-          this.showDashboardMovie = false;
-          this.showDashboardRating = false;
-          this.showDashboardUser = false;
+          this.showDashboardCreateMovie = false;
+          this.showDashboardCreateRating = false;
+          this.showDashboardCreateUser = false;
           this.showDashboardUpdateMovie = true;
           this.showDashboardUpdateRating = false;
           this.showDashboardUpdatUser = false;
@@ -138,9 +138,9 @@ export class BenchmarkComponent implements OnInit {
           console.log('Response:', response);
           this.resultsUpdateRatings = [response];
           this.sharedService.updateBenchmarkData(response);
-          this.showDashboardMovie = false;
-          this.showDashboardRating = false;
-          this.showDashboardUser = false;
+          this.showDashboardCreateMovie = false;
+          this.showDashboardCreateRating = false;
+          this.showDashboardCreateUser = false;
           this.showDashboardUpdateMovie = false;
           this.showDashboardUpdateRating = true;
           this.showDashboardUpdatUser = false;
@@ -162,9 +162,9 @@ export class BenchmarkComponent implements OnInit {
           console.log('Response:', response);
           this.resultsUpdateUsers = [response];
           this.sharedService.updateBenchmarkData(response);
-          this.showDashboardMovie = false;
-          this.showDashboardRating = false;
-          this.showDashboardUser = false;
+          this.showDashboardCreateMovie = false;
+          this.showDashboardCreateRating = false;
+          this.showDashboardCreateUser = false;
           this.showDashboardUpdateMovie = false;
           this.showDashboardUpdateRating = false;
           this.showDashboardUpdatUser = true;
@@ -186,9 +186,9 @@ export class BenchmarkComponent implements OnInit {
         console.log('Response:', response);
         this.resultsFindMovie = [response];
         this.sharedService.updateBenchmarkData(response);
-        this.showDashboardMovie = true;
-        this.showDashboardRating = false;
-        this.showDashboardUser = false;
+        this.showDashboardCreateMovie = true;
+        this.showDashboardCreateRating = false;
+        this.showDashboardCreateUser = false;
       },
       error: (error) => {
         console.error('Error:', error);
@@ -204,11 +204,11 @@ export class BenchmarkComponent implements OnInit {
     this.benchmarkService.findRatings(count, runs).subscribe({
       next: (response) => {
         console.log('Response:', response);
-        this.resultsr = [response];
+        this.resultsCreateRating = [response];//must change
         this.sharedService.updateBenchmarkData(response);
-        this.showDashboardMovie = false;
-        this.showDashboardRating = true;
-        this.showDashboardUser = false;
+        this.showDashboardCreateMovie = false;
+        this.showDashboardCreateRating = true;
+        this.showDashboardCreateUser = false;
       },
       error: (error) => {
         console.error('Error:', error);
@@ -223,11 +223,11 @@ export class BenchmarkComponent implements OnInit {
     this.benchmarkService.findUsers(count, runs).subscribe({
       next: (response) => {
         console.log('Response:', response);
-        this.resultsu = [response];
+        this.resultsCreateUser = [response]; //must change
         this.sharedService.updateBenchmarkData(response);
-        this.showDashboardMovie = false;
-        this.showDashboardRating = false;
-        this.showDashboardUser = true;
+        this.showDashboardCreateMovie = false;
+        this.showDashboardCreateRating = false;
+        this.showDashboardCreateUser = true;
       },
       error: (error) => {
         console.error('Error:', error);
