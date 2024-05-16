@@ -32,15 +32,15 @@ public class UserRedisController {
     }
 
     // Endpoint pour mettre à jour un utilisateur existant
-    @PutMapping("/{id}")
+    @PutMapping("update/{id}")
     public ResponseEntity<User> updateUser(@PathVariable String id, @RequestBody User newUser) {
         // Puisque Redis n'a pas de fonctionnalité de mise à jour, nous sauvegardons simplement le nouvel utilisateur
-        User updatedUser = userRedisService.saveUser(newUser);
+        User updatedUser = userRedisService.updateUser(id,newUser);
         return ResponseEntity.ok(updatedUser);
     }
 
     // Endpoint pour supprimer un utilisateur par son identifiant
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable String id) {
         userRedisService.deleteUser(id);
         return ResponseEntity.noContent().build();

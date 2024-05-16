@@ -13,5 +13,6 @@ public interface RatingRedisService {
     List<Rating> findAllRatings();
     Optional<Rating> findRatingById(String id);
     Rating saveRating(Rating rating);
+    Rating updateRating(String id, Rating rating);
     Page<Rating> getAllRatings(Pageable pageable);
 }

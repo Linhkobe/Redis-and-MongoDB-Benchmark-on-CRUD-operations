@@ -31,10 +31,10 @@ public class MovieRedisController {
         return movie.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Movie> updateMovie(@PathVariable String id, @RequestBody Movie updatedMovie) {
-        Movie movie = movieRedisService.saveMovie(updatedMovie); // Since Redis doesn't have "update", we'll re-save it.
-        return ResponseEntity.ok(movie);
+        Movie updateMovie = movieRedisService.updateMovie(id, updatedMovie);
+        return ResponseEntity.ok(updateMovie);
     }
 
     @GetMapping("/paged")
@@ -43,7 +43,7 @@ public class MovieRedisController {
     }
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteMovie(@PathVariable String id) {
         movieRedisService.deleteMovie(id);
         return ResponseEntity.noContent().build();

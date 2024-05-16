@@ -17,7 +17,11 @@ public class MovieRedisServiceImpl implements MovieRedisService {
     @Autowired
     private MovieRedisRepository movieRedisRepository;
 
-
+    @Override
+    public Movie updateMovie(String id, Movie movie) {
+        movie.setId(id);
+        return movieRedisRepository.save(movie);
+    }
     @Override
     public Movie saveMovie(Movie movie) {
         return movieRedisRepository.save(movie);
@@ -42,6 +46,8 @@ public class MovieRedisServiceImpl implements MovieRedisService {
     @Override
     public Page<Movie> getAllMovies(Pageable pageable) {
         return movieRedisRepository.findAll(pageable);}
+
+
 
     @Override
     public Movie updateMovieBenchmark(String id, Movie movie) {

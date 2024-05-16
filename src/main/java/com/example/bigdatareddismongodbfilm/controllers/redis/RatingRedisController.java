@@ -29,13 +29,13 @@ public class RatingRedisController {
         return rating.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Rating> updateRating(@PathVariable String id, @RequestBody Rating newRating) {
-        Rating updatedRating = ratingRedisService.saveRating(newRating); // Since Redis doesn't have "update", we'll re-save it.
+        Rating updatedRating = ratingRedisService.updateRating(id,newRating); // Since Redis doesn't have "update", we'll re-save it.
         return ResponseEntity.ok(updatedRating);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteRating(@PathVariable String id) {
         ratingRedisService.deleteRating(id);
         return ResponseEntity.noContent().build();

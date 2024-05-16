@@ -1,5 +1,6 @@
 package com.example.bigdatareddismongodbfilm.services.redis;
 
+import com.example.bigdatareddismongodbfilm.entity.Movie;
 import com.example.bigdatareddismongodbfilm.entity.User;
 import com.example.bigdatareddismongodbfilm.repositories.redis.UserRedisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,17 @@ public class UserRedisServiceImpl implements UserRedisService {
     // Repository pour accéder aux données des utilisateurs dans Redis
     private final UserRedisRepository userRedisRepository;
 
+
     // Injection de dépendance du repository via le constructeur
     @Autowired
     public UserRedisServiceImpl(UserRedisRepository userRedisRepository) {
         this.userRedisRepository = userRedisRepository;
     }
-
+    @Override
+    public User updateUser(String id, User user) {
+        user.setId(id);
+        return userRedisRepository.save(user);
+    }
     // Méthode pour enregistrer un nouvel utilisateur dans Redis
     @Override
     public User saveUser(User user) {

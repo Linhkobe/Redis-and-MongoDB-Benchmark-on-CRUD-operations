@@ -72,8 +72,8 @@ export class RatingRedisComponent {
     });
   }
 
-  deleteRating(rating: any): void {
-    this.ratingRedisService.deleteRating(rating.id).subscribe({
+  deleteRating(id: string): void {
+    this.ratingRedisService.deleteRating(id).subscribe({
       next: () => {
         this.loadRatings();
       },

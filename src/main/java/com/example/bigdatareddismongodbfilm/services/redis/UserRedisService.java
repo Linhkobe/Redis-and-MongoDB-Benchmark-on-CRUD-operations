@@ -14,4 +14,5 @@ public interface UserRedisService {
     void deleteUser(String id);
     List<User> findAllUsers();
     Page<User> getAllUsers(Pageable pageable);
+    User updateUser(String id, User user);
 }

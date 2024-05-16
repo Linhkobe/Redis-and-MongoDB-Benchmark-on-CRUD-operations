@@ -12,6 +12,7 @@ public interface MovieRedisService {
     Optional<Movie> findMovieById(String id);
     void deleteMovie(String id);
     List<Movie> findAllMovies();
+    Movie updateMovie(String id, Movie movie);
 
     Page<Movie> getAllMovies(Pageable pageable);
     Movie updateMovieBenchmark(String id, Movie movie);

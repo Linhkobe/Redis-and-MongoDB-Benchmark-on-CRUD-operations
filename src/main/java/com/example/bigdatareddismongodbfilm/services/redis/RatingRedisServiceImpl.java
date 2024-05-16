@@ -1,5 +1,6 @@
 package com.example.bigdatareddismongodbfilm.services.redis;
 
+import com.example.bigdatareddismongodbfilm.entity.Movie;
 import com.example.bigdatareddismongodbfilm.entity.Rating;
 import com.example.bigdatareddismongodbfilm.repositories.redis.RatingRedisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,11 @@ public class RatingRedisServiceImpl implements RatingRedisService {
     @Autowired
     public RatingRedisServiceImpl(RatingRedisRepository ratingRedisRepository) {
         this.ratingRedisRepository = ratingRedisRepository;
+    }
+    @Override
+    public Rating updateRating(String id, Rating rating) {
+        rating.setId(id);
+        return ratingRedisRepository.save(rating);
     }
 
     @Override

@@ -22,6 +22,7 @@ export class BenchmarkComponent implements OnInit {
   @ViewChild('ratingForm') ratingForm!: NgForm;
   @ViewChild('userForm') userForm!: NgForm;
   @ViewChild('updateForm') updateForm!: NgForm;
+  @ViewChild('findMovieForm') findMovieForm!: NgForm;
 
   constructor(private benchmarkService: BenchmarkService, private sharedService: SharedService) {}
 
@@ -102,8 +103,8 @@ export class BenchmarkComponent implements OnInit {
   }
 
   findMovies() {
-    const count = this.movieForm.value.count;
-    const runs = this.movieForm.value.runs;
+    const count = this.findMovieForm.value.count;
+    const runs = this.findMovieForm.value.runs;
 
     this.benchmarkService.findMovies(count, runs).subscribe({
       next: (response) => {

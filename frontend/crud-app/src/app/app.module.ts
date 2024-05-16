@@ -36,6 +36,7 @@ import { UserRedisComponent } from './user-redis/user-redis.component';
 import {RatingRedisComponent} from "./rating-redis/rating-redis.component";
 import {MovieRedisComponent} from "./movie-redis/movie-redis.component";
 import {MatTooltip} from "@angular/material/tooltip";
+import { CrudRedisComponent } from './crud-redis/crud-redis.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import {MatTooltip} from "@angular/material/tooltip";
     BenchmarkComponent,
     RatingRedisComponent,
     MovieRedisComponent,
-    UserRedisComponent
+    UserRedisComponent,
+    CrudRedisComponent
   ],
     imports: [
         BrowserModule,
