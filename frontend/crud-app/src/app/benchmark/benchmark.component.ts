@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
-import { BenchmarkService } from "./benchmark.service";
-import { NgForm } from "@angular/forms";
+import { BenchmarkService } from './benchmark.service';
+import { NgForm } from '@angular/forms';
 import { SharedService } from '../shared.service';
 
 @Component({
@@ -10,7 +9,9 @@ import { SharedService } from '../shared.service';
   styleUrls: ['./benchmark.component.css']
 })
 export class BenchmarkComponent implements OnInit {
-  showDashboard = false;
+  showDashboardMovie = false;
+  showDashboardRating = false;
+  showDashboardUser = false;
   resultsFindMovie: any[] = [];
   resultsm: any[] = [];
   resultsr: any[] = [];
@@ -35,7 +36,9 @@ export class BenchmarkComponent implements OnInit {
         console.log('Response:', response);
         this.resultsm = [response];
         this.sharedService.updateBenchmarkData(response);
-        this.showDashboard = true;
+        this.showDashboardMovie = true;
+        this.showDashboardRating = false;
+        this.showDashboardUser = false;
       },
       error: (error) => {
         console.error('Error:', error);
@@ -51,6 +54,10 @@ export class BenchmarkComponent implements OnInit {
       next: (response) => {
         console.log('Response:', response);
         this.resultsr = [response];
+        this.sharedService.updateBenchmarkData(response);
+        this.showDashboardMovie = false;
+        this.showDashboardRating = true;
+        this.showDashboardUser = false;
       },
       error: (error) => {
         console.error('Error:', error);
@@ -66,6 +73,10 @@ export class BenchmarkComponent implements OnInit {
       next: (response) => {
         console.log('Response:', response);
         this.resultsu = [response];
+        this.sharedService.updateBenchmarkData(response);
+        this.showDashboardMovie = false;
+        this.showDashboardRating = false;
+        this.showDashboardUser = true;
       },
       error: (error) => {
         console.error('Error:', error);
@@ -99,7 +110,9 @@ export class BenchmarkComponent implements OnInit {
         console.log('Response:', response);
         this.resultsFindMovie = [response];
         this.sharedService.updateBenchmarkData(response);
-        this.showDashboard = true;
+        this.showDashboardMovie = true;
+        this.showDashboardRating = false;
+        this.showDashboardUser = false;
       },
       error: (error) => {
         console.error('Error:', error);
@@ -115,6 +128,10 @@ export class BenchmarkComponent implements OnInit {
       next: (response) => {
         console.log('Response:', response);
         this.resultsr = [response];
+        this.sharedService.updateBenchmarkData(response);
+        this.showDashboardMovie = false;
+        this.showDashboardRating = true;
+        this.showDashboardUser = false;
       },
       error: (error) => {
         console.error('Error:', error);
@@ -130,6 +147,10 @@ export class BenchmarkComponent implements OnInit {
       next: (response) => {
         console.log('Response:', response);
         this.resultsu = [response];
+        this.sharedService.updateBenchmarkData(response);
+        this.showDashboardMovie = false;
+        this.showDashboardRating = false;
+        this.showDashboardUser = true;
       },
       error: (error) => {
         console.error('Error:', error);

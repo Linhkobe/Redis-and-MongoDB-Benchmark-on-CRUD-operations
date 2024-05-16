@@ -48,58 +48,55 @@
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
 
-    <app-dashboard *ngIf="showDashboard"></app-dashboard>
+    <app-dashboard *ngIf="showDashboardMovie"></app-dashboard>
 
     <h2>2) Find</h2>
+    <form #movieFindForm="ngForm" (ngSubmit)="findMovies()">
+      <mat-form-field class="input-field">
+        <input matInput type="number" name="count" ngModel placeholder="Number of movies to find">
+      </mat-form-field>
+      <mat-form-field class="input-field">
+        <input matInput type="number" name="runs" ngModel placeholder="Number of runs for finding">
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Find Benchmark</button>
+    </form>
 
-      <h2>Find Movies</h2>
-      <form #movieFindForm="ngForm" (ngSubmit)="findMovies()">
-        <mat-form-field class="input-field">
-          <input matInput type="number" name="count" ngModel placeholder="Number of movies to find">
-        </mat-form-field>
-        <mat-form-field class="input-field">
-          <input matInput type="number" name="runs" ngModel placeholder="Number of runs for finding">
-        </mat-form-field>
-        <button mat-raised-button color="primary" type="submit">Find Benchmark</button>
-      </form>
+    <mat-table [dataSource]="resultsFindMovie" class="mat-elevation-z8">
+      <!-- Column definitions -->
+      <ng-container matColumnDef="averageTimeElapsedMongo">
+        <mat-header-cell *matHeaderCellDef> Average Time Elapsed Mongo </mat-header-cell>
+        <mat-cell *matCellDef="let result"> {{result.averageTimeElapsedMongo}} </mat-cell>
+      </ng-container>
 
-      <mat-table [dataSource]="resultsFindMovie" class="mat-elevation-z8">
-        <!-- Column definitions -->
-        <ng-container matColumnDef="averageTimeElapsedMongo">
-          <mat-header-cell *matHeaderCellDef> Average Time Elapsed Mongo </mat-header-cell>
-          <mat-cell *matCellDef="let result"> {{result.averageTimeElapsedMongo}} </mat-cell>
-        </ng-container>
+      <ng-container matColumnDef="averageTimeElapsedInMillisecondsMongo">
+        <mat-header-cell *matHeaderCellDef> Average Time Elapsed In Milliseconds Mongo </mat-header-cell>
+        <mat-cell *matCellDef="let result"> {{result.averageTimeElapsedInMillisecondsMongo}} </mat-cell>
+      </ng-container>
 
-        <ng-container matColumnDef="averageTimeElapsedInMillisecondsMongo">
-          <mat-header-cell *matHeaderCellDef> Average Time Elapsed In Milliseconds Mongo </mat-header-cell>
-          <mat-cell *matCellDef="let result"> {{result.averageTimeElapsedInMillisecondsMongo}} </mat-cell>
-        </ng-container>
+      <ng-container matColumnDef="averageTimeElapsedRedis">
+        <mat-header-cell *matHeaderCellDef> Average Time Elapsed Redis </mat-header-cell>
+        <mat-cell *matCellDef="let result"> {{result.averageTimeElapsedRedis}} </mat-cell>
+      </ng-container>
 
-        <ng-container matColumnDef="averageTimeElapsedRedis">
-          <mat-header-cell *matHeaderCellDef> Average Time Elapsed Redis </mat-header-cell>
-          <mat-cell *matCellDef="let result"> {{result.averageTimeElapsedRedis}} </mat-cell>
-        </ng-container>
+      <ng-container matColumnDef="averageTimeElapsedInMillisecondsRedis">
+        <mat-header-cell *matHeaderCellDef> Average Time Elapsed In Milliseconds Redis </mat-header-cell>
+        <mat-cell *matCellDef="let result"> {{result.averageTimeElapsedInMillisecondsRedis}} </mat-cell>
+      </ng-container>
 
-        <ng-container matColumnDef="averageTimeElapsedInMillisecondsRedis">
-          <mat-header-cell *matHeaderCellDef> Average Time Elapsed In Milliseconds Redis </mat-header-cell>
-          <mat-cell *matCellDef="let result"> {{result.averageTimeElapsedInMillisecondsRedis}} </mat-cell>
-        </ng-container>
+      <ng-container matColumnDef="averageCpuLoad">
+        <mat-header-cell *matHeaderCellDef> Average CPU Load </mat-header-cell>
+        <mat-cell *matCellDef="let result"> {{result.averageCpuLoad}} </mat-cell>
+      </ng-container>
 
-        <ng-container matColumnDef="averageCpuLoad">
-          <mat-header-cell *matHeaderCellDef> Average CPU Load </mat-header-cell>
-          <mat-cell *matCellDef="let result"> {{result.averageCpuLoad}} </mat-cell>
-        </ng-container>
+      <ng-container matColumnDef="runs">
+        <mat-header-cell *matHeaderCellDef> Runs </mat-header-cell>
+        <mat-cell *matCellDef="let result"> {{result.runs}} </mat-cell>
+      </ng-container>
 
-        <ng-container matColumnDef="runs">
-          <mat-header-cell *matHeaderCellDef> Runs </mat-header-cell>
-          <mat-cell *matCellDef="let result"> {{result.runs}} </mat-cell>
-        </ng-container>
-
-        <!-- Row definitions -->
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let result; columns: displayedColumns;"></mat-row>
-      </mat-table>
-
+      <!-- Row definitions -->
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
 
     <h2>3) Update</h2>
     <form #updateForm="ngForm" (ngSubmit)="updateMovies()">
@@ -149,17 +146,13 @@
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
 
-    <app-dashboard *ngIf="showDashboard"></app-dashboard>
+    <app-dashboard *ngIf="showDashboardMovie"></app-dashboard>
 
     <h2>4) Delete</h2>
   </mat-tab>
 
-
-
-
   <mat-tab label="Rating">
-
-    <h2>2) Create</h2>
+    <h2>1) Create</h2>
     <form #ratingForm="ngForm" (ngSubmit)="createRatings()">
       <mat-form-field class="input-field">
         <input matInput type="number" name="count" ngModel placeholder="Number of ratings">
@@ -206,12 +199,13 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
-    <app-dashboard *ngIf="showDashboard"></app-dashboard>
+
+    <app-dashboard *ngIf="showDashboardRating"></app-dashboard>
 
     <h2>2) Find</h2>
-    <form #movieFindForm="ngForm" (ngSubmit)="findRatings()">
+    <form #ratingFindForm="ngForm" (ngSubmit)="findRatings()">
       <mat-form-field class="input-field">
-        <input matInput type="number" name="count" ngModel placeholder="Number of movies to find">
+        <input matInput type="number" name="count" ngModel placeholder="Number of ratings to find">
       </mat-form-field>
       <mat-form-field class="input-field">
         <input matInput type="number" name="runs" ngModel placeholder="Number of runs for finding">
@@ -257,12 +251,14 @@
     </mat-table>
 
     <h2>3) Update</h2>
+    <!-- Add Update Form here if needed -->
 
     <h2>4) Delete</h2>
+    <!-- Add Delete Form here if needed -->
   </mat-tab>
-  <mat-tab label="User">
 
-    <h2>3) Create</h2>
+  <mat-tab label="User">
+    <h2>1) Create</h2>
     <form #userForm="ngForm" (ngSubmit)="createUsers()">
       <mat-form-field class="input-field">
         <input matInput type="number" name="count" ngModel placeholder="Number of users">
@@ -310,11 +306,12 @@
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
 
-    <app-dashboard *ngIf="showDashboard"></app-dashboard>
+    <app-dashboard *ngIf="showDashboardUser"></app-dashboard>
+
     <h2>2) Find</h2>
-    <form #movieFindForm="ngForm" (ngSubmit)="findUsers()">
+    <form #userFindForm="ngForm" (ngSubmit)="findUsers()">
       <mat-form-field class="input-field">
-        <input matInput type="number" name="count" ngModel placeholder="Number of movies to find">
+        <input matInput type="number" name="count" ngModel placeholder="Number of users to find">
       </mat-form-field>
       <mat-form-field class="input-field">
         <input matInput type="number" name="runs" ngModel placeholder="Number of runs for finding">
@@ -358,8 +355,11 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
+
     <h2>3) Update</h2>
+    <!-- Add Update Form here if needed -->
 
     <h2>4) Delete</h2>
+    <!-- Add Delete Form here if needed -->
   </mat-tab>
 </mat-tab-group>
