@@ -82,9 +82,9 @@
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </mat-table>
+        <app-dashboard *ngIf="showDashboardFindMovie"></app-dashboard>
       </mat-tab>
 
-      <app-dashboard *ngIf="showDashboardFindMovie"></app-dashboard>
 
       <mat-tab label="Update">
         <form #updateMovieForm="ngForm" (ngSubmit)="updateMovies()">
@@ -216,9 +216,9 @@
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </mat-table>
+        <app-dashboard *ngIf="showDashboardFindRating"></app-dashboard>
       </mat-tab>
 
-      <app-dashboard *ngIf="showDashboardFindRating"></app-dashboard>
 
       <mat-tab label="Update">
         <form #updateRatingForm="ngForm" (ngSubmit)="updateRatings()">
@@ -350,9 +350,9 @@
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </mat-table>
+        <app-dashboard *ngIf="showDashboardFindUser"></app-dashboard>
       </mat-tab>
 
-      <app-dashboard *ngIf="showDashboardFindUser"></app-dashboard>
 
       <mat-tab label="Update">
         <form #updateUserForm="ngForm" (ngSubmit)="updateUsers()">
