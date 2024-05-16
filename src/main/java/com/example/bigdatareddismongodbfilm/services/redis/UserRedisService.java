@@ -1,6 +1,7 @@
 // UserRedisService.java
 package com.example.bigdatareddismongodbfilm.services.redis;
 
+import com.example.bigdatareddismongodbfilm.entity.Rating;
 import com.example.bigdatareddismongodbfilm.entity.User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
@@ -15,4 +16,5 @@ public interface UserRedisService {
     List<User> findAllUsers();
     Page<User> getAllUsers(Pageable pageable);
     User updateUser(String id, User user);
+    User updateUserBenchmark(String id, User user);
 }

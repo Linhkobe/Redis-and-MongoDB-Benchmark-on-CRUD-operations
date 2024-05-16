@@ -451,4 +451,154 @@ public class BenchmarkService {
             return null;
         }
     }
+    public Rating updateRandomRating() {
+        Rating randomRating = ratingServiceMongo.getRandomRating();
+        if (randomRating != null) {
+            int newRatingVal = Integer.parseInt(randomRating.getRating_val()) + 1;
+            randomRating.setRating_val(String.valueOf(newRatingVal));
+            System.out.println("Random rating updated with new value: " + newRatingVal);
+            return randomRating;
+        } else {
+            System.out.println("No rating found in the database.");
+            return null;
+        }
+    }
+    public BenchmarkResult updateRatings(int count, int runs) {
+        try {
+            long totalStartTimeMongo = 0;
+            long totalEndTimeMongo = 0;
+            long totalStartTimeRedis = 0;
+            long totalEndTimeRedis = 0;
+            double totalCpuLoad = 0.0;
+
+            // Warm up the databases with some preliminary tests
+            for (int i = 0; i < 10; i++) {
+                Rating rating = this.updateRandomRating();
+                ratingServiceMongo.updateRatingBenchmark(rating.getId(), rating);
+                ratingServiceRedis.updateRatingBenchmark(rating.getId(), rating);
+            }
+
+            for (int i = 0; i < runs; i++) {
+                // Benchmark MongoDB
+                long startTimeMongo = System.nanoTime();
+                for (int j = 0; j < count; j++) {
+                    Rating rating = this.updateRandomRating();
+                    ratingServiceMongo.updateRatingBenchmark(rating.getId(), rating);
+                }
+                long endTimeMongo = System.nanoTime();
+                totalStartTimeMongo += startTimeMongo;
+                totalEndTimeMongo += endTimeMongo;
+
+                // Benchmark Redis
+                long startTimeRedis = System.nanoTime();
+                for (int j = 0; j < count; j++) {
+                    Rating rating = this.updateRandomRating();
+                    ratingServiceRedis.updateRatingBenchmark(rating.getId(), rating);
+                }
+                long endTimeRedis = System.nanoTime();
+                totalStartTimeRedis += startTimeRedis;
+                totalEndTimeRedis += endTimeRedis;
+
+                // Measure CPU load
+                OperatingSystemMXBean operatingSystemMXBean = ManagementFactory.getOperatingSystemMXBean();
+                double cpuLoad = operatingSystemMXBean.getSystemLoadAverage();
+                totalCpuLoad += cpuLoad;
+                System.out.println("CPU Load for run " + (i+1) + ": " + cpuLoad);
+            }
+
+            long averageTimeElapsedMongo = (totalEndTimeMongo - totalStartTimeMongo) / runs;
+            long averageTimeElapsedRedis = (totalEndTimeRedis - totalStartTimeRedis) / runs;
+            long averageTimeElapsedInMillisecondsMongo = averageTimeElapsedMongo / 1000000;
+            long averageTimeElapsedInMillisecondsRedis = averageTimeElapsedRedis / 1000000;
+            double averageCpuLoad = totalCpuLoad / runs;
+
+            System.out.println("Average execution time for MongoDB in nanoseconds: " + averageTimeElapsedMongo);
+            System.out.println("Average execution time for MongoDB in milliseconds: " + averageTimeElapsedInMillisecondsMongo);
+            System.out.println("Average execution time for Redis in nanoseconds: " + averageTimeElapsedRedis);
+            System.out.println("Average execution time for Redis in milliseconds: " + averageTimeElapsedInMillisecondsRedis);
+            System.out.println("Average CPU Load: " + averageCpuLoad);
+
+            return new BenchmarkResult(averageTimeElapsedMongo, averageTimeElapsedInMillisecondsMongo, averageTimeElapsedRedis, averageTimeElapsedInMillisecondsRedis, averageCpuLoad, runs);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public User updateRandomUser() {
+        User randomUser = userServiceMongo.getRandomUser();
+        if (randomUser != null) {
+            String newDisplayName = randomUser.getDisplay_name() + " 2024";
+            randomUser.setDisplay_name(newDisplayName);
+            System.out.println("Random user updated with new display_name: " + newDisplayName);
+            return randomUser;
+        } else {
+            System.out.println("No user found in the database.");
+            return null;
+        }
+    }
+    public BenchmarkResult updateUsers(int count, int runs) {
+        try {
+            long totalStartTimeMongo = 0;
+            long totalEndTimeMongo = 0;
+            long totalStartTimeRedis = 0;
+            long totalEndTimeRedis = 0;
+            double totalCpuLoad = 0.0;
+
+            // Warm up the databases with some preliminary tests
+            for (int i = 0; i < 10; i++) {
+                User user = this.updateRandomUser();
+                userServiceMongo.updateUserBenchmark(user.getId(), user);
+                userServiceRedis.updateUserBenchmark(user.getId(), user);
+            }
+
+            for (int i = 0; i < runs; i++) {
+                // Benchmark MongoDB
+                long startTimeMongo = System.nanoTime();
+                for (int j = 0; j < count; j++) {
+                    User user = this.updateRandomUser();
+                    userServiceMongo.updateUserBenchmark(user.getId(), user);
+                }
+                long endTimeMongo = System.nanoTime();
+                totalStartTimeMongo += startTimeMongo;
+                totalEndTimeMongo += endTimeMongo;
+
+                // Benchmark Redis
+                long startTimeRedis = System.nanoTime();
+                for (int j = 0; j < count; j++) {
+                    User user = this.updateRandomUser();
+                    userServiceRedis.updateUserBenchmark(user.getId(), user);
+                }
+                long endTimeRedis = System.nanoTime();
+                totalStartTimeRedis += startTimeRedis;
+                totalEndTimeRedis += endTimeRedis;
+
+                // Measure CPU load
+                OperatingSystemMXBean operatingSystemMXBean = ManagementFactory.getOperatingSystemMXBean();
+                double cpuLoad = operatingSystemMXBean.getSystemLoadAverage();
+                totalCpuLoad += cpuLoad;
+                System.out.println("CPU Load for run " + (i + 1) + ": " + cpuLoad);
+            }
+
+            long averageTimeElapsedMongo = (totalEndTimeMongo - totalStartTimeMongo) / runs;
+            long averageTimeElapsedRedis = (totalEndTimeRedis - totalStartTimeRedis) / runs;
+            long averageTimeElapsedInMillisecondsMongo = averageTimeElapsedMongo / 1000000;
+            long averageTimeElapsedInMillisecondsRedis = averageTimeElapsedRedis / 1000000;
+            double averageCpuLoad = totalCpuLoad / runs;
+
+            System.out.println("Average execution time for MongoDB in nanoseconds: " + averageTimeElapsedMongo);
+            System.out.println("Average execution time for MongoDB in milliseconds: " + averageTimeElapsedInMillisecondsMongo);
+            System.out.println("Average execution time for Redis in nanoseconds: " + averageTimeElapsedRedis);
+            System.out.println("Average execution time for Redis in milliseconds: " + averageTimeElapsedInMillisecondsRedis);
+            System.out.println("Average CPU Load: " + averageCpuLoad);
+
+            return new BenchmarkResult(averageTimeElapsedMongo, averageTimeElapsedInMillisecondsMongo, averageTimeElapsedRedis, averageTimeElapsedInMillisecondsRedis, averageCpuLoad, runs);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
+
 }

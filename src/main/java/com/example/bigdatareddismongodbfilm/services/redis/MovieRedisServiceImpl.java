@@ -55,4 +55,5 @@ public class MovieRedisServiceImpl implements MovieRedisService {
         Movie updatedMovie = movieRedisRepository.save(movie);
         return updatedMovie;
     }
+
 }

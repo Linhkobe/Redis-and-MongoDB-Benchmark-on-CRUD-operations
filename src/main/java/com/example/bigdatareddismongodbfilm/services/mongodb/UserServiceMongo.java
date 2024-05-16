@@ -1,4 +1,5 @@
 package com.example.bigdatareddismongodbfilm.services.mongodb;
+import com.example.bigdatareddismongodbfilm.entity.Rating;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import com.example.bigdatareddismongodbfilm.entity.User;
@@ -12,4 +13,6 @@ public interface UserServiceMongo {
     User updateUser(String id, User user);
     void deleteUser(String id);
     Page<User> getAllUsers(Pageable pageable);
+    User getRandomUser();
+    User updateUserBenchmark(String id, User user);
 }

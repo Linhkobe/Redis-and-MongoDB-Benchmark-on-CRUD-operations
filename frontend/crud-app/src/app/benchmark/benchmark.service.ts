@@ -61,6 +61,28 @@ export class BenchmarkService {
         })
       );
   }
+  updateRatings(count: number, runs: number): Observable<any> {
+    let params = new HttpParams().set('count', count.toString()).set('runs', runs.toString());
+    return this.http.patch(`${this.apiUrl}/updateRatings`, { count, runs }, { params })
+      .pipe(
+        tap(response => console.log('Update response:', response)),
+        catchError(error => {
+          console.error('Error during update:', error);
+          throw error;
+        })
+      );
+  }
+  updateUsers(count: number, runs: number): Observable<any> {
+    let params = new HttpParams().set('count', count.toString()).set('runs', runs.toString());
+    return this.http.patch(`${this.apiUrl}/updateUsers`, { count, runs }, { params })
+      .pipe(
+        tap(response => console.log('Update response:', response)),
+        catchError(error => {
+          console.error('Error during update:', error);
+          throw error;
+        })
+      );
+  }
 
   findMovies(count: number, runs: number): Observable<any> {
     let params = new HttpParams().set('count', count.toString()).set('runs', runs.toString());

@@ -1,6 +1,7 @@
 package com.example.bigdatareddismongodbfilm.services.redis;
 
 import com.example.bigdatareddismongodbfilm.entity.Movie;
+import com.example.bigdatareddismongodbfilm.entity.Rating;
 import com.example.bigdatareddismongodbfilm.entity.User;
 import com.example.bigdatareddismongodbfilm.repositories.redis.UserRedisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +57,11 @@ public class UserRedisServiceImpl implements UserRedisService {
     @Override
     public List<User> findAllUsers() {
         return userRedisRepository.findAll();
+    }
+
+    public User updateUserBenchmark(String id, User user) {
+        user.setId(id);
+        User updatedUser = userRedisRepository.save(user);
+        return updatedUser;
     }
 }

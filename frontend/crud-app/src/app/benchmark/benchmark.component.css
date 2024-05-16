@@ -6,3 +6,24 @@
   height: 300px;
   max-height: 400px;
 }
+.mat-tab-label-content {
+  font-weight: bold;
+  font-size: 1.5em;
+  color: #2c3e50;
+}
+
+.mat-tab-group.mat-primary .mat-tab-label-active {
+  background-color: #e0e0e0;
+  border-radius: 4px;
+}
+
+.mat-tab-label-content.sub-tab {
+  font-weight: normal;
+  font-size: 1em;
+  color: #616161;
+}
+
+.mat-tab-group .mat-tab-label.mat-tab-label-active.sub-tab {
+  background-color: #f5f5f5;
+  border-radius: 5px;
+}

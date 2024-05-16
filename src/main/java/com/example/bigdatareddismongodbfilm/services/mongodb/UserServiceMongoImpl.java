@@ -1,16 +1,19 @@
 package com.example.bigdatareddismongodbfilm.services.mongodb;
 
+import com.example.bigdatareddismongodbfilm.entity.Rating;
 import com.example.bigdatareddismongodbfilm.entity.User;
 import com.example.bigdatareddismongodbfilm.repositories.mongodb.UserRepository;
 import com.example.bigdatareddismongodbfilm.services.redis.UserRedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class UserServiceMongoImpl implements UserServiceMongo {
@@ -62,5 +65,30 @@ public class UserServiceMongoImpl implements UserServiceMongo {
         List<User> allUsers = getAllUsers();  // Retrieve all users from MongoDB
         allUsers.forEach(userRedisService::saveUser);  // Save each user to Redis
         System.out.println("Initialized Redis with existing MongoDB data(USER collection).");
+    }
+
+    public User getRandomUser() {
+        // Compter le nombre total de films dans la base de données
+        long userCount = userRepository.count();
+        if (userCount > 0) {
+            // Générer un index aléatoire dans la plage de films disponibles
+            Random random = new Random();
+            int randomIndex = random.nextInt((int) userCount);
+
+            // Obtenir une page contenant un film aléatoire
+            Pageable pageable = PageRequest.of(randomIndex, 1);
+            List<User> users = userRepository.findAll(pageable).getContent();
+
+            // Renvoyer le premier film trouvé dans la page
+            return users.get(0);
+        } else {
+            // Aucun film trouvé dans la base de données
+            return null;
+        }
+    }
+    public User updateUserBenchmark(String id, User user) {
+        user.setId(id);
+        User updatedUser = userRepository.save(user);
+        return updatedUser;
     }
 }

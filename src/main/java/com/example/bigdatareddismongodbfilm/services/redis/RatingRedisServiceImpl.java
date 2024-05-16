@@ -50,4 +50,10 @@ public class RatingRedisServiceImpl implements RatingRedisService {
     public List<Rating> findAllRatings() {
         return ratingRedisRepository.findAll();
     }
+
+    public Rating updateRatingBenchmark(String id, Rating rating) {
+        rating.setId(id);
+        Rating updatedRating = ratingRedisRepository.save(rating);
+        return updatedRating;
+    }
 }

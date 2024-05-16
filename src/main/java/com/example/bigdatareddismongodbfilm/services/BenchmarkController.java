@@ -1,12 +1,10 @@
 package com.example.bigdatareddismongodbfilm.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class BenchmarkController {
 
     @Autowired
@@ -34,9 +32,21 @@ public class BenchmarkController {
         System.out.println("Received request with Count: " + count + ", Runs: " + runs);
         return benchmarkService.updateMovies(count, runs);
     }
-    @PostMapping("/api/benchmark/findMovies")
+    @PatchMapping("/api/benchmark/updateRatings")
+    public BenchmarkResult updateRating(@RequestParam int count, @RequestParam int runs) {
+        System.out.println("Received request with Count: " + count + ", Runs: " + runs);
+        return benchmarkService.updateRatings(count, runs);
+    }
+    @PatchMapping("/api/benchmark/updateUsers")
+    public BenchmarkResult updateUsers(@RequestParam int count, @RequestParam int runs) {
+        System.out.println("Received request with Count: " + count + ", Runs: " + runs);
+        return benchmarkService.updateUsers(count, runs);
+    }
+
+    @GetMapping("/api/benchmark/findMovies")
     public BenchmarkResult findMovies(@RequestParam int count, @RequestParam int runs) {
         System.out.println("Received request with Count: " + count + ", Runs: " + runs);
         return benchmarkService.findMovies(count, runs);
     }
+
 }
