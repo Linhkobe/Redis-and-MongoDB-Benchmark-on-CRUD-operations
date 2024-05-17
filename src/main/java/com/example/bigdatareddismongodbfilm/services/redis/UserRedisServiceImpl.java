@@ -3,9 +3,11 @@ package com.example.bigdatareddismongodbfilm.services.redis;
 import com.example.bigdatareddismongodbfilm.entity.Movie;
 import com.example.bigdatareddismongodbfilm.entity.Rating;
 import com.example.bigdatareddismongodbfilm.entity.User;
+import com.example.bigdatareddismongodbfilm.repositories.mongodb.UserRepository;
 import com.example.bigdatareddismongodbfilm.repositories.redis.UserRedisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
@@ -17,6 +19,9 @@ import java.util.Optional;
 @Service
 public class UserRedisServiceImpl implements UserRedisService {
 
+    @Autowired
+    private UserRepository userRepository;
+
     // Repository pour accéder aux données des utilisateurs dans Redis
     private final UserRedisRepository userRedisRepository;
 
@@ -24,6 +29,14 @@ public class UserRedisServiceImpl implements UserRedisService {
     public List<User> getFirstNUsers(int n) {
         Pageable pageable = PageRequest.of(0, n);
         return userRedisRepository.findAll(pageable).getContent();
+    }
+
+    public List<User> getRandomUsers(int count) {
+        Pageable pageable = PageRequest.of(0, count, Sort.by("id").ascending());
+
+        List<User> randomUsers = userRepository.findAll(pageable).getContent();
+
+        return randomUsers;
     }
 
     // Injection de dépendance du repository via le constructeur

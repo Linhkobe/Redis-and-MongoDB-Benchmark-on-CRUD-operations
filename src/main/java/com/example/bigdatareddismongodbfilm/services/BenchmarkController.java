@@ -66,4 +66,16 @@ public class BenchmarkController {
         return benchmarkService.deleteMovies(count,runs);
     }
 
+    @DeleteMapping("/api/benchmark/deleteRatings")
+    public BenchmarkResult deleteRatings(@RequestParam int count ,@RequestParam int runs) {
+        System.out.println("Received request with Count: " + count + ", Runs: " + runs );
+        return benchmarkService.deleteRatings(count,runs);
+    }
+
+    @DeleteMapping("/api/benchmark/deleteUsers")
+    public BenchmarkResult deleteUsers(@RequestParam int count ,@RequestParam int runs) {
+        System.out.println("Received request with Count: " + count + ", Runs: " + runs );
+        return benchmarkService.deleteUsers(count,runs);
+    }
+
 }

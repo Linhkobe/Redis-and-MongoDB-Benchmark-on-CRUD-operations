@@ -731,7 +731,7 @@ public class BenchmarkService {
             return null;
         }
     }
-    // DELETE
+    // DELETE Movie
     public void deleteRandomMovies(int count) {
         List<Movie> movies = movieServiceMongo.getRandomMovies(count);
         for (Movie movie : movies) {
@@ -798,9 +798,138 @@ public class BenchmarkService {
         }
     }
 
+    // DELETE Rating
+    public void deleteRandomRatings(int count) {
+        List<Rating> ratings = ratingServiceMongo.getRandomRatings(count);
+        for (Rating rating : ratings) {
+            if (rating != null) {
+                ratingServiceMongo.deleteRating(rating.getId());
+                ratingServiceMongo.deleteRating(rating.getId());
+                System.out.println("Rating deleted: " + rating.getId());
+            }
+        }
+    }
 
 
+    public BenchmarkResult deleteRatings(int count, int runs) {
+        try {
+            long totalStartTimeMongo = 0;
+            long totalEndTimeMongo = 0;
+            long totalStartTimeRedis = 0;
+            long totalEndTimeRedis = 0;
+            double totalCpuLoad = 0.0;
+
+            // Warm-up
+            for (int i = 0; i < 10; i++) {
+                deleteRandomRatings(count);
+            }
+
+            for (int i = 0; i < runs; i++) {
+                // Benchmark MongoDB
+                long startTimeMongo = System.nanoTime();
+                deleteRandomRatings(count);
+                long endTimeMongo = System.nanoTime();
+                totalStartTimeMongo += startTimeMongo;
+                totalEndTimeMongo += endTimeMongo;
+
+                // Benchmark Redis
+                long startTimeRedis = System.nanoTime();
+                deleteRandomRatings(count);
+                long endTimeRedis = System.nanoTime();
+                totalStartTimeRedis += startTimeRedis;
+                totalEndTimeRedis += endTimeRedis;
+
+                // Measure CPU load
+                OperatingSystemMXBean operatingSystemMXBean = ManagementFactory.getOperatingSystemMXBean();
+                double cpuLoad = operatingSystemMXBean.getSystemLoadAverage();
+                totalCpuLoad += cpuLoad;
+                System.out.println("CPU Load for run " + (i + 1) + ": " + cpuLoad);
+            }
+
+            long averageTimeElapsedMongo = (totalEndTimeMongo - totalStartTimeMongo) / runs;
+            long averageTimeElapsedRedis = (totalEndTimeRedis - totalStartTimeRedis) / runs;
+            long averageTimeElapsedInMillisecondsMongo = averageTimeElapsedMongo / 1000000;
+            long averageTimeElapsedInMillisecondsRedis = averageTimeElapsedRedis / 1000000;
+            double averageCpuLoad = totalCpuLoad / runs;
+
+            System.out.println("Average execution time for MongoDB in nanoseconds: " + averageTimeElapsedMongo);
+            System.out.println("Average execution time for MongoDB in milliseconds: " + averageTimeElapsedInMillisecondsMongo);
+            System.out.println("Average execution time for Redis in nanoseconds: " + averageTimeElapsedRedis);
+            System.out.println("Average execution time for Redis in milliseconds: " + averageTimeElapsedInMillisecondsRedis);
+            System.out.println("Average CPU Load: " + averageCpuLoad);
+
+            return new BenchmarkResult(averageTimeElapsedMongo, averageTimeElapsedInMillisecondsMongo, averageTimeElapsedRedis, averageTimeElapsedInMillisecondsRedis, averageCpuLoad, runs);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //DELETE USER
+    public void deleteRandomUsers(int count) {
+        List<User> users = userServiceMongo.getRandomUsers(count);
+        for (User user : users) {
+            if (user != null) {
+                userServiceMongo.deleteUser(user.getId());
+                userServiceRedis.deleteUser(user.getId());
+                System.out.println("Movie deleted: " + user.getId());
+            }
+        }
+    }
 
 
+    public BenchmarkResult deleteUsers(int count, int runs) {
+        try {
+            long totalStartTimeMongo = 0;
+            long totalEndTimeMongo = 0;
+            long totalStartTimeRedis = 0;
+            long totalEndTimeRedis = 0;
+            double totalCpuLoad = 0.0;
+
+            // Warm-up
+            for (int i = 0; i < 10; i++) {
+                deleteRandomUsers(count);
+            }
+
+            for (int i = 0; i < runs; i++) {
+                // Benchmark MongoDB
+                long startTimeMongo = System.nanoTime();
+                deleteRandomUsers(count);
+                long endTimeMongo = System.nanoTime();
+                totalStartTimeMongo += startTimeMongo;
+                totalEndTimeMongo += endTimeMongo;
+
+                // Benchmark Redis
+                long startTimeRedis = System.nanoTime();
+                deleteRandomUsers(count);
+                long endTimeRedis = System.nanoTime();
+                totalStartTimeRedis += startTimeRedis;
+                totalEndTimeRedis += endTimeRedis;
+
+                // Measure CPU load
+                OperatingSystemMXBean operatingSystemMXBean = ManagementFactory.getOperatingSystemMXBean();
+                double cpuLoad = operatingSystemMXBean.getSystemLoadAverage();
+                totalCpuLoad += cpuLoad;
+                System.out.println("CPU Load for run " + (i + 1) + ": " + cpuLoad);
+            }
+
+            long averageTimeElapsedMongo = (totalEndTimeMongo - totalStartTimeMongo) / runs;
+            long averageTimeElapsedRedis = (totalEndTimeRedis - totalStartTimeRedis) / runs;
+            long averageTimeElapsedInMillisecondsMongo = averageTimeElapsedMongo / 1000000;
+            long averageTimeElapsedInMillisecondsRedis = averageTimeElapsedRedis / 1000000;
+            double averageCpuLoad = totalCpuLoad / runs;
+
+            System.out.println("Average execution time for MongoDB in nanoseconds: " + averageTimeElapsedMongo);
+            System.out.println("Average execution time for MongoDB in milliseconds: " + averageTimeElapsedInMillisecondsMongo);
+            System.out.println("Average execution time for Redis in nanoseconds: " + averageTimeElapsedRedis);
+            System.out.println("Average execution time for Redis in milliseconds: " + averageTimeElapsedInMillisecondsRedis);
+            System.out.println("Average CPU Load: " + averageCpuLoad);
+
+            return new BenchmarkResult(averageTimeElapsedMongo, averageTimeElapsedInMillisecondsMongo, averageTimeElapsedRedis, averageTimeElapsedInMillisecondsRedis, averageCpuLoad, runs);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }

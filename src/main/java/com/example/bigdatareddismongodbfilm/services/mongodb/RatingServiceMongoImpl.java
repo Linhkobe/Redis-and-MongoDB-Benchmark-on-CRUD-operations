@@ -31,6 +31,12 @@ public class RatingServiceMongoImpl implements RatingServiceMongo {
         return ratingRepository.findAll(pageable).getContent();
     }
 
+    public List<Rating> getRandomRatings(int count) {
+        Pageable pageable = PageRequest.of(0, count);
+        List<Rating> randomRatings = ratingRepository.findAll(pageable).getContent();
+        return randomRatings;
+    }
+
 
     @Autowired
     private RatingRedisService ratingRedisService;  // Autowired Redis Service

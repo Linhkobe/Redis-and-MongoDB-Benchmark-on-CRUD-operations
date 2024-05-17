@@ -300,7 +300,45 @@
       </mat-tab>
 
       <mat-tab label="Delete">
-        <!-- Add Delete Form here if needed -->
+        <form #deleteRatingForm="ngForm" (ngSubmit)="deleteRatings()">
+          <mat-form-field class="input-field">
+            <input matInput type="number" name="count" ngModel placeholder="Number of movies to delete">
+          </mat-form-field>
+          <mat-form-field class="input-field">
+            <input matInput type="number" name="runs" ngModel placeholder="Number of runs to delete">
+          </mat-form-field>
+          <button mat-flat-button color="warn" type="submit">Delete Benchmark</button>
+        </form>
+        <mat-table [dataSource]="resultsDeleteRating" class="mat-elevation-z8">
+          <!-- Column definitions -->
+          <ng-container matColumnDef="averageTimeElapsedMongo">
+            <mat-header-cell *matHeaderCellDef> Average Time Elapsed Mongo </mat-header-cell>
+            <mat-cell *matCellDef="let resultsDeleteRating"> {{resultsDeleteRating.averageTimeElapsedMongo}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="averageTimeElapsedInMillisecondsMongo">
+            <mat-header-cell *matHeaderCellDef> Average Time Elapsed In Milliseconds Mongo </mat-header-cell>
+            <mat-cell *matCellDef="let resultsDeleteRating"> {{resultsDeleteRating.averageTimeElapsedInMillisecondsMongo}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="averageTimeElapsedRedis">
+            <mat-header-cell *matHeaderCellDef> Average Time Elapsed Redis </mat-header-cell>
+            <mat-cell *matCellDef="let resultsDeleteRating"> {{resultsDeleteRating.averageTimeElapsedRedis}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="averageTimeElapsedInMillisecondsRedis">
+            <mat-header-cell *matHeaderCellDef> Average Time Elapsed In Milliseconds Redis </mat-header-cell>
+            <mat-cell *matCellDef="let resultsDeleteRating"> {{resultsDeleteRating.averageTimeElapsedInMillisecondsRedis}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="averageCpuLoad">
+            <mat-header-cell *matHeaderCellDef> Average CPU Load </mat-header-cell>
+            <mat-cell *matCellDef="let resultsDeleteMovie"> {{resultsDeleteMovie.averageCpuLoad}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="runs">
+            <mat-header-cell *matHeaderCellDef> Runs </mat-header-cell>
+            <mat-cell *matCellDef="let resultsDeleteRating"> {{resultsDeleteRating.runs}} </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <app-dashboard *ngIf="showDashboardDeleteRating"></app-dashboard>
       </mat-tab>
     </mat-tab-group>
   </mat-tab>
@@ -434,7 +472,45 @@
       </mat-tab>
 
       <mat-tab label="Delete">
-        <!-- Add Delete Form here if needed -->
+        <form #deleteUserForm="ngForm" (ngSubmit)="deleteUsers()">
+          <mat-form-field class="input-field">
+            <input matInput type="number" name="count" ngModel placeholder="Number of movies to delete">
+          </mat-form-field>
+          <mat-form-field class="input-field">
+            <input matInput type="number" name="runs" ngModel placeholder="Number of runs to delete">
+          </mat-form-field>
+          <button mat-flat-button color="warn" type="submit">Delete Benchmark</button>
+        </form>
+        <mat-table [dataSource]="resultsDeleteUser" class="mat-elevation-z8">
+          <!-- Column definitions -->
+          <ng-container matColumnDef="averageTimeElapsedMongo">
+            <mat-header-cell *matHeaderCellDef> Average Time Elapsed Mongo </mat-header-cell>
+            <mat-cell *matCellDef="let resultsDeleteUser"> {{resultsDeleteUser.averageTimeElapsedMongo}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="averageTimeElapsedInMillisecondsMongo">
+            <mat-header-cell *matHeaderCellDef> Average Time Elapsed In Milliseconds Mongo </mat-header-cell>
+            <mat-cell *matCellDef="let resultsDeleteUser"> {{resultsDeleteUser.averageTimeElapsedInMillisecondsMongo}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="averageTimeElapsedRedis">
+            <mat-header-cell *matHeaderCellDef> Average Time Elapsed Redis </mat-header-cell>
+            <mat-cell *matCellDef="let resultsDeleteUser"> {{resultsDeleteUser.averageTimeElapsedRedis}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="averageTimeElapsedInMillisecondsRedis">
+            <mat-header-cell *matHeaderCellDef> Average Time Elapsed In Milliseconds Redis </mat-header-cell>
+            <mat-cell *matCellDef="let resultsDeleteUser"> {{resultsDeleteUser.averageTimeElapsedInMillisecondsRedis}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="averageCpuLoad">
+            <mat-header-cell *matHeaderCellDef> Average CPU Load </mat-header-cell>
+            <mat-cell *matCellDef="let resultsDeleteUser"> {{resultsDeleteUser.averageCpuLoad}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="runs">
+            <mat-header-cell *matHeaderCellDef> Runs </mat-header-cell>
+            <mat-cell *matCellDef="let resultsDeleteUser"> {{resultsDeleteUser.runs}} </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <app-dashboard *ngIf="showDashboardDeleteUser"></app-dashboard>
       </mat-tab>
     </mat-tab-group>
   </mat-tab>

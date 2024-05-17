@@ -1,5 +1,6 @@
 package com.example.bigdatareddismongodbfilm.services.mongodb;
 
+import com.example.bigdatareddismongodbfilm.entity.Movie;
 import com.example.bigdatareddismongodbfilm.entity.Rating;
 import com.example.bigdatareddismongodbfilm.entity.User;
 import com.example.bigdatareddismongodbfilm.repositories.mongodb.UserRepository;
@@ -10,8 +11,10 @@ import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -26,7 +29,13 @@ public class UserServiceMongoImpl implements UserServiceMongo {
         Pageable pageable = PageRequest.of(0, n);
         return userRepository.findAll(pageable).getContent();
     }
+    public List<User> getRandomUsers(int count) {
+        Pageable pageable = PageRequest.of(0, count, Sort.by("id").ascending());
 
+        List<User> randomUsers = userRepository.findAll(pageable).getContent();
+
+        return randomUsers;
+    }
 
     @Autowired
     private UserRedisService userRedisService;  // Autowired Redis Service

@@ -18,4 +18,5 @@ public interface UserRedisService {
     User updateUser(String id, User user);
     User updateUserBenchmark(String id, User user);
     List<User> getFirstNUsers(int n);
+    List<User> getRandomUsers(int count);
 }

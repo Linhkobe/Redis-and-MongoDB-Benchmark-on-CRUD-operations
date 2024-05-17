@@ -16,4 +16,5 @@ public interface UserServiceMongo {
     User getRandomUser();
     User updateUserBenchmark(String id, User user);
     List<User> getFirstNUsers(int n);
+    List <User> getRandomUsers(int count);
 }

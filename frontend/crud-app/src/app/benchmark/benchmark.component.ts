@@ -19,6 +19,8 @@ export class BenchmarkComponent implements OnInit {
   showDashboardFindRating = false;
   showDashboardFindUser = false;
   showDashboardDeleteMovie = false;
+  showDashboardDeleteRating = false;
+  showDashboardDeleteUser = false;
   resultsFindMovie: any[] = [];
   resultsFindRating: any[] = [];
   resultsFindUser: any[] = [];
@@ -29,6 +31,8 @@ export class BenchmarkComponent implements OnInit {
   resultsCreateRating: any[] = [];
   resultsCreateUser: any[] = [];
   resultsDeleteMovie: any[] = [];
+  resultsDeleteRating: any[] = [];
+  resultsDeleteUser: any[] = [];
 
   displayedColumns: string[] = ['averageTimeElapsedMongo', 'averageTimeElapsedInMillisecondsMongo', 'averageTimeElapsedRedis', 'averageTimeElapsedInMillisecondsRedis', 'averageCpuLoad', 'runs'];
 
@@ -43,6 +47,8 @@ export class BenchmarkComponent implements OnInit {
   @ViewChild('findMovieForm') findMovieForm!: NgForm;
   @ViewChild('findUserForm') findUserForm!: NgForm;
   @ViewChild('deleteMovieForm') deleteMovieForm!: NgForm;
+  @ViewChild('deleteRatingForm') deleteRatingForm!: NgForm;
+  @ViewChild('deleteUserForm') deleteUserForm!: NgForm;
 
 
   constructor(private benchmarkService: BenchmarkService, private sharedService: SharedService) {}
@@ -64,6 +70,9 @@ export class BenchmarkComponent implements OnInit {
         this.showDashboardUpdateMovie = false;
         this.showDashboardUpdateRating = false;
         this.showDashboardUpdatUser = false;
+        this.showDashboardDeleteUser = false;
+        this.showDashboardDeleteRating = false;
+        this.showDashboardDeleteMovie = false;
       },
       error: (error) => {
         console.error('Error:', error);
@@ -109,6 +118,9 @@ export class BenchmarkComponent implements OnInit {
         this.showDashboardUpdateMovie = false;
         this.showDashboardUpdateRating = false;
         this.showDashboardUpdatUser = false;
+        this.showDashboardDeleteUser = false;
+        this.showDashboardDeleteRating = false;
+        this.showDashboardDeleteMovie = false;
 
       },
       error: (error) => {
@@ -133,6 +145,9 @@ export class BenchmarkComponent implements OnInit {
           this.showDashboardUpdateMovie = true;
           this.showDashboardUpdateRating = false;
           this.showDashboardUpdatUser = false;
+          this.showDashboardDeleteUser = false;
+          this.showDashboardDeleteRating = false;
+          this.showDashboardDeleteMovie = false;
         },
         error: (error) => {
           console.error('Error:', error);
@@ -156,7 +171,9 @@ export class BenchmarkComponent implements OnInit {
           this.showDashboardUpdateMovie = false;
           this.showDashboardUpdateRating = true;
           this.showDashboardUpdatUser = false;
-
+          this.showDashboardDeleteUser = false;
+          this.showDashboardDeleteRating = false;
+          this.showDashboardDeleteMovie = false;
         },
         error: (error) => {
           console.error('Error:', error);
@@ -180,7 +197,9 @@ export class BenchmarkComponent implements OnInit {
           this.showDashboardUpdateMovie = false;
           this.showDashboardUpdateRating = false;
           this.showDashboardUpdatUser = true;
-
+          this.showDashboardDeleteUser = false;
+          this.showDashboardDeleteRating = false;
+          this.showDashboardDeleteMovie = false;
         },
         error: (error) => {
           console.error('Error:', error);
@@ -205,6 +224,9 @@ export class BenchmarkComponent implements OnInit {
         this.showDashboardUpdateRating = false;
         this.showDashboardUpdatUser = false;
         this.showDashboardFindMovie = true;
+        this.showDashboardDeleteUser = false;
+        this.showDashboardDeleteRating = false;
+        this.showDashboardDeleteMovie = false;
       },
       error: (error) => {
         console.error('Error:', error);
@@ -231,6 +253,9 @@ export class BenchmarkComponent implements OnInit {
         this.showDashboardUpdateMovie = false;
         this.showDashboardUpdateRating = false;
         this.showDashboardUpdatUser = false;
+        this.showDashboardDeleteUser = false;
+        this.showDashboardDeleteRating = false;
+        this.showDashboardDeleteMovie = false;
       },
       error: (error) => {
         console.error('Error:', error);
@@ -256,6 +281,9 @@ export class BenchmarkComponent implements OnInit {
         this.showDashboardUpdateMovie = false;
         this.showDashboardUpdateRating = false;
         this.showDashboardUpdatUser = false;
+        this.showDashboardDeleteUser = false;
+        this.showDashboardDeleteRating = false;
+        this.showDashboardDeleteMovie = false;
       },
       error: (error) => {
         console.error('Error:', error);
@@ -281,6 +309,62 @@ export class BenchmarkComponent implements OnInit {
         this.showDashboardUpdateRating = false;
         this.showDashboardUpdatUser = false;
         this.showDashboardDeleteMovie = true;
+      },
+      error: (error) => {
+        console.error('Error:', error);
+      }
+    });
+  }
+
+  deleteRatings() {
+    const count = this.deleteRatingForm.value.count;
+    const runs = this.deleteRatingForm.value.runs;
+
+    this.benchmarkService.deleteRatings(count, runs).subscribe({
+      next: (response) => {
+        console.log('Response:', response);
+        this.resultsDeleteRating = [response]; //must change
+        this.sharedService.updateBenchmarkData(response);
+        this.showDashboardCreateMovie = false;
+        this.showDashboardCreateRating = false;
+        this.showDashboardCreateUser = false;
+        this.showDashboardFindRating = false;
+        this.showDashboardFindMovie = false;
+        this.showDashboardFindUser = false;
+        this.showDashboardUpdateMovie = false;
+        this.showDashboardUpdateRating = false;
+        this.showDashboardUpdatUser = false;
+        this.showDashboardDeleteMovie = false;
+        this.showDashboardDeleteRating = true;
+        this.showDashboardDeleteUser = false;
+      },
+      error: (error) => {
+        console.error('Error:', error);
+      }
+    });
+  }
+
+  deleteUsers() {
+    const count = this.deleteUserForm.value.count;
+    const runs = this.deleteUserForm.value.runs;
+
+    this.benchmarkService.deleteUsers(count, runs).subscribe({
+      next: (response) => {
+        console.log('Response:', response);
+        this.resultsDeleteUser = [response]; //must change
+        this.sharedService.updateBenchmarkData(response);
+        this.showDashboardCreateMovie = false;
+        this.showDashboardCreateRating = false;
+        this.showDashboardCreateUser = false;
+        this.showDashboardFindRating = false;
+        this.showDashboardFindMovie = false;
+        this.showDashboardFindUser = false;
+        this.showDashboardUpdateMovie = false;
+        this.showDashboardUpdateRating = false;
+        this.showDashboardUpdatUser = false;
+        this.showDashboardDeleteMovie = false;
+        this.showDashboardDeleteRating = false;
+        this.showDashboardDeleteUser = true;
       },
       error: (error) => {
         console.error('Error:', error);
