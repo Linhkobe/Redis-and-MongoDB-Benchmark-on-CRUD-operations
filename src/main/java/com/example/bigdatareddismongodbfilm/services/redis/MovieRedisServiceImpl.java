@@ -63,5 +63,9 @@ public class MovieRedisServiceImpl implements MovieRedisService {
         Movie updatedMovie = movieRedisRepository.save(movie);
         return updatedMovie;
     }
+    public void deleteMovieById(String id) {
+        movieRedisRepository.deleteById(id);
+    }
+
 
 }

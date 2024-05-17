@@ -60,5 +60,10 @@ public class BenchmarkController {
         System.out.println("Received request with Count: " + count + ", Runs: " + runs);
         return benchmarkService.findUsers(count, runs);
     }
+    @DeleteMapping("/api/benchmark/deleteMovies")
+    public BenchmarkResult deleteMovies(@RequestParam int count ,@RequestParam int runs) {
+        System.out.println("Received request with Count: " + count + ", Runs: " + runs );
+        return benchmarkService.deleteMovies(count,runs);
+    }
 
 }

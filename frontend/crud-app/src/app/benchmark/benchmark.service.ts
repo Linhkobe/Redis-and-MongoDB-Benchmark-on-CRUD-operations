@@ -122,4 +122,16 @@ export class BenchmarkService {
         })
       );
   }
+  deleteMovies(count: number, runs: number): Observable<any> {
+    let params = new HttpParams().set('count', count.toString()).set('runs', runs.toString());
+    console.log(`Sending request with Count: ${count}, Runs: ${runs}`);
+    return this.http.delete(`${this.apiUrl}/deleteMovies`, { params: params })
+      .pipe(
+        tap((response: any) => console.log('Response:', response)),
+        catchError(error => {
+          console.error('Error:', error);
+          throw error;
+        })
+      );
+  }
 }

@@ -13,7 +13,8 @@ public interface MovieServiceMongo {
     Movie updateMovie(String id, Movie movie);
     void deleteMovie(String id);
     Page<Movie> getAllMovies(Pageable pageable);
-
+    void deleteMovieById(String id);
+    List<Movie> getRandomMovies(int count);
     Movie getRandomMovie();
     Movie updateMovieBenchmark(String id, Movie movie);
     List<Movie> getFirstNMovies(int n);

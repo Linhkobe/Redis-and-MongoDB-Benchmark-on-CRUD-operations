@@ -18,6 +18,7 @@ export class BenchmarkComponent implements OnInit {
   showDashboardFindMovie = false;
   showDashboardFindRating = false;
   showDashboardFindUser = false;
+  showDashboardDeleteMovie = false;
   resultsFindMovie: any[] = [];
   resultsFindRating: any[] = [];
   resultsFindUser: any[] = [];
@@ -27,6 +28,8 @@ export class BenchmarkComponent implements OnInit {
   resultsCreateMovie: any[] = [];
   resultsCreateRating: any[] = [];
   resultsCreateUser: any[] = [];
+  resultsDeleteMovie: any[] = [];
+
   displayedColumns: string[] = ['averageTimeElapsedMongo', 'averageTimeElapsedInMillisecondsMongo', 'averageTimeElapsedRedis', 'averageTimeElapsedInMillisecondsRedis', 'averageCpuLoad', 'runs'];
 
   @ViewChild('movieForm') movieForm!: NgForm;
@@ -39,6 +42,7 @@ export class BenchmarkComponent implements OnInit {
   @ViewChild('findRatingForm') findRatingForm!: NgForm;
   @ViewChild('findMovieForm') findMovieForm!: NgForm;
   @ViewChild('findUserForm') findUserForm!: NgForm;
+  @ViewChild('deleteMovieForm') deleteMovieForm!: NgForm;
 
 
   constructor(private benchmarkService: BenchmarkService, private sharedService: SharedService) {}
@@ -252,6 +256,31 @@ export class BenchmarkComponent implements OnInit {
         this.showDashboardUpdateMovie = false;
         this.showDashboardUpdateRating = false;
         this.showDashboardUpdatUser = false;
+      },
+      error: (error) => {
+        console.error('Error:', error);
+      }
+    });
+  }
+  deleteMovies() {
+    const count = this.deleteMovieForm.value.count;
+    const runs = this.deleteMovieForm.value.runs;
+
+    this.benchmarkService.deleteMovies(count, runs).subscribe({
+      next: (response) => {
+        console.log('Response:', response);
+        this.resultsDeleteMovie = [response]; //must change
+        this.sharedService.updateBenchmarkData(response);
+        this.showDashboardCreateMovie = false;
+        this.showDashboardCreateRating = false;
+        this.showDashboardCreateUser = false;
+        this.showDashboardFindRating = false;
+        this.showDashboardFindMovie = false;
+        this.showDashboardFindUser = false;
+        this.showDashboardUpdateMovie = false;
+        this.showDashboardUpdateRating = false;
+        this.showDashboardUpdatUser = false;
+        this.showDashboardDeleteMovie = true;
       },
       error: (error) => {
         console.error('Error:', error);

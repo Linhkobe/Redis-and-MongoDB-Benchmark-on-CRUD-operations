@@ -128,7 +128,45 @@
       </mat-tab>
 
       <mat-tab label="Delete">
-        <!-- Add Delete Form here if needed -->
+        <form #deleteMovieForm="ngForm" (ngSubmit)="deleteMovies()">
+          <mat-form-field class="input-field">
+            <input matInput type="number" name="count" ngModel placeholder="Number of movies to delete">
+          </mat-form-field>
+          <mat-form-field class="input-field">
+            <input matInput type="number" name="runs" ngModel placeholder="Number of runs to delete">
+          </mat-form-field>
+          <button mat-flat-button color="warn" type="submit">Delete Benchmark</button>
+        </form>
+        <mat-table [dataSource]="resultsDeleteMovie" class="mat-elevation-z8">
+          <!-- Column definitions -->
+          <ng-container matColumnDef="averageTimeElapsedMongo">
+            <mat-header-cell *matHeaderCellDef> Average Time Elapsed Mongo </mat-header-cell>
+            <mat-cell *matCellDef="let resultsDeleteMovie"> {{resultsDeleteMovie.averageTimeElapsedMongo}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="averageTimeElapsedInMillisecondsMongo">
+            <mat-header-cell *matHeaderCellDef> Average Time Elapsed In Milliseconds Mongo </mat-header-cell>
+            <mat-cell *matCellDef="let resultsDeleteMovie"> {{resultsDeleteMovie.averageTimeElapsedInMillisecondsMongo}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="averageTimeElapsedRedis">
+            <mat-header-cell *matHeaderCellDef> Average Time Elapsed Redis </mat-header-cell>
+            <mat-cell *matCellDef="let resultsDeleteMovie"> {{resultsDeleteMovie.averageTimeElapsedRedis}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="averageTimeElapsedInMillisecondsRedis">
+            <mat-header-cell *matHeaderCellDef> Average Time Elapsed In Milliseconds Redis </mat-header-cell>
+            <mat-cell *matCellDef="let resultsDeleteMovie"> {{resultsDeleteMovie.averageTimeElapsedInMillisecondsRedis}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="averageCpuLoad">
+            <mat-header-cell *matHeaderCellDef> Average CPU Load </mat-header-cell>
+            <mat-cell *matCellDef="let resultsDeleteMovie"> {{resultsDeleteMovie.averageCpuLoad}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="runs">
+            <mat-header-cell *matHeaderCellDef> Runs </mat-header-cell>
+            <mat-cell *matCellDef="let resultsDeleteMovie"> {{resultsDeleteMovie.runs}} </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <app-dashboard *ngIf="showDashboardDeleteMovie"></app-dashboard>
       </mat-tab>
     </mat-tab-group>
   </mat-tab>

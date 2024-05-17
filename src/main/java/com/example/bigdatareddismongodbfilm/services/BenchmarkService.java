@@ -731,6 +731,74 @@ public class BenchmarkService {
             return null;
         }
     }
+    // DELETE
+    public void deleteRandomMovies(int count) {
+        List<Movie> movies = movieServiceMongo.getRandomMovies(count);
+        for (Movie movie : movies) {
+            if (movie != null) {
+                movieServiceMongo.deleteMovieById(movie.getId());
+                movieServiceRedis.deleteMovieById(movie.getId());
+                System.out.println("Movie deleted: " + movie.getId());
+            }
+        }
+    }
+
+
+    public BenchmarkResult deleteMovies(int count, int runs) {
+        try {
+            long totalStartTimeMongo = 0;
+            long totalEndTimeMongo = 0;
+            long totalStartTimeRedis = 0;
+            long totalEndTimeRedis = 0;
+            double totalCpuLoad = 0.0;
+
+            // Warm-up
+            for (int i = 0; i < 10; i++) {
+                deleteRandomMovies(count);
+            }
+
+            for (int i = 0; i < runs; i++) {
+                // Benchmark MongoDB
+                long startTimeMongo = System.nanoTime();
+                deleteRandomMovies(count);
+                long endTimeMongo = System.nanoTime();
+                totalStartTimeMongo += startTimeMongo;
+                totalEndTimeMongo += endTimeMongo;
+
+                // Benchmark Redis
+                long startTimeRedis = System.nanoTime();
+                deleteRandomMovies(count);
+                long endTimeRedis = System.nanoTime();
+                totalStartTimeRedis += startTimeRedis;
+                totalEndTimeRedis += endTimeRedis;
+
+                // Measure CPU load
+                OperatingSystemMXBean operatingSystemMXBean = ManagementFactory.getOperatingSystemMXBean();
+                double cpuLoad = operatingSystemMXBean.getSystemLoadAverage();
+                totalCpuLoad += cpuLoad;
+                System.out.println("CPU Load for run " + (i + 1) + ": " + cpuLoad);
+            }
+
+            long averageTimeElapsedMongo = (totalEndTimeMongo - totalStartTimeMongo) / runs;
+            long averageTimeElapsedRedis = (totalEndTimeRedis - totalStartTimeRedis) / runs;
+            long averageTimeElapsedInMillisecondsMongo = averageTimeElapsedMongo / 1000000;
+            long averageTimeElapsedInMillisecondsRedis = averageTimeElapsedRedis / 1000000;
+            double averageCpuLoad = totalCpuLoad / runs;
+
+            System.out.println("Average execution time for MongoDB in nanoseconds: " + averageTimeElapsedMongo);
+            System.out.println("Average execution time for MongoDB in milliseconds: " + averageTimeElapsedInMillisecondsMongo);
+            System.out.println("Average execution time for Redis in nanoseconds: " + averageTimeElapsedRedis);
+            System.out.println("Average execution time for Redis in milliseconds: " + averageTimeElapsedInMillisecondsRedis);
+            System.out.println("Average CPU Load: " + averageCpuLoad);
+
+            return new BenchmarkResult(averageTimeElapsedMongo, averageTimeElapsedInMillisecondsMongo, averageTimeElapsedRedis, averageTimeElapsedInMillisecondsRedis, averageCpuLoad, runs);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
 
 
 

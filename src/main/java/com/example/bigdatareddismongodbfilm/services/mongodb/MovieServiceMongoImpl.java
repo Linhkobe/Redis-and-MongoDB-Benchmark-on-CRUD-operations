@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
@@ -97,6 +98,19 @@ public class MovieServiceMongoImpl implements MovieServiceMongo {
             // Aucun film trouvé dans la base de données
             return null;
         }
+    }
+
+    @Override
+    public void deleteMovieById(String id) {
+        movieRepository.deleteById(id);
+        movieRedisService.deleteMovie(id);  // Delete from Redis as well
+    }
+    public List<Movie> getRandomMovies(int count) {
+        Pageable pageable = PageRequest.of(0, count, Sort.by("id").ascending());
+
+        List<Movie> randomMovies = movieRepository.findAll(pageable).getContent();
+
+        return randomMovies;
     }
 
 

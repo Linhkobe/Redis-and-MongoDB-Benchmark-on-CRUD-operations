@@ -13,7 +13,7 @@ public interface MovieRedisService {
     void deleteMovie(String id);
     List<Movie> findAllMovies();
     Movie updateMovie(String id, Movie movie);
-
+    void deleteMovieById(String id);
     Page<Movie> getAllMovies(Pageable pageable);
     Movie updateMovieBenchmark(String id, Movie movie);
     List<Movie> getFirstNMovies(int n);
