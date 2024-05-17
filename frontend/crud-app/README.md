@@ -39,11 +39,11 @@ Pour lancer le projet, vous pouvez suivre les étapes suivants :
 - En termes du frontend, mettez dans "projet-de-d-veloppement-big-data-dao_trinh_brezzo_hassad_zaher/frontend/crud-app" et lancez la commande "npm install " et puis "ng serve -o".
 4) Maintenant vous pouvez voir l'interface de l'application, il y a un sidnav avec deux options "CRUD mongodb", "CRUD Redis" et "Benchmark" :
 - Dans l'option "CRUD", vous pouvez faire l'opération CRUD avec toutes les trois entités avec deux SGBD, par exemple avec entité "Movie" :
-![img.png](img.png)
-![img_1.png](img_1.png)
+![img.png](../../img.png)
+![img_1.png](../../img_1.png)
   + "Create" - ajouter un nouveau film à la base de données.
   + "Read" - consulter/trouver un film par "id" du film.
   + "Update" - mettre à jour un film.
   + "Delete" - supprimer un film.
 - Dans l'option "Benchmark", ici vous pouvez expérimenter la comparaison en termes de performance entre deux SGBD MongoDB et Redis
-![img_2.png](img_2.png)
+![img_2.png](../../img_2.png)
