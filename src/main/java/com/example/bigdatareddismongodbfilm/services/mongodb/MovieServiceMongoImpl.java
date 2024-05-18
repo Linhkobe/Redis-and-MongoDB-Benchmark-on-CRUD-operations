@@ -6,16 +6,27 @@ import com.example.bigdatareddismongodbfilm.services.redis.MovieRedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Criteria;
+
 
 @Service
 public class MovieServiceMongoImpl implements MovieServiceMongo {
+    @Autowired
+    private Environment env;
 
     @Autowired
     private MovieRepository movieRepository;
@@ -72,12 +83,45 @@ public class MovieServiceMongoImpl implements MovieServiceMongo {
         return movieRepository.findAll(pageable);
     }
 
-    // Method to initialize Redis with data from MongoDB at startup
+    // Method to initialize Redis with data from MongoAtlas at startup
     @EventListener(ContextRefreshedEvent.class)
     public void initRedisWithMongoData() {
-        List<Movie> allMovies = getAllMovies();  // Retrieve all movies from MongoDB
+        List<Movie> allMovies = getAllMoviesFromAtlas();  // Retrieve all movies from MongoDB Atlas
         allMovies.forEach(movieRedisService::saveMovie);  // Save each movie to Redis
-        System.out.println("Initialized Redis with existing MongoDB data(MOVIE collection).");
+        System.out.println("Initialized Redis with existing MongoDB Atlas data(MOVIE collection).");
+    }
+
+    // Method to initialize local MongoDB with data from MongoDB Atlas at startup
+    @EventListener(ContextRefreshedEvent.class)
+    public void initLocalMongoWithAtlasData() {
+        List<Movie> allMovies = getAllMoviesFromAtlas();  // Retrieve all movies from MongoDB Atlas
+        allMovies.forEach(movieRepository::save);  // Save each movie to local MongoDB
+        System.out.println("Initialized local MongoDB with existing MongoDB Atlas data(MOVIE collection).");
+    }
+
+
+
+// ...
+
+    public List<Movie> getAllMoviesFromAtlas() {
+        try {
+            String atlasUri = Objects.requireNonNull(env.getProperty("SPRING_DATA_MONGODB_ATLAS_URI"));
+            System.out.println("MongoDB Atlas URI: " + atlasUri);
+
+            MongoTemplate mongoTemplateAtlas = new MongoTemplate(new SimpleMongoClientDatabaseFactory(atlasUri));
+
+            Query query = new Query();
+            query.limit(1000);  // Limit to 1000 records
+
+            List<Movie> movies = mongoTemplateAtlas.find(query, Movie.class);
+
+            System.out.println("Number of movies retrieved from MongoDB Atlas: " + movies.size());
+            return movies;
+        } catch (Exception e) {
+            System.out.println("An error occurred while retrieving movies from MongoDB Atlas:");
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 
     public Movie getRandomMovie() {

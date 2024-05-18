@@ -4,7 +4,7 @@ services:
   app:
     image: app-bigdata
     environment:
-      - SPRING_DATA_MONGODB_URI=mongodb+srv://trinh:123@cluster0.qxwqfkh.mongodb.net/filmDatabase
+      - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/filmDatabase
       - SPRING_DATA_REDIS_HOST=redis
       - SPRING_DATA_REDIS_PORT=6379
     ports:

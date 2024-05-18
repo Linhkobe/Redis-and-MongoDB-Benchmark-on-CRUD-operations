@@ -1,26 +1,34 @@
 package com.example.bigdatareddismongodbfilm.services.mongodb;
 
-import com.example.bigdatareddismongodbfilm.entity.Movie;
 import com.example.bigdatareddismongodbfilm.entity.Rating;
 import com.example.bigdatareddismongodbfilm.repositories.mongodb.RatingRepository;
 import com.example.bigdatareddismongodbfilm.services.redis.RatingRedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 @Service
 public class RatingServiceMongoImpl implements RatingServiceMongo {
 
     private static final Logger logger = LoggerFactory.getLogger(RatingServiceMongoImpl.class);
+
+    @Autowired
+    private Environment env;
 
     @Autowired
     private RatingRepository ratingRepository;
@@ -83,12 +91,40 @@ public class RatingServiceMongoImpl implements RatingServiceMongo {
     }
 
 
-    // Method to initialize Redis with data from MongoDB at startup
+
     @EventListener(ContextRefreshedEvent.class)
     public void initRedisWithMongoData() {
-        List<Rating> allRatings = getAllRatings();  // Retrieve all ratings from MongoDB
-        allRatings.forEach(ratingRedisService::saveRating);  // Save each rating to Redis
-        System.out.println("Initialized Redis with existing MongoDB data(RATING collection).");
+        List<Rating> allRatings = getAllRatingsFromAtlas();
+        allRatings.forEach(ratingRedisService::saveRating);
+        System.out.println("Initialized Redis with existing MongoDB Atlas data(RATING collection).");
+    }
+
+    @EventListener(ContextRefreshedEvent.class)
+    public void initLocalMongoWithAtlasData() {
+        List<Rating> allRatings = getAllRatingsFromAtlas();
+        allRatings.forEach(ratingRepository::save);
+        System.out.println("Initialized local MongoDB with existing MongoDB Atlas data(RATING collection).");
+    }
+
+    public List<Rating> getAllRatingsFromAtlas() {
+        try {
+            String atlasUri = Objects.requireNonNull(env.getProperty("SPRING_DATA_MONGODB_ATLAS_URI"));
+            System.out.println("MongoDB Atlas URI: " + atlasUri);
+
+            MongoTemplate mongoTemplateAtlas = new MongoTemplate(new SimpleMongoClientDatabaseFactory(atlasUri));
+
+            Query query = new Query();
+            query.limit(1000);
+
+            List<Rating> ratings = mongoTemplateAtlas.find(query, Rating.class);
+
+            System.out.println("Number of ratings retrieved from MongoDB Atlas: " + ratings.size());
+            return ratings;
+        } catch (Exception e) {
+            System.out.println("An error occurred while retrieving ratings from MongoDB Atlas:");
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 
     public Rating getRandomRating() {

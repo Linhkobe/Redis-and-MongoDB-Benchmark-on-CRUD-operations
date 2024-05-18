@@ -27,6 +27,14 @@
 + H2 Database
 + Lombok
 
+# Peuplement des bases de données locales
+
+Lors du démarrage de l'application, les bases de données locales MongoDB et Redis sont automatiquement peuplées avec des données provenant de MongoDB Atlas. Ce processus est géré par les méthodes `initLocalMongoWithAtlasData` et `initRedisWithMongoData` dans les classes `MovieServiceMongoImpl`, `RatingServiceMongoImpl` et `UserServiceMongoImpl`.
+
+Ces méthodes récupèrent les 1000 premiers enregistrements de chaque collection (Movie, Rating, User) depuis MongoDB Atlas, puis les sauvegardent dans les bases de données locales. Le nombre d'enregistrements récupérés peut être ajusté en modifiant la valeur de la limite dans l'objet `Query` utilisé pour récupérer les données.
+
+Notez que ce processus est effectué à chaque démarrage de l'application.
+
 # Comment lancer/expérimenter le projet
 Pour lancer le projet, vous pouvez suivre les étapes suivants :
 1) Clonez le projet par la commande "git clone https://github.com/M1-MIAGE-23-24/projet-de-d-veloppement-big-data-dao_trinh_brezzo_hassad_zaher.git"
@@ -45,3 +53,5 @@ Pour lancer le projet, vous pouvez suivre les étapes suivants :
     + "Delete" - supprimer un film.
 - Dans l'option "Benchmark", ici vous pouvez expérimenter la comparaison en termes de performance entre deux SGBD MongoDB et Redis
   ![img_2.png](img_2.png)
+
+

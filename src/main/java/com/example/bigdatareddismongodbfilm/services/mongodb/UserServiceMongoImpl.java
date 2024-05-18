@@ -8,6 +8,7 @@ import com.example.bigdatareddismongodbfilm.services.redis.UserRedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
@@ -16,10 +17,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
 
 @Service
 public class UserServiceMongoImpl implements UserServiceMongo {
+    @Autowired
+    private Environment env;
 
     @Autowired
     private UserRepository userRepository;
@@ -75,12 +82,39 @@ public class UserServiceMongoImpl implements UserServiceMongo {
         return userRepository.findAll(pageable);
     }
 
-    // Method to initialize Redis with data from MongoDB at startup
     @EventListener(ContextRefreshedEvent.class)
     public void initRedisWithMongoData() {
-        List<User> allUsers = getAllUsers();  // Retrieve all users from MongoDB
-        allUsers.forEach(userRedisService::saveUser);  // Save each user to Redis
-        System.out.println("Initialized Redis with existing MongoDB data(USER collection).");
+        List<User> allUsers = getAllUsersFromAtlas();
+        allUsers.forEach(userRedisService::saveUser);
+        System.out.println("Initialized Redis with existing MongoDB Atlas data(USER collection).");
+    }
+
+    @EventListener(ContextRefreshedEvent.class)
+    public void initLocalMongoWithAtlasData() {
+        List<User> allUsers = getAllUsersFromAtlas();
+        allUsers.forEach(userRepository::save);
+        System.out.println("Initialized local MongoDB with existing MongoDB Atlas data(USER collection).");
+    }
+
+    public List<User> getAllUsersFromAtlas() {
+        try {
+            String atlasUri = Objects.requireNonNull(env.getProperty("SPRING_DATA_MONGODB_ATLAS_URI"));
+            System.out.println("MongoDB Atlas URI: " + atlasUri);
+
+            MongoTemplate mongoTemplateAtlas = new MongoTemplate(new SimpleMongoClientDatabaseFactory(atlasUri));
+
+            Query query = new Query();
+            query.limit(1000);
+
+            List<User> users = mongoTemplateAtlas.find(query, User.class);
+
+            System.out.println("Number of users retrieved from MongoDB Atlas: " + users.size());
+            return users;
+        } catch (Exception e) {
+            System.out.println("An error occurred while retrieving users from MongoDB Atlas:");
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 
     public User getRandomUser() {
