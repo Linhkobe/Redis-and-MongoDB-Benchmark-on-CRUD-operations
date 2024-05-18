@@ -40,9 +40,7 @@ Pour lancer le projet, vous pouvez suivre les étapes suivants :
 1) Clonez le projet par la commande "git clone https://github.com/M1-MIAGE-23-24/projet-de-d-veloppement-big-data-dao_trinh_brezzo_hassad_zaher.git"
 2) Accéder au répertoire nommé "projet-de-d-veloppement-big-data-dao_trinh_brezzo_hassad_zaher"
 3) Concernant le frontend et le serveur/backend
-- Deux façons pour lancer le serveur/backend:
-    + Mettez dans la racine du projet et lancez la commande "docker build -t app-bigdata ." et puis "docker-compose up".
-    + Mettez dans la racine du projet et lancez la commande "./gradlew bootRun".
+- Pour lancer le serveur/backend, mettez dans la racine du projet et lancez la commande "docker build -t app-bigdata ." et puis "docker-compose up".
 - En termes du frontend, mettez dans "projet-de-d-veloppement-big-data-dao_trinh_brezzo_hassad_zaher/frontend/crud-app" et lancez la commande "npm install " et puis "ng serve -o".
 4) Maintenant vous pouvez voir l'interface de l'application, il y a un sidnav avec deux options "CRUD mongodb", "CRUD Redis" et "Benchmark" :
 - Dans l'option "CRUD", vous pouvez faire l'opération CRUD avec toutes les trois entités avec deux SGBD, par exemple avec entité "Movie" :
