@@ -3,6 +3,7 @@
 package com.example.bigdatareddismongodbfilm.controllers.mongodb;
 
 import com.example.bigdatareddismongodbfilm.entity.Rating;
+import com.example.bigdatareddismongodbfilm.repositories.mongodb.RatingRepository;
 import com.example.bigdatareddismongodbfilm.services.mongodb.RatingServiceMongo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -53,5 +54,19 @@ public class RatingController {
     @GetMapping("/paged")
     public Page<Rating> getAllRatingsPaged(Pageable pageable) {
         return ratingService.getAllRatings(pageable);
+    }
+
+
+    @Autowired
+    private RatingRepository ratingRepository;
+
+    @GetMapping("/user/{userId}")
+    public List<Rating> getRatingsByUserId(@PathVariable String userId) {
+        return ratingService.findByUserIdWithUserAndMovieDetails(userId);
+    }
+
+    @GetMapping("/movie/{movieId}/users")
+    public List<String> getUsersWhoRatedMovie(@PathVariable String movieId) {
+        return ratingService.findUsersWhoRatedMovie(movieId);
     }
 }

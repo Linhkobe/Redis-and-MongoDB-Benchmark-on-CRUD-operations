@@ -18,6 +18,9 @@ public class Rating implements Serializable {
     private String rating_val;
     private String user_id;
 
+    private User user;
+    private Movie movie;
+
     // getters and setters
     public String getId() {
         return id;
@@ -49,5 +52,60 @@ public class Rating implements Serializable {
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
+    }
+
+    // User class
+    public static class User {
+        private String display_name;
+        private String username;
+
+        // Getters and setters
+        public String getDisplay_name() {
+            return display_name;
+        }
+
+        public void setDisplay_name(String display_name) {
+            this.display_name = display_name;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+    }
+
+    // Movie class
+    public static class Movie {
+        private String movie_title;
+        private List<String> genres;
+        private String overview;
+
+        // Getters and setters
+        public String getMovie_title() {
+            return movie_title;
+        }
+
+        public void setMovie_title(String movie_title) {
+            this.movie_title = movie_title;
+        }
+
+        public List<String> getGenres() {
+            return genres;
+        }
+
+        public void setGenres(List<String> genres) {
+            this.genres = genres;
+        }
+
+        public String getOverview() {
+            return overview;
+        }
+
+        public void setOverview(String overview) {
+            this.overview = overview;
+        }
     }
 }

@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,23 @@ public class RatingServiceMongoImpl implements RatingServiceMongo {
 
     @Autowired
     private RatingRepository ratingRepository;
+
+    @Override
+    public List<Rating> findByUserIdWithUserAndMovieDetails(String userId) {
+        return ratingRepository.findByUserIdWithUserAndMovieDetails(userId);
+    }
+
+    @Override
+    public List<String> findUsersWhoRatedMovie(String movieId) {
+        return ratingRepository.findUsersWhoRatedMovie(movieId);
+    }
+
+    @GetMapping("/user/{userId}")
+    public List<Rating> getRatingsByUserId(@PathVariable String userId) {
+        List<Rating> ratings = ratingRepository.findByUserIdWithUserAndMovieDetails(userId);
+        System.out.println("Fetched ratings for user " + userId + ": " + ratings);
+        return ratings;
+    }
 
     @Override
     public List<Rating> getFirstNRatings(int n) {

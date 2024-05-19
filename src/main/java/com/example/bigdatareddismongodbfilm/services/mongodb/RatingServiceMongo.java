@@ -20,4 +20,6 @@ public interface RatingServiceMongo {
     Rating updateRatingBenchmark(String id, Rating rating);
     List <Rating> getFirstNRatings(int n);
     List<Rating> getRandomRatings(int count);
+    List<Rating> findByUserIdWithUserAndMovieDetails(String userId);
+    List<String> findUsersWhoRatedMovie(String movieId);
 }

@@ -52,4 +52,37 @@ Pour lancer le projet, vous pouvez suivre les étapes suivants :
 - Dans l'option "Benchmark", ici vous pouvez expérimenter la comparaison en termes de performance entre deux SGBD MongoDB et Redis
   ![img_2.png](img_2.png)
 
+# Benchmark
+Pour le benchmark, nous avons utilisé JMH (Java Microbenchmark Harness) pour comparer les performances de MongoDB et Redis. Les tests de performances sont effectués sur les opérations CRUD pour les entités Movie, Rating et User.
+Les opérations CRUD sont éxécutées en nombre de fois souhaités par l'utilisateur de l'application. 
+Le but est de calculer la moyenne du temps d'exécution, CPU utilisé de chaque opération CRUD pour chaque entité et pour chaque SGBD et faire la comparaison.
+- Create: Créer un nouvel ou plusieurs enregistrement(s) dans la base de données.
+- Read: pour cette méthode, nous avons faire une méthode pour trouver "n" premiers enregistrements de chaque entité. 
+- Update: Mettre à jour un ou plusieurs enregistrement(s) aléatoirement dans la base de données.
+- Delete: Supprimer un ou plusieurs enregistrement(s) aléatoirement dans la base de données.
 
+## Exemple de benchmark sur la méthode "Find" pour l'entité "Movie" :
+![img_5.png](img_5.png)
+1) Axes du Graphique:
+- L'axe horizontal représente le numéro du benchmark.
+- L'axe vertical représente le temps moyen écoulé en millisecondes pour effectuer l'opération de recherche.
+Légende:
+  +La courbe bleue représente les performances de MongoDB.
+  +La courbe rouge représente les performances de Redis.
+
+2) Statistiques Moyennes Affichées:
+
+- Average Time Elapsed Mongo : Le temps moyen écoulé pour MongoDB est de 6278263543 nanosecondes, soit 6278 millisecondes.
+- Average Time Elapsed In Milliseconds Mongo : Ce qui confirme que la moyenne de 6278 millisecondes est correcte.
+- Average Time Elapsed Redis : Le temps moyen écoulé pour Redis est de 5635626754 nanosecondes, soit 5635 millisecondes.
+- Average Time Elapsed In Milliseconds Redis : Ce qui confirme que la moyenne de 5635 millisecondes est correcte.
+- Average CPU Load : La charge moyenne du CPU pendant ces tests est de 3.6841.
+- Runs : Le nombre de fois que le benchmark a été exécuté est 5.
+
+3) Interprétation du Graphique:
+- Performance de MongoDB: La courbe bleue montre que MongoDB a un temps de réponse variable, avec des pics aux benchmarks 5 et 15 où le temps de réponse atteint environ 6000 millisecondes.
+La courbe montre également une amélioration significative après le benchmark 15 avec une baisse des temps de réponse.
+- Performance de Redis: La courbe rouge montre que Redis a des performances plus stables avec moins de fluctuations importantes par rapport à MongoDB. 
+Redis reste généralement plus rapide que MongoDB avec des temps de réponse inférieurs, notamment après le benchmark 15.
+- Comparaison: Redis est généralement plus performant que MongoDB, avec des temps de réponse plus courts et plus constants. MongoDB montre des temps de réponse plus élevés et une plus grande variabilité, 
+ce qui pourrait indiquer des inefficacités dans certaines conditions ou des goulots d'étranglement spécifiques.
